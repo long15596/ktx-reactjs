@@ -13,7 +13,7 @@ export default function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <Link className="nav-link" to={`room`}>Sinh Viên<span className="sr-only">(current)</span></Link>
+                            <Link className="nav-link" to={``}>Sinh Viên<span className="sr-only">(current)</span></Link>
                         </li>
                         <li className="nav-item"><Link className="nav-link" to={`room`}>Phòng</Link></li>
                         <li className="nav-item"><Link className="nav-link" to={`invoice`}>Hóa Đơn</Link></li>

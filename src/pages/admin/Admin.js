@@ -1,19 +1,12 @@
-import NavBar from "../../components/NavBar";
-import {Route, Routes} from "react-router";
-import ListRoom from "../room/ListRoom";
-import ListUser from "../user/ListUser";
-import ListInvoice from "../invoice/ListInvoice";
-import ListDevice from "../device/ListDevice";
-
+import {Outlet} from "react-router";
 export default function Admin() {
     return(
         <>
-            <Routes>
-                <Route path={`user`} element={<ListUser/>}></Route>
-                <Route path={`room`} element={<ListRoom/>}></Route>
-                <Route path={`invoice`} element={<ListInvoice/>}></Route>
-                <Route path={`device`} element={<ListDevice/>}></Route>
-            </Routes>
+            <div className="row pt-4">
+                <div className="offset-1 col-10">
+                    <Outlet></Outlet>
+                </div>
+            </div>
         </>
     )
 }
