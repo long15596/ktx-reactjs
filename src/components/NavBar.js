@@ -17,7 +17,7 @@ export default function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
-                            <Link className="nav-link" to={``}>Home<span className="sr-only">(current)</span></Link>
+                            <Link className="nav-link" to={``}>Trang chủ<span className="sr-only">(current)</span></Link>
                         </li>
                         <li className={`nav-item ${location.pathname === '/profile' ? 'active' : ''}`}>
                             <Link className="nav-link" to={`profile`}>Thông tin cá nhân</Link>
@@ -28,7 +28,6 @@ export default function NavBar() {
                         <li className={`nav-item ${location.pathname === '/request' ? 'active' : ''}`}>
                             <Link className="nav-link" to={`#`}>Yêu cầu thuê phòng</Link>
                         </li>
-
                     </ul>
                     {/*<ul className="navbar-nav mr-auto">*/}
                     {/*    <li className="nav-item active">*/}
