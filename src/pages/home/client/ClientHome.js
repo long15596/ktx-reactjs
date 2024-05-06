@@ -1,10 +1,11 @@
-export default function ClientHome(){
+export default function ClientHome() {
     return (
         <>
             <div className="container-fluid">
                 <div className="row d-flex justify-content-center">
                     <h1>Danh sách phòng</h1>
                 </div>
+
                 <div className="container">
                     <div className="row">
                         <div className="col-4">
@@ -141,8 +142,6 @@ export default function ClientHome(){
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
             </div>
