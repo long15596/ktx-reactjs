@@ -13,6 +13,7 @@ import Room from "./pages/room/Room";
 import Device from "./pages/device/Device";
 import AddDevice from "./pages/device/AddDevice";
 import EditDevice from "./pages/device/EditDevice";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
                           </Route>
                       </Route>
                   </Routes>
+                  <Home></Home>
               </div>
           </div>
       </div>
