@@ -2,6 +2,7 @@ import './App.css';
 import Admin from "./pages/admin/Admin";
 import NavBar from "./components/NavBar";
 import {Route, Routes} from "react-router";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
@@ -12,9 +13,14 @@ function App() {
                   <NavBar></NavBar>
               </div>
           </div>
+          {/*<div className="row">*/}
+          {/*    <div className="col-12">*/}
+          {/*        <Admin></Admin>*/}
+          {/*    </div>*/}
+          {/*</div> */}
           <div className="row">
               <div className="col-12">
-                  <Admin></Admin>
+                  <Home></Home>
               </div>
           </div>
       </div>
