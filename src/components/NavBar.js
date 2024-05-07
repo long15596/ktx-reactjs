@@ -1,22 +1,31 @@
-import { Link, useLocation } from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import logo from './Logo Đại Học Giao Thông Vận Tải - UTC.svg';
 import Login from "../pages/login/Login";
 import {useDispatch, useSelector} from "react-redux";
-import {setCheckShow} from "../services/usersServices/UserService";
+import { logOut, setCheckShow} from "../services/usersServices/UserService";
 export default function NavBar() {
     const location = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const checkShow = useSelector(state => {
         return state.user.checkShow
     });
+    const currentUser = useSelector(state => {
+        return state.user.currentUser
+    })
     const handleLoginClick = () => {
         dispatch(setCheckShow(true));
+    };
+    const handleLogoutClick = () => {
+        localStorage.clear()
+        dispatch(logOut());
+        navigate('/')
     };
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "#e3f2fd"}}>
                 <Link to={``} className="navbar-brand">
-                    <img src={logo} width="50" height="50" className="d-inline-block align-top" alt="" />
+                    <img src={logo} width="50" height="50" className="d-inline-block align-top" alt=""/>
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -26,7 +35,8 @@ export default function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
-                            <Link className="nav-link" to={``}>Trang chủ<span className="sr-only">(current)</span></Link>
+                            <Link className="nav-link" to={``}>Trang chủ<span
+                                className="sr-only">(current)</span></Link>
                         </li>
                         <li className={`nav-item ${location.pathname === '/profile' ? 'active' : ''}`}>
                             <Link className="nav-link" to={`profile`}>Thông tin cá nhân</Link>
@@ -40,15 +50,24 @@ export default function NavBar() {
                     </ul>
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <Link className="nav-link" to={``}>Sinh Viên<span className="sr-only">(current)</span></Link>
+                            <Link className="nav-link" to={``}>Sinh Viên<span
+                                className="sr-only">(current)</span></Link>
                         </li>
                         <li className="nav-item"><Link className="nav-link" to={`room`}>Phòng</Link></li>
                         <li className="nav-item"><Link className="nav-link" to={`invoice`}>Hóa Đơn</Link></li>
                         <li className="nav-item"><Link className="nav-link" to={`device`}>Thiết Bị</Link></li>
                     </ul>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={()=>{
-                        handleLoginClick()
-                    }}>Đăng Nhập</button>
+                    {
+                        currentUser ?
+                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={() => {
+                                handleLogoutClick()
+                            }}>Đăng Xuất
+                            </button> :
+                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={() => {
+                                handleLoginClick()
+                            }}>Đăng Nhập
+                            </button>
+                    }
                 </div>
             </nav>
             {checkShow && <Login/>}

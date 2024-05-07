@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {getRooms} from "../../../services/roomsServices/RoomService";
+import './client.css'
 
 
 export default function ClientHome() {

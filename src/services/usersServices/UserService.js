@@ -10,8 +10,13 @@ export const login = createAsyncThunk(
     }
 )
 export const setCheckShow = createAsyncThunk(
-    "checkShow",
+    "checkShow/Check",
     async (values)=>{
         return values
+    }
+)
+export const logOut = createAsyncThunk(
+    "user/Logout",
+    async ()=>{
     }
 )

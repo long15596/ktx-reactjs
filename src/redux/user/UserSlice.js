@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {login, setCheckShow} from "../../services/usersServices/UserService";
+import {login, logOut, setCheckShow} from "../../services/usersServices/UserService";
 let localStorageUser = () => {
     if (JSON.parse(localStorage.getItem(`currentUser`))) {
         return JSON.parse(localStorage.getItem(`currentUser`))
@@ -21,7 +21,10 @@ const userSlice = createSlice({
         });
         builder.addCase(setCheckShow.fulfilled, (state, action)=>{
             state.checkShow = action.payload
-        })
+        });
+        builder.addCase(logOut.fulfilled, (state, action) => {
+            state.currentUser = null
+        });
     }
 })
 export default userSlice.reducer;
