@@ -1,8 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import logo from './Logo Đại Học Giao Thông Vận Tải - UTC.svg';
+import {useState} from "react";
+import Login from "../pages/login/Login";
 export default function NavBar() {
     const location = useLocation();
-
+    const [showLogin, setShowLogin] = useState(false);
+    const handleLoginClick = () => {
+        setShowLogin(true);
+    };
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "#e3f2fd"}}>
@@ -29,14 +34,6 @@ export default function NavBar() {
                             <Link className="nav-link" to={`#`}>Yêu cầu thuê phòng</Link>
                         </li>
                     </ul>
-                    {/*<ul className="navbar-nav mr-auto">*/}
-                    {/*    <li className="nav-item active">*/}
-                    {/*        <Link className="nav-link" to={`room`}>Sinh Viên<span className="sr-only">(current)</span></Link>*/}
-                    {/*    </li>*/}
-                    {/*    <li className="nav-item"><Link className="nav-link" to={`room`}>Phòng</Link></li>*/}
-                    {/*    <li className="nav-item"><Link className="nav-link" to={`invoice`}>Hóa Đơn</Link></li>*/}
-                    {/*    <li className="nav-item"><Link className="nav-link" to={`device`}>Thiết Bị</Link></li>*/}
-                    {/*</ul>*/}
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
                             <Link className="nav-link" to={``}>Sinh Viên<span className="sr-only">(current)</span></Link>
@@ -45,9 +42,12 @@ export default function NavBar() {
                         <li className="nav-item"><Link className="nav-link" to={`invoice`}>Hóa Đơn</Link></li>
                         <li className="nav-item"><Link className="nav-link" to={`device`}>Thiết Bị</Link></li>
                     </ul>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Đăng Nhập</button>
+                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={()=>{
+                        handleLoginClick()
+                    }}>Đăng Nhập</button>
                 </div>
             </nav>
+            {showLogin && <Login/>}
         </>
     )
 }
