@@ -1,8 +1,14 @@
 import a from './img.png'
 import './ListRoom.css'
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 export default function ListRoom() {
+    let dispatch = useDispatch();
+    let rooms = useSelector(state => {
+        return state.rooms.rooms
+    })
+    console.log(rooms)
     return (
         <>
             <div className={`d-flex align-items-center`}>

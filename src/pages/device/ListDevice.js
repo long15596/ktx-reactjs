@@ -1,7 +1,18 @@
 import {Link} from "react-router-dom";
 import a from "../room/img.png";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {getDevices} from "../../services/DiveceService";
+import {useNavigate} from "react-router";
 
 export default function ListDevice(){
+    let dispatch = useDispatch()
+    let devices = useSelector(state => {
+        return state.devices.devices
+    })
+    useEffect(() => {
+        dispatch(getDevices())
+    },[])
     return(
         <>
             <div className={`d-flex align-items-center`}>
@@ -16,21 +27,23 @@ export default function ListDevice(){
                         <th scope="col">Ảnh</th>
                         <th scope="col">Tên Thiết Bị</th>
                         <th></th>
-                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td><img src={a} id={`img-table`} alt={`img-room`}/></td>
-                        <td>Đeèn</td>
-                        <td>
-                            <Link to={`edit`} className="btn btn-outline-success" type="submit">Sửa</Link>
-                        </td>
-                        <td>
-                            <button className="btn btn-outline-danger" type="submit">Xóa</button>
-                        </td>
-                    </tr>
+                    {
+                        devices.map((device, index) => (
+                            <>
+                                <tr>
+                                    <th scope="row">{index + 1}</th>
+                                    <td><img src={device.img} id={`img-table`} alt={`img-devices`}/></td>
+                                    <td>{device.name}</td>
+                                    <td>
+                                        <Link to={`edit/${device.id}`} className="btn btn-outline-success">Sửa</Link>
+                                    </td>
+                                </tr>
+                            </>
+                        ))
+                    }
                     </tbody>
                 </table>
             </div>
