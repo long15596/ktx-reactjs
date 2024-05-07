@@ -1,10 +1,22 @@
 import a from './img.png'
 import FireUpload from "../../components/FireUpload";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Field, Form, Formik} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router";
+import {getDevices} from "../../services/DiveceService";
 
 export default function AddRoom() {
+    let dispatch = useDispatch()
+    let navigate = useNavigate()
     let [url, setUrl] = useState('')
+    let devices = useSelector(state => {
+        return state.devices.devices
+    })
+    console.log(devices)
+    useEffect(() => {
+        dispatch(getDevices())
+    }, [])
     let handleAdd = (values) => {
 
     }
@@ -12,11 +24,10 @@ export default function AddRoom() {
         <>
             <Formik initialValues={{
                 name: "",
-                maxCurrent: 0,
+                maxCurrent: "",
                 description: "",
-                img: url,
-                price: 0,
-                type: '',
+                price: "",
+                type: "",
             }} onSubmit={values => {
                 handleAdd(values)
             }}>
@@ -27,52 +38,53 @@ export default function AddRoom() {
                             <div className="form-group row">
                                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Tên Phòng</label>
                                 <div className="col-sm-10">
-                                    <Field type="text" className="form-control"/>
+                                    <Field type="text" className="form-control" name={`name`}/>
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Số Người</label>
                                 <div className="col-sm-10">
-                                    <Field type="number" className="form-control"/>
+                                    <Field type="number" className="form-control" name={`maxCurrent`}/>
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Mô Tả</label>
                                 <div className="col-sm-10">
-                                    <Field type="text" className="form-control"/>
+                                    <Field type="text" className="form-control" name={`description`}/>
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Loại Phòng</label>
                                 <div className="col-sm-10">
-                                    <Field type="text" className="form-control"/>
+                                    <Field type="text" className="form-control" name={`type`}/>
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Giá</label>
                                 <div className="col-sm-10">
-                                    <Field type="number" className="form-control"/>
+                                    <Field type="number" className="form-control" name={`price`}/>
                                 </div>
                             </div>
                             <fieldset className="form-group row">
                                 <legend className="col-form-label col-sm-2 float-sm-left pt-0">Thiết Bị</legend>
                                 <div className="col-sm-10">
                                     <div className="form-check">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value=""
-                                                   id="defaultCheck1"/>
-                                            <label className="form-check-label" htmlFor="defaultCheck1">
-                                                Default checkbox
-                                            </label>
-                                        </div>
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value=""
-                                                   id="defaultCheck2"
-                                                   disabled/>
-                                            <label className="form-check-label" htmlFor="defaultCheck2">
-                                                Disabled checkbox
-                                            </label>
-                                        </div>
+                                        {
+                                            devices ?
+                                            devices.map(device => (
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" value={device.id}
+                                                           id="defaultCheck1"/>
+                                                    <label className="form-check-label" htmlFor="defaultCheck1">
+                                                        {device.name}
+                                                    </label>
+                                                </div>
+                                            ))
+                                                :
+                                                <>
+                                                    <p>Tải Dữ Liệu </p>
+                                                </>
+                                        }
                                     </div>
                                 </div>
                             </fieldset>

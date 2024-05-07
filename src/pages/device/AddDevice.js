@@ -10,7 +10,6 @@ export default function AddDevice() {
     let dispatch = useDispatch()
     let navigate = useNavigate()
     let [url, setUrl] = useState('')
-    console.log(url)
     let handleAdd = (values) => {
         values = {...values, img: url}
         dispatch(addDevices({values}))
@@ -32,7 +31,6 @@ export default function AddDevice() {
                         name: "",
                         img: url
                     }} onSubmit={values => {
-                        console.log(values)
                         handleAdd(values)
                     }}>
                         <Form>

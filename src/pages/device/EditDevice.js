@@ -19,7 +19,6 @@ export default function EditDevice() {
     },[])
     let [url, setUrl] = useState('')
     let handleEdit = (values) => {
-        console.log(url)
         values = {...values, img: url}
         dispatch(editDevice({id ,values}))
         navigate(`/device`)
