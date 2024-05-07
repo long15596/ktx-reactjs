@@ -2,7 +2,6 @@ import './App.css';
 import Admin from "./pages/admin/Admin";
 import NavBar from "./components/NavBar";
 import {Route, Routes} from "react-router";
-import Home from "./pages/home/Home";
 import ListUser from "./pages/user/ListUser";
 import ListRoom from "./pages/room/ListRoom";
 import ListInvoice from "./pages/invoice/ListInvoice";
@@ -29,21 +28,20 @@ function App() {
                   <Routes>
                       <Route to={`home`} element={<Home/>}></Route>
                       <Route to={`admin`} element={<Admin/>}>
-                          <Route path={``} element={<ListUser/>}></Route>
+                          <Route path={``} element={<ListUser/>}/>
                           <Route path={`room`} element={<Room/>}>
-                              <Route path={``} element={<ListRoom/>}></Route>
+                              <Route path={``} element={<ListRoom/>}/>
                               <Route path={`add`} element={<AddRoom/>}/>
                               <Route path={`edit`} element={<EditRoom/>}/>
                           </Route>
-                          <Route path={`invoice`} element={<ListInvoice/>}></Route>
+                          <Route path={`invoice`} element={<ListInvoice/>}/>
                           <Route path={`device`} element={<Device/>}>
-                              <Route path={``} element={<ListDevice/>}></Route>
+                              <Route path={``} element={<ListDevice/>}/>
                               <Route path={`add`} element={<AddDevice/>}/>
                               <Route path={`edit`} element={<EditDevice/>}/>
                           </Route>
                       </Route>
                   </Routes>
-                  <Home></Home>
               </div>
           </div>
       </div>

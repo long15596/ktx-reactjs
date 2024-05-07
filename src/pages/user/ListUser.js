@@ -1,4 +1,3 @@
-import {Link} from "react-router-dom";
 import a from "../room/img.png";
 
 export default function ListUser() {
