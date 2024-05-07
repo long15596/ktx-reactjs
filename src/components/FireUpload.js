@@ -27,18 +27,20 @@ export default function FireUpload({onUpload}) {
     let handleClick = async () => {
         let storageRef = ref(storage, `files/${file.name}`)
         let uploadTask = uploadBytesResumable(storageRef, file)
-
-        uploadTask.on(
-            `state_changed`,
-            (snapshot) => {
-                setProgress((snapshot.bytesTransferred/snapshot.totalBytes)*100)
-            },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                    onUpload(url)
-                })
-            }
-        )
+        await new Promise((resolve, reject) => {
+            uploadTask.on(
+                `state_changed`,
+                (snapshot) => {
+                    setProgress((snapshot.bytesTransferred/snapshot.totalBytes)*100)
+                },
+                reject,
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                        onUpload(url)
+                    }).catch(reject)
+                }
+            )
+        })
     }
     return(
         <>

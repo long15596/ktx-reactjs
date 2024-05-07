@@ -1,11 +1,15 @@
 import a from './img.png'
 import FireUpload from "../../components/FireUpload";
 import {useState} from "react";
+import {Formik} from "formik";
 
 export default function AddRoom() {
     let [url, setUrl] = useState('')
     return (
         <>
+            <Formik initialValues={} onSubmit={}>
+
+            </Formik>
             <form>
                 <h2>Thêm Phòng Mới</h2>
                 <div className="row justify-content-center pt-2">
