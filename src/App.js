@@ -13,6 +13,10 @@ import Room from "./pages/room/Room";
 import Device from "./pages/device/Device";
 import AddDevice from "./pages/device/AddDevice";
 import EditDevice from "./pages/device/EditDevice";
+import ClientHome from "./pages/home/client/ClientHome";
+import Profile from "./pages/home/client/Profile";
+import ClientInvoice from "./pages/home/client/ClientInvoice";
+import Request from "./pages/home/client/Request";
 
 function App() {
   return (
@@ -26,7 +30,12 @@ function App() {
           <div className="row">
               <div className="col-12">
                   <Routes>
-                      <Route to={`home`} element={<Home/>}></Route>
+                      <Route to={``} element={<Home/>}>
+                              <Route path={``} element={<ClientHome/>}></Route>
+                              <Route path={`profile`} element={<Profile/>}></Route>
+                              <Route path={`invoice`} element={<ClientInvoice/>}></Route>
+                              <Route path={`request`} element={<Request/>}></Route>
+                      </Route>
                       <Route to={`admin`} element={<Admin/>}>
                           <Route path={``} element={<ListUser/>}/>
                           <Route path={`room`} element={<Room/>}>
@@ -42,7 +51,7 @@ function App() {
                           </Route>
                       </Route>
                   </Routes>
-                  <Home></Home>
+
               </div>
           </div>
       </div>

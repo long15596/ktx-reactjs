@@ -31,7 +31,7 @@ export default function NavBar() {
                             <Link className="nav-link" to={`invoice`}>Hóa Đơn</Link>
                         </li>
                         <li className={`nav-item ${location.pathname === '/request' ? 'active' : ''}`}>
-                            <Link className="nav-link" to={`#`}>Yêu cầu thuê phòng</Link>
+                            <Link className="nav-link" to={`request`}>Yêu cầu thuê phòng</Link>
                         </li>
                     </ul>
                     <ul className="navbar-nav mr-auto">

@@ -1,4 +1,17 @@
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {getRooms} from "../../../services/RoomService";
+
 export default function ClientHome() {
+    const dispatch = useDispatch()
+    const rooms = useSelector(state => {
+        console.log(state.rooms.rooms)
+        return state.rooms.rooms
+    })
+    useEffect(() => {
+        dispatch(getRooms())
+    }, []);
+
     return (
         <>
             <div className="container-fluid">
@@ -8,139 +21,28 @@ export default function ClientHome() {
 
                 <div className="container">
                     <div className="row">
-                        <div className="col-4">
-                            <div className="card">
-                                <img
-                                    src="https://photo-cms-baophapluat.epicdn.me/w840/Uploaded/2024/Cbnphun/2016_02_26/3_HBWL.png"
-                                    className="card-img-top" alt="..."/>
-                                <div className="card-body">
-                                    <h5 className="card-title">Số phòng</h5>
-                                    <p className="card-text">Số người đã ở hiện tại/Số người tối đa</p>
-                                    <p className="card-text">Loại phòng</p>
-                                    <p className="card-text">Mô tả</p>
-                                    <p className="card-text">Giá</p>
+                        {rooms.map(room => (
+                            <div className="col-4" key={room.id}>
+                                <div className="card">
+                                    <img
+                                        src={room.img}
+                                        className="card-img-top" alt="..."
+                                    />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{room.name}</h5>
+                                        <p className="card-text">Số người: {room.currentPresent}/{room.maxCurrent}</p>
+                                        <p className="card-text">Kiểu: {room.type}</p>
+                                        <p className="card-text">Mô tả: {room.description}</p>
+                                        <p className="card-text">Giá: {room.price}</p>
 
-                                    <div className={'d-flex justify-content-end'}>
-                                        <a href="#" className="btn btn-outline-primary">Thuê ngay!!!</a>
+                                        <div className={'d-flex justify-content-end'}>
+                                            <a href="#" className="btn btn-outline-primary">Thuê ngay!!!</a>
+                                        </div>
+
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-4">
-                            <div className="card">
-                                <img
-                                    src="https://photo-cms-baophapluat.epicdn.me/w840/Uploaded/2024/Cbnphun/2016_02_26/3_HBWL.png"
-                                    className="card-img-top" alt="..."/>
-                                <div className="card-body">
-                                    <h5 className="card-title">Số phòng</h5>
-                                    <p className="card-text">Số người đã ở hiện tại/Số người tối đa</p>
-                                    <p className="card-text">Loại phòng</p>
-                                    <p className="card-text">Mô tả</p>
-                                    <p className="card-text">Giá</p>
-
-                                    <div className={'d-flex justify-content-end'}>
-                                        <a href="#" className="btn btn-outline-primary">Thuê ngay!!!</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-4">
-                            <div className="card">
-                                <img
-                                    src="https://photo-cms-baophapluat.epicdn.me/w840/Uploaded/2024/Cbnphun/2016_02_26/3_HBWL.png"
-                                    className="card-img-top" alt="..."/>
-                                <div className="card-body">
-                                    <h5 className="card-title">Số phòng</h5>
-                                    <p className="card-text">Số người đã ở hiện tại/Số người tối đa</p>
-                                    <p className="card-text">Loại phòng</p>
-                                    <p className="card-text">Mô tả</p>
-                                    <p className="card-text">Giá</p>
-
-                                    <div className={'d-flex justify-content-end'}>
-                                        <a href="#" className="btn btn-outline-primary">Thuê ngay!!!</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-4">
-                            <div className="card">
-                                <img
-                                    src="https://photo-cms-baophapluat.epicdn.me/w840/Uploaded/2024/Cbnphun/2016_02_26/3_HBWL.png"
-                                    className="card-img-top" alt="..."/>
-                                <div className="card-body">
-                                    <h5 className="card-title">Số phòng</h5>
-                                    <p className="card-text">Số người đã ở hiện tại/Số người tối đa</p>
-                                    <p className="card-text">Loại phòng</p>
-                                    <p className="card-text">Mô tả</p>
-                                    <p className="card-text">Giá</p>
-
-                                    <div className={'d-flex justify-content-end'}>
-                                        <a href="#" className="btn btn-outline-primary">Thuê ngay!!!</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-4">
-                            <div className="card">
-                                <img
-                                    src="https://photo-cms-baophapluat.epicdn.me/w840/Uploaded/2024/Cbnphun/2016_02_26/3_HBWL.png"
-                                    className="card-img-top" alt="..."/>
-                                <div className="card-body">
-                                    <h5 className="card-title">Số phòng</h5>
-                                    <p className="card-text">Số người đã ở hiện tại/Số người tối đa</p>
-                                    <p className="card-text">Loại phòng</p>
-                                    <p className="card-text">Mô tả</p>
-                                    <p className="card-text">Giá</p>
-
-                                    <div className={'d-flex justify-content-end'}>
-                                        <a href="#" className="btn btn-outline-primary">Thuê ngay!!!</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-4">
-                            <div className="card">
-                                <img
-                                    src="https://photo-cms-baophapluat.epicdn.me/w840/Uploaded/2024/Cbnphun/2016_02_26/3_HBWL.png"
-                                    className="card-img-top" alt="..."/>
-                                <div className="card-body">
-                                    <h5 className="card-title">Số phòng</h5>
-                                    <p className="card-text">Số người đã ở hiện tại/Số người tối đa</p>
-                                    <p className="card-text">Loại phòng</p>
-                                    <p className="card-text">Mô tả</p>
-                                    <p className="card-text">Giá</p>
-
-                                    <div className={'d-flex justify-content-end'}>
-                                        <a href="#" className="btn btn-outline-primary">Thuê ngay!!!</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-4">
-                            <div className="card">
-                                <img
-                                    src="https://photo-cms-baophapluat.epicdn.me/w840/Uploaded/2024/Cbnphun/2016_02_26/3_HBWL.png"
-                                    className="card-img-top" alt="..."/>
-                                <div className="card-body">
-                                    <h5 className="card-title">Số phòng</h5>
-                                    <p className="card-text">Số người đã ở hiện tại/Số người tối đa</p>
-                                    <p className="card-text">Loại phòng</p>
-                                    <p className="card-text">Mô tả</p>
-                                    <p className="card-text">Giá</p>
-
-                                    <div className={'d-flex justify-content-end'}>
-                                        <a href="#" className="btn btn-outline-primary">Thuê ngay!!!</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
 
