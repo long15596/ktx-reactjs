@@ -1,6 +1,9 @@
 import a from './img.png'
+import FireUpload from "../../components/FireUpload";
+import {useState} from "react";
 
 export default function AddRoom() {
+    let [url, setUrl] = useState('')
     return (
         <>
             <form>
@@ -60,8 +63,14 @@ export default function AddRoom() {
                             </div>
                         </fieldset>
                     </div>
-                    <div className="col-6 justify-content-center">
-                        <img src={a} alt="room-img" style={{objectFit: "cover"}}/>
+                    <div className="col-6">
+                        <div className={`d-flex justify-content-center`}>
+                            <img src={!url ? a : url} alt="room-img" style={{objectFit: "cover", aspectRatio: `1`}}/>
+                        </div>
+                        <FireUpload onUpload={(uploadUrl) => {
+                            console.log(uploadUrl)
+                            setUrl(uploadUrl)
+                        }}></FireUpload>
                         <div className="form-group row pt-2">
                             <div className="col-sm-10">
                                 <button type="submit" className="btn btn-primary">Thêm</button>
