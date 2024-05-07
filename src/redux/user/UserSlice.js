@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {login, logOut, setCheckShow} from "../../services/usersServices/UserService";
+import {editProfile, getProfile,logOut, login, setCheckShow} from "../../services/usersServices/UserService";
 let localStorageUser = () => {
     if (JSON.parse(localStorage.getItem(`currentUser`))) {
         return JSON.parse(localStorage.getItem(`currentUser`))
@@ -10,6 +10,7 @@ const initialState = {
     currentUser: localStorageUser(),
     user : [],
     checkShow: false,
+    profile:{}
 }
 const userSlice = createSlice({
     name : 'user',
@@ -25,6 +26,12 @@ const userSlice = createSlice({
         builder.addCase(logOut.fulfilled, (state, action) => {
             state.currentUser = null
         });
+        builder.addCase(getProfile.fulfilled,(state,action)=>{
+            state.profile = action.payload
+        })
+        builder.addCase(editProfile.fulfilled,(state,action)=>{
+            state.profile = action.payload
+        })
     }
 })
 export default userSlice.reducer;
