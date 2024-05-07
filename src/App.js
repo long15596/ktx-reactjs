@@ -42,7 +42,7 @@ function App() {
                           </Route>
                       </Route>
                   </Routes>
-                  {/*<Home></Home>*/}
+                  <Home></Home>
               </div>
           </div>
       </div>
