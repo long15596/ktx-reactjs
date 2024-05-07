@@ -15,3 +15,19 @@ export const setCheckShow = createAsyncThunk(
         return values
     }
 )
+export const getProfile = createAsyncThunk(
+    "user/getProfile",
+    async (id)=>{
+        const res = await customAxios.get(`users/${id}`)
+        return res.data
+    }
+)
+
+export const editProfile = createAsyncThunk(
+    "user/editProfile",
+    async ({id,values})=>{
+        const res = await customAxios.put(`users/${id}`,values)
+        console.log(res)
+        return res.data
+    }
+)
