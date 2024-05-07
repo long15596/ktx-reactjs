@@ -25,23 +25,23 @@ function App() {
           </div>
           <div className="row">
               <div className="col-12">
-                  <Routes>
-                      <Route to={`home`} element={<Home/>}></Route>
-                      <Route to={`admin`} element={<Admin/>}>
-                          <Route path={``} element={<ListUser/>}/>
-                          <Route path={`room`} element={<Room/>}>
-                              <Route path={``} element={<ListRoom/>}/>
-                              <Route path={`add`} element={<AddRoom/>}/>
-                              <Route path={`edit`} element={<EditRoom/>}/>
-                          </Route>
-                          <Route path={`invoice`} element={<ListInvoice/>}/>
-                          <Route path={`device`} element={<Device/>}>
-                              <Route path={``} element={<ListDevice/>}/>
-                              <Route path={`add`} element={<AddDevice/>}/>
-                              <Route path={`edit`} element={<EditDevice/>}/>
-                          </Route>
-                      </Route>
-                  </Routes>
+                  {/*<Routes>*/}
+                  {/*    <Route to={`home`} element={<Home/>}></Route>*/}
+                  {/*    <Route to={`admin`} element={<Admin/>}>*/}
+                  {/*        <Route path={``} element={<ListUser/>}/>*/}
+                  {/*        <Route path={`room`} element={<Room/>}>*/}
+                  {/*            <Route path={``} element={<ListRoom/>}/>*/}
+                  {/*            <Route path={`add`} element={<AddRoom/>}/>*/}
+                  {/*            <Route path={`edit`} element={<EditRoom/>}/>*/}
+                  {/*        </Route>*/}
+                  {/*        <Route path={`invoice`} element={<ListInvoice/>}/>*/}
+                  {/*        <Route path={`device`} element={<Device/>}>*/}
+                  {/*            <Route path={``} element={<ListDevice/>}/>*/}
+                  {/*            <Route path={`add`} element={<AddDevice/>}/>*/}
+                  {/*            <Route path={`edit`} element={<EditDevice/>}/>*/}
+                  {/*        </Route>*/}
+                  {/*    </Route>*/}
+                  {/*</Routes>*/}
                   <Home></Home>
               </div>
           </div>
