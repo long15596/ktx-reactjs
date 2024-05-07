@@ -1,26 +1,60 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import {Field, Form, Formik } from "formik";
+import {Link, useNavigate} from "react-router-dom";
 import './login.css'
 import {useDispatch} from "react-redux";
+import {login, setCheckShow} from "../../services/usersServices/UserService";
+import Swal from "sweetalert2";
 
 export default function Login() {
     const dispatch = useDispatch();
-    const validationSchema = Yup.object().shape({
-        username: Yup.string()
-            .required('Username is required')
-            .matches(/^[A-Z][a-zA-Z0-9]*$/, 'Username must start with an uppercase letter')
-            .min(2, 'Username must be at least 2 characters')
-            .max(32, 'Username must not exceed 32 characters'),
-        password: Yup.string()
-            .required('Password is required')
-            .matches(/^[a-zA-Z0-9]*$/, 'Password must contain only alphanumeric characters')
-            .min(6, 'Password must be at least 6 characters')
-            .max(32, 'Password must not exceed 32 characters'),
+    const navigate = useNavigate();
+    const handleLogin = async (values)=>{
+           await dispatch(login(values)).then(user =>{
+               if (user.payload === undefined) {
+                   showError('Sai tên người dùng hoặc mật khẩu, vui lòng kiểm tra lại!');
+               } else {
+                   const userRoles = user.payload.roles.map(role => role.authority);
+                   if (userRoles.includes("ROLE_USER")) {
+                       showSuccess('Đăng nhập thành công');
+                       setTimeout(() => {
+                           dispatch(setCheckShow(false))
+                           navigate(`/`);
+                       }, 1500);
+                   } else if (userRoles.includes("ROLE_ADMIN")) {
+                       showSuccess('Đăng nhập thành công');
+                       setTimeout(() => {
+                           dispatch(setCheckShow(false))
+                           navigate(`/admin`);
+                       }, 1500);
+                   }
+               }
+           });
+    };
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
     });
-    const handleLogin = (values)=>{
-            dispatch()
-    }
+
+    const showError = (errorMessage) => {
+        Toast.fire({
+            icon: 'error',
+            title: `<span class="error-message">${errorMessage}</span>`,
+        });
+    };
+
+    const showSuccess = (successMessage) => {
+        Toast.fire({
+            icon: 'success',
+            title: successMessage,
+        });
+    };
 
     return (
         <div className="container pt-5 pb-5 mt-5 login-container">
@@ -34,16 +68,17 @@ export default function Login() {
                                         <Link to={''} className={`btn-close`} aria-label={`Close`}></Link>
                                     </div>
                                     <div className="mb-5" id="signIn">
-                                        <h3 className="ml-3 mt-0 login-title">Sign In</h3>
+                                        <h3 className="text-center mb-4">Đăng Nhập</h3>
+                                        <hr />
                                     </div>
+
                                 </div>
                             </div>
-                            <hr />
+
                             <Formik initialValues={{
                                 username: '',
                                 password: ''
                             }}
-                                    validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         handleLogin(values)
                                     }}>
@@ -52,20 +87,18 @@ export default function Login() {
                                         <div className="col-12">
                                             <div className="form-floating mb-3">
                                                 <Field type="text" className="form-control login-input" name="username" id="username" placeholder="Username" required />
-                                                <label htmlFor="username">Username</label>
-                                                <ErrorMessage name="username" component="div" className="text-danger" />
+                                                <label htmlFor="username">Mã sinh viên</label>
                                             </div>
                                         </div>
                                         <div className="col-12">
                                             <div className="form-floating mb-3">
                                                 <Field type="password" className="form-control login-input" name="password" id="password" placeholder="Password" required />
-                                                <label htmlFor="password">Password</label>
-                                                <ErrorMessage name="password" component="div" className="text-danger" />
+                                                <label htmlFor="password">Mật khẩu</label>
                                             </div>
                                         </div>
                                         <div className="col-12">
                                             <div className="d-grid">
-                                                <button className="btn btn-primary login-button" type="submit">Login</button>
+                                                <button className="btn btn-primary login-button" type="submit">Đăng nhập</button>
                                             </div>
                                         </div>
                                     </div>

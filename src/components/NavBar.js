@@ -1,12 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import logo from './Logo Đại Học Giao Thông Vận Tải - UTC.svg';
-import {useState} from "react";
 import Login from "../pages/login/Login";
+import {useDispatch, useSelector} from "react-redux";
+import {setCheckShow} from "../services/usersServices/UserService";
 export default function NavBar() {
     const location = useLocation();
-    const [showLogin, setShowLogin] = useState(false);
+    const dispatch = useDispatch();
+    const checkShow = useSelector(state => {
+        return state.user.checkShow
+    });
     const handleLoginClick = () => {
-        setShowLogin(true);
+        dispatch(setCheckShow(true));
     };
     return (
         <>
@@ -47,7 +51,7 @@ export default function NavBar() {
                     }}>Đăng Nhập</button>
                 </div>
             </nav>
-            {showLogin && <Login/>}
+            {checkShow && <Login/>}
         </>
     )
 }

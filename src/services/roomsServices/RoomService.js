@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import customAxios from "./api";
+import customAxios from "../api";
 
 export const getRooms = createAsyncThunk(
     "rooms/getRooms",
