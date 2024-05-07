@@ -2,6 +2,7 @@ import './App.css';
 import Admin from "./pages/admin/Admin";
 import NavBar from "./components/NavBar";
 import {Route, Routes} from "react-router";
+import Home from "./pages/home/Home";
 import ListUser from "./pages/user/ListUser";
 import ListRoom from "./pages/room/ListRoom";
 import ListInvoice from "./pages/invoice/ListInvoice";
@@ -12,7 +13,6 @@ import Room from "./pages/room/Room";
 import Device from "./pages/device/Device";
 import AddDevice from "./pages/device/AddDevice";
 import EditDevice from "./pages/device/EditDevice";
-import Home from "./pages/home/Home";
 
 function App() {
   return (
@@ -42,6 +42,7 @@ function App() {
                           </Route>
                       </Route>
                   </Routes>
+                  <Home></Home>
               </div>
           </div>
       </div>
