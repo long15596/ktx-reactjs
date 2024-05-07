@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addRooms, getRooms} from "../../services/RoomService";
+import {addRooms, getRooms} from "../../services/roomsServices/RoomService";
+
 
 const initialState = {
     rooms: [],

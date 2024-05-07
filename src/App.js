@@ -47,7 +47,7 @@ function App() {
                           <Route path={`device`} element={<Device/>}>
                               <Route path={``} element={<ListDevice/>}/>
                               <Route path={`add`} element={<AddDevice/>}/>
-                              <Route path={`edit`} element={<EditDevice/>}/>
+                              <Route path={`edit/:id`} element={<EditDevice/>}/>
                           </Route>
                       </Route>
                   </Routes>
