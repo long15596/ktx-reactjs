@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRooms } from "../../../services/RoomService";
+import {getRooms} from "../../../services/roomsServices/RoomService";
+
 
 export default function ClientHome() {
     const dispatch = useDispatch();
