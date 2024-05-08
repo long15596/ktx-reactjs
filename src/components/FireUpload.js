@@ -25,6 +25,10 @@ export default function FireUpload({onUpload}) {
     }
 
     let handleClick = async () => {
+        if (!file) {
+            alert("Vui lòng chọn một tệp để tải lên.");
+            return;
+        }
         let storageRef = ref(storage, `files/${file.name}`)
         let uploadTask = uploadBytesResumable(storageRef, file)
         await new Promise((resolve, reject) => {

@@ -30,18 +30,17 @@ function App() {
           <div className="row">
               <div className="col-12">
                   <Routes>
-                      <Route to={``} element={<Home/>}>
+                      <Route path={``} element={<Home/>}>
                               <Route path={``} element={<ClientHome/>}></Route>
                               <Route path={`profile`} element={<Profile/>}></Route>
                               <Route path={`invoice`} element={<ClientInvoice/>}></Route>
                               <Route path={`request`} element={<Request/>}></Route>
                       </Route>
-                      <Route to={`admin`} element={<Admin/>}>
+                      <Route path={`admin`} element={<Admin/>}>
                           <Route path={``} element={<ListUser/>}/>
                           <Route path={`room`} element={<Room/>}>
                               <Route path={``} element={<ListRoom/>}/>
-                              <Route path={`add`} element={<AddRoom/>}/>
-                              <Route path={`edit`} element={<EditRoom/>}/>
+                              <Route path={`add/:id`} element={<AddRoom/>}/>
                           </Route>
                           <Route path={`invoice`} element={<ListInvoice/>}/>
                           <Route path={`device`} element={<Device/>}>
@@ -51,7 +50,6 @@ function App() {
                           </Route>
                       </Route>
                   </Routes>
-
               </div>
           </div>
       </div>

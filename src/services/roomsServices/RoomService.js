@@ -15,3 +15,10 @@ export const addRooms = createAsyncThunk(
         return res.data
     }
 )
+export const editRooms = createAsyncThunk(
+    "rooms/editRooms",
+    async ({id, values}) => {
+        const res = await customAxios.put(`rooms/${id}`, values)
+        return res.data
+    }
+)

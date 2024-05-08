@@ -1,10 +1,12 @@
 import a from './img.png'
 import './ListRoom.css'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {addRooms} from "../../services/roomsServices/RoomService";
 
 export default function ListRoom() {
-    let dispatch = useDispatch();
+    let dispatch = useDispatch()
+    let navigate = useNavigate()
     let rooms = useSelector(state => {
         return state.rooms.rooms
     })
@@ -12,7 +14,14 @@ export default function ListRoom() {
         <>
             <div className={`d-flex align-items-center`}>
                 <h2>Danh Sách Phòng</h2>
-                <Link to={`add`} className="btn btn-outline-primary m-2" type="submit">Thêm Mới</Link>
+                <button className="btn btn-outline-primary m-2" onClick={() => {
+                    let values = {}
+                    dispatch(addRooms({values})).then(data => {
+                        console.log('new', data.payload)
+                        navigate(`add/${data.payload.id}`)
+                    })
+                }}>Thêm Mới
+                </button>
             </div>
             <div className={`justify-content-center align-items-center pt-2`}>
                 <table className="table">
@@ -31,22 +40,28 @@ export default function ListRoom() {
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td><img src={a} id={`img-table`} alt={`img-room`}/></td>
-                        <td>Phòng 1</td>
-                        <td>10</td>
-                        <td>5</td>
-                        <td>Sạch vl</td>
-                        <td>10000</td>
-                        <td>vip pro no1</td>
-                        <td>
-                            <Link to={`edit`} className="btn btn-outline-success" type="submit">Sửa</Link>
-                        </td>
-                        <td>
-                            <button className="btn btn-outline-danger" type="submit">Xóa</button>
-                        </td>
-                    </tr>
+                    {
+                        rooms.map((room, index) => (
+                            <>
+                                <tr>
+                                    <th scope="row">{index + 1}</th>
+                                    <td><img src={room.img ? room.img : a} id={`img-table`} alt={`img-room`}/></td>
+                                    <td>{room.name}</td>
+                                    <td>{room.maxCurrent}</td>
+                                    <td>{room.currentPresent}</td>
+                                    <td>{room.description}</td>
+                                    <td>{room.price}</td>
+                                    <td>{room.type}</td>
+                                    <td>
+                                        <Link to={`add/${room.id}`} className="btn btn-outline-success" type="submit">Sửa</Link>
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-outline-danger" type="submit">Xóa</button>
+                                    </td>
+                                </tr>
+                            </>
+                        ))
+                    }
                     </tbody>
                 </table>
             </div>
