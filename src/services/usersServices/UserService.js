@@ -5,7 +5,6 @@ export const login = createAsyncThunk(
     "user/Login",
     async (values)=>{
         const res = await customAxios.post('login',values)
-        console.log(res.data)
         return res.data
     }
 )
@@ -32,7 +31,13 @@ export const editProfile = createAsyncThunk(
     "user/editProfile",
     async ({id,values})=>{
         const res = await customAxios.put(`users/${id}`,values)
-        console.log(res)
+        return res.data
+    }
+)
+export const addProfile = createAsyncThunk(
+    "user/addProfile",
+    async ({values})=>{
+        const res = await  customAxios.post(`register`,values)
         return res.data
     }
 )

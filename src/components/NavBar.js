@@ -46,21 +46,27 @@ export default function NavBar() {
                                 <li className="nav-item"><Link className="nav-link" to={`invoice`}>Hóa Đơn</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to={`device`}>Thiết Bị</Link></li>
                             </>
-                        ) : (
+                        ): (
                             <>
                                 <li className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
                                     <Link className="nav-link" to={``}>Trang chủ<span
                                         className="sr-only">(current)</span></Link>
                                 </li>
-                                <li className={`nav-item ${location.pathname === '/profile' ? 'active' : ''}`}>
-                                    <Link className="nav-link" to={`profile`}>Thông tin cá nhân</Link>
-                                </li>
-                                <li className={`nav-item ${location.pathname === '/invoice' ? 'active' : ''}`}>
-                                    <Link className="nav-link" to={`invoice`}>Hóa Đơn</Link>
-                                </li>
-                                <li className={`nav-item ${location.pathname === '/request' ? 'active' : ''}`}>
-                                    <Link className="nav-link" to={`request`}>Yêu cầu thuê phòng</Link>
-                                </li>
+                                {currentUser &&
+                                currentUser.roles[0].authority === 'ROLE_USER' ? (
+                                    <>
+                                        <li className={`nav-item ${location.pathname === '/profile' ? 'active' : ''}`}>
+                                            <Link className="nav-link" to={`profile`}>Thông tin cá nhân</Link>
+                                        </li>
+                                        <li className={`nav-item ${location.pathname === '/invoice' ? 'active' : ''}`}>
+                                            <Link className="nav-link" to={`invoice`}>Hóa Đơn</Link>
+                                        </li>
+                                    </>
+                                ):(
+                                        <li className={`nav-item ${location.pathname === '/request' ? 'active' : ''}`}>
+                                            <Link className="nav-link" to={`request`}>Yêu cầu thuê phòng</Link>
+                                        </li>
+                                    )}
                             </>
                         )}
                     </ul>
