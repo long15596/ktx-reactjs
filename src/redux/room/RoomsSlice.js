@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addRooms, editRooms, getRooms} from "../../services/roomsServices/RoomService";
+import {addRooms, editRooms, getOneRoom, getRooms} from "../../services/roomsServices/RoomService";
 
 
 const initialState = {
@@ -14,6 +14,9 @@ const roomsSlice = createSlice({
         builder.addCase(getRooms.fulfilled, (state, action) => {
             state.rooms = action.payload
         });
+        builder.addCase(getOneRoom.fulfilled, (state, action)=>{
+            state.room = action.payload
+        })
         builder.addCase(addRooms.fulfilled, (state, action) => {
             state.rooms.push(action.payload)
             state.newRoom = action.payload

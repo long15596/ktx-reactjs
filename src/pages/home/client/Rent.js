@@ -3,19 +3,24 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {Link} from "react-router-dom";
 import {getRoomDevice} from "../../../services/roomDeviceService/roomDeviceService";
+import {getOneRoom} from "../../../services/roomsServices/RoomService";
 
 export default function Rent() {
     const dispatch = useDispatch();
     const {id} = useParams();
-    const roomDevice = useSelector(state => {
-        console.log(state)
-        return state
+    const room = useSelector(state => {
+        console.log(state.rooms.room)
+        return state.rooms.room
     })
-    const room = roomDevice.rooms.room
-    const devices = roomDevice.devices.devices
+    const devices = useSelector(state => {
+        console.log(state.roomsDevice.roomDevices)
+        return state.roomsDevice.roomDevices
+    })
     useEffect(() => {
+        dispatch(getOneRoom(id))
         dispatch(getRoomDevice(id))
     }, []);
+
     return (
         <>
             <div className="container">
@@ -57,7 +62,7 @@ export default function Rent() {
                                         <span>{room.description}</span>
                                         <br/>
                                         <span>Thiết bị: {devices.map(device => {
-                                            return (device.name + ", ")
+                                            return (device.device.name? device.device.name + ", ": "Không có thiết bị")
                                         })}</span>
                                         <hr className="m-0 pt-2 mt-2"/>
                                     </div>
