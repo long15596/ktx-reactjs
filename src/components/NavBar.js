@@ -39,12 +39,12 @@ export default function NavBar() {
                         currentUser.roles[0].authority === 'ROLE_ADMIN' ? (
                             <>
                                 <li className="nav-item active">
-                                    <Link className="nav-link" to={``}>Sinh Viên<span
+                                    <Link className="nav-link" to={`/admin`}>Sinh Viên<span
                                         className="sr-only">(current)</span></Link>
                                 </li>
-                                <li className="nav-item"><Link className="nav-link" to={`room`}>Phòng</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to={`invoice`}>Hóa Đơn</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to={`device`}>Thiết Bị</Link></li>
+                                <li className="nav-item"><Link className="nav-link" to={`/admin/room`}>Phòng</Link></li>
+                                <li className="nav-item"><Link className="nav-link" to={`/admin/invoice`}>Hóa Đơn</Link></li>
+                                <li className="nav-item"><Link className="nav-link" to={`/admin/device`}>Thiết Bị</Link></li>
                             </>
                         ) : (
                             <>

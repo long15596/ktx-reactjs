@@ -6,7 +6,7 @@ import './client.css'
 
 export default function ClientHome() {
     const dispatch = useDispatch();
-    const [visibleRooms, setVisibleRooms] = useState(6); // Số lượng phòng hiển thị ban đầu
+    const [visibleRooms, setVisibleRooms] = useState(6);
     const rooms = useSelector(state => state.rooms.rooms);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ export default function ClientHome() {
     }, []);
 
     const handleShowMore = () => {
-        setVisibleRooms(prev => prev + 6); // Khi nhấn nút Xem thêm, hiển thị thêm 6 phòng
+        setVisibleRooms(prev => prev + 6);
     };
 
     return (

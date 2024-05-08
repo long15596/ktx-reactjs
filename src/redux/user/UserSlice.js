@@ -1,5 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {editProfile, getProfile,logOut, login, setCheckShow} from "../../services/usersServices/UserService";
+import {
+    editProfile,
+    getProfile,
+    logOut,
+    login,
+    setCheckShow,
+    getAllUserByAdmin
+} from "../../services/usersServices/UserService";
 let localStorageUser = () => {
     if (JSON.parse(localStorage.getItem(`currentUser`))) {
         return JSON.parse(localStorage.getItem(`currentUser`))
@@ -31,6 +38,9 @@ const userSlice = createSlice({
         })
         builder.addCase(editProfile.fulfilled,(state,action)=>{
             state.profile = action.payload
+        })
+        builder.addCase(getAllUserByAdmin.fulfilled,(state,action)=>{
+            state.user = action.payload
         })
     }
 })
