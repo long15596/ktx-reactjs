@@ -16,6 +16,9 @@ export default function Rent() {
         console.log(state.roomsDevice.roomDevices)
         return state.roomsDevice.roomDevices
     })
+    const user = useSelector(state => {
+        return state.user.profile
+    })
     useEffect(() => {
         dispatch(getOneRoom(id))
         dispatch(getRoomDevice(id))
@@ -73,13 +76,21 @@ export default function Rent() {
                                     </div>
                                     <div className="col-lg-12 mt-3">
                                         <div className="row">
+                                            {user.gender === room.type ?
                                             <div className="col-lg-6 pb-2">
                                                 <Link className="btn btn-outline-danger w-100" to={"/"}>Không
                                                     thuê</Link>
+
                                             </div>
+                                                    :
+                                                    <Link className="btn btn-outline-danger w-100" to={"/"}>Không thể
+                                                thuê phòng dành cho {room.type}</Link>
+                                            }
+                                            {user.gender === room.type ?
                                             <div className="col-lg-6">
-                                                <Link to={""} className="btn btn-outline-success w-100">Thuê</Link>
+                                                 <Link to={""} className="btn btn-outline-success w-100">Thuê</Link>
                                             </div>
+                                                : ""}
                                         </div>
                                     </div>
                                 </div>
