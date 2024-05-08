@@ -48,7 +48,7 @@ export default function FireUpload({onUpload}) {
                 <div className="progress">
                     <div className="progress-bar" role="progressbar" style={{width: `${progress}%`}}
                          aria-valuenow={progress}
-                         aria-valuemin="0" aria-valuemax="100">${progress}%
+                         aria-valuemin="0" aria-valuemax="100">{progress}%
                     </div>
                 </div>
                 <div className="input-group mb-3 pt-2">
