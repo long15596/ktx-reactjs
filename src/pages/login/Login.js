@@ -84,16 +84,18 @@ export default function Login() {
                     <div className="row gy-3 overflow-hidden">
                         <div className="col-12">
                             <div className="form-floating mb-3">
+                                <label className={"mb-2"} htmlFor="username">Mã sinh viên</label>
                                 <Field type="text" className="form-control login-input" name="username" id="username"
                                        placeholder="Username" required/>
-                                <label htmlFor="username">Mã sinh viên</label>
+
                             </div>
                         </div>
                         <div className="col-12">
                             <div className="form-floating mb-3">
+                                <label className={"mb-2"} htmlFor="password">Mật khẩu</label>
                                 <Field type="password" className="form-control login-input" name="password"
                                        id="password" placeholder="Password" required/>
-                                <label htmlFor="password">Mật khẩu</label>
+
                             </div>
                         </div>
                         <div className="col-12">

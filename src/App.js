@@ -19,41 +19,42 @@ import ClientInvoice from "./pages/home/client/ClientInvoice";
 import Request from "./pages/home/client/Request";
 
 function App() {
-  return (
+    return (
 
-      <div className="container-fluid">
-          <div className="row">
-              <div className="col-12">
-                  <NavBar></NavBar>
-              </div>
-          </div>
-          <div className="row">
-              <div className="col-12">
-                  <Routes>
-                      <Route path={``} element={<Home/>}>
-                              <Route path={``} element={<ClientHome/>}></Route>
-                              <Route path={`profile`} element={<Profile/>}></Route>
-                              <Route path={`invoice`} element={<ClientInvoice/>}></Route>
-                              <Route path={`request`} element={<Request/>}></Route>
-                      </Route>
-                      <Route path={`admin`} element={<Admin/>}>
-                          <Route path={``} element={<ListUser/>}/>
-                          <Route path={`room`} element={<Room/>}>
-                              <Route path={``} element={<ListRoom/>}/>
-                              <Route path={`add/:id`} element={<AddRoom/>}/>
-                          </Route>
-                          <Route path={`invoice`} element={<ListInvoice/>}/>
-                          <Route path={`device`} element={<Device/>}>
-                              <Route path={``} element={<ListDevice/>}/>
-                              <Route path={`add`} element={<AddDevice/>}/>
-                              <Route path={`edit/:id`} element={<EditDevice/>}/>
-                          </Route>
-                      </Route>
-                  </Routes>
-              </div>
-          </div>
-      </div>
-  );
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-12">
+                    <NavBar></NavBar>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-12">
+                    <Routes>
+                        <Route path={``} element={<Home/>}>
+                            <Route path={``} element={<ClientHome/>}></Route>
+                            <Route path={`profile`} element={<Profile/>}></Route>
+                            <Route path={`invoice`} element={<ClientInvoice/>}></Route>
+                            <Route path={`request`} element={<Request/>}></Route>
+                        </Route>
+                        <Route path={`admin`} element={<Admin/>}>
+                            <Route path={``} element={<ListUser/>}/>
+                            <Route path={`room`} element={<Room/>}>
+                                <Route path={``} element={<ListRoom/>}/>
+                                <Route path={`add`} element={<AddRoom/>}/>
+                                <Route path={`edit`} element={<EditRoom/>}/>
+                            </Route>
+                            <Route path={`invoice`} element={<ListInvoice/>}/>
+                            <Route path={`device`} element={<Device/>}>
+                                <Route path={``} element={<ListDevice/>}/>
+                                <Route path={`add`} element={<AddDevice/>}/>
+                                <Route path={`edit/:id`} element={<EditDevice/>}/>
+                            </Route>
+                        </Route>
+                    </Routes>
+
+                </div>
+            </div>
+        </div>);
 }
 
 export default App;

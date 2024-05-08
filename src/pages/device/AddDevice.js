@@ -4,7 +4,7 @@ import a from "../room/img.png";
 import {Field, Form, Formik} from "formik";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
-import {addDevices} from "../../services/DiveceService";
+import {addDevices} from "../../services/devicesService/DiveceService";
 
 export default function AddDevice() {
     let dispatch = useDispatch()
