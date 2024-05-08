@@ -17,8 +17,7 @@ export default function ListRoom() {
                 <button className="btn btn-outline-primary m-2" onClick={() => {
                     let values = {}
                     dispatch(addRooms({values})).then(data => {
-                        console.log('new', data.payload)
-                        navigate(`add/${data.payload.id}`)
+                        navigate(`/admin/room/add/${data.payload.id}`)
                     })
                 }}>Thêm Mới
                 </button>

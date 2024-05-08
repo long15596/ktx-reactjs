@@ -8,7 +8,6 @@ import ListRoom from "./pages/room/ListRoom";
 import ListInvoice from "./pages/invoice/ListInvoice";
 import ListDevice from "./pages/device/ListDevice";
 import AddRoom from "./pages/room/AddRoom";
-import EditRoom from "./pages/room/EditRoom";
 import Room from "./pages/room/Room";
 import Device from "./pages/device/Device";
 import AddDevice from "./pages/device/AddDevice";
@@ -40,8 +39,7 @@ function App() {
                             <Route path={``} element={<ListUser/>}/>
                             <Route path={`room`} element={<Room/>}>
                                 <Route path={``} element={<ListRoom/>}/>
-                                <Route path={`add`} element={<AddRoom/>}/>
-                                <Route path={`edit`} element={<EditRoom/>}/>
+                                <Route path={`add/:id`} element={<AddRoom/>}/>
                             </Route>
                             <Route path={`invoice`} element={<ListInvoice/>}/>
                             <Route path={`device`} element={<Device/>}>
@@ -51,7 +49,6 @@ function App() {
                             </Route>
                         </Route>
                     </Routes>
-
                 </div>
             </div>
         </div>);

@@ -4,9 +4,9 @@ import {useEffect, useState} from "react";
 import {Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
-import {getDevices} from "../../services/DiveceService";
 import {editRooms, getRooms} from "../../services/roomsServices/RoomService";
-import {addRoomDevice} from "../../services/roomDeviceService/roomDeviceService";
+import {getDevices} from "../../services/devicesService/DiveceService";
+import {addRoomDevice, getRoomDevice} from "../../services/roomDeviceService/roomDeviceService";
 
 export default function AddRoom() {
     let {id} = useParams()
@@ -14,8 +14,6 @@ export default function AddRoom() {
     let navigate = useNavigate()
     let [url, setUrl] = useState('')
     let [listDevice, setListDevice] = useState([])
-    console.log(listDevice)
-    console.log(id)
     let room = useSelector(state => {
         if (id) {
             return state.rooms.rooms.find(room => room.id == id)
@@ -23,18 +21,21 @@ export default function AddRoom() {
             return state.rooms.newRoom
         }
     })
-    console.log(room)
     let devices = useSelector(state => {
         return state.devices.devices
     })
-    console.log(devices)
+    let roomDevices = useSelector(state => {
+        return state.roomsDevice.roomDevices
+    })
+    console.log(roomDevices)
     useEffect(() => {
         dispatch(getRooms())
         dispatch(getDevices())
+        dispatch(getRoomDevice({id: !id ? room.id : id}))
     }, [])
     let handleAdd = (values) => {
         values = {...values, img: url}
-        // dispatch(editRooms({id: values.id, values}))
+        dispatch(editRooms({id: values.id, values}))
         if (listDevice) {
             for (const item of listDevice) {
                 let data = {
@@ -45,11 +46,10 @@ export default function AddRoom() {
                         id: item
                     }
                 }
-                console.log(data)
-                // dispatch(addRoomDevice({values: data}))
+                dispatch(addRoomDevice({values: data}))
             }
         }
-        // navigate(`/admin/room`)
+        navigate(`/admin/room`)
     }
     return (
         <>
@@ -106,9 +106,9 @@ export default function AddRoom() {
                                                                        setListDevice([...listDevice, device.id])
                                                                        :
                                                                        setListDevice(listDevice.filter(id => id != device.id))
-                                                                   console.log(listDevice)
                                                                }}/>
-                                                        <label className="form-check-label" htmlFor={`checkbox-${device.id}`}>
+                                                        <label className="form-check-label"
+                                                               htmlFor={`checkbox-${device.id}`}>
                                                             {device.name}
                                                         </label>
                                                     </div>
