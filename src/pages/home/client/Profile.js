@@ -3,9 +3,7 @@ import {Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {editProfile, getProfile} from "../../../services/usersServices/UserService";
-import {FormSelect} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
-import a from "../../room/img.png";
 import FireUpload from "../../../components/FireUpload";
 
 export default function Profile() {
@@ -14,16 +12,17 @@ export default function Profile() {
     })
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    let [url, setUrl] = useState('')
+
     const user = useSelector(state => {
         return state.user.profile
     })
-    useEffect(() => {
+    let [url, setUrl] = useState(user.img)
+    useEffect( () => {
+
         dispatch(getProfile(currentUser.id))
-        setUrl(user.img)
     }, []);
     const handleEdit = async (values) => {
-        values = await {...values, img: url}
+        values = await {...values,img: url}
         await dispatch(editProfile({id: user.id, values}))
         await navigate("/")
     }
@@ -69,12 +68,13 @@ export default function Profile() {
                                     </div>
                                     <div className="form-group col-md-4">
                                         <label htmlFor="inputGender"> Giới tính</label>
-                                        <FormSelect name={"gender"} id="inputGender" className="form-control">
+                                        <Field as="select" name="gender" id="inputGender" className="form-control">
                                             <option selected>Lựa chọn</option>
-                                            <option>Nam</option>
-                                            <option>Nữ</option>
-                                            <option>Khác...</option>
-                                        </FormSelect>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Khác">Khác...</option>
+                                        </Field>
+
                                     </div>
                                     <div className="form-group col-md-2">
                                         <label htmlFor="inputClazz">Lớp?</label>
@@ -83,7 +83,7 @@ export default function Profile() {
                                 </div>
                             </div>
                             <div className="col-3 avatar-edit text-center">
-                                <img src={url !== undefined ? url : "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"} className={"avatar img-thumbnail"} alt="avatar"/>
+                                <img src={url !== undefined ? user.img : "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"} className={"avatar img-thumbnail"} alt="avatar"/>
                                 <FireUpload onUpload={(onUpload) => {
                                     setUrl(onUpload)
                                 }}></FireUpload>

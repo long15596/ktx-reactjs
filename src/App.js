@@ -16,6 +16,7 @@ import ClientHome from "./pages/home/client/ClientHome";
 import Profile from "./pages/home/client/Profile";
 import ClientInvoice from "./pages/home/client/ClientInvoice";
 import Request from "./pages/home/client/Request";
+import Rent from "./pages/home/client/Rent";
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
                             <Route path={`profile`} element={<Profile/>}></Route>
                             <Route path={`invoice`} element={<ClientInvoice/>}></Route>
                             <Route path={`request`} element={<Request/>}></Route>
+                            <Route path={`rent/:id`} element={<Rent/>}></Route>
                         </Route>
                         <Route path={`admin`} element={<Admin/>}>
                             <Route path={``} element={<ListUser/>}/>

@@ -1,18 +1,18 @@
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
-import {addProfile, editProfile, setCheckShow,} from "../../../services/usersServices/UserService";
+import {useEffect, useState} from "react";
+import {addProfile} from "../../../services/usersServices/UserService";
 import {Field, Form, Formik} from "formik";
-import {FormSelect} from "react-bootstrap";
-import a from "../../room/img.png";
 import FireUpload from "../../../components/FireUpload";
 import Swal from "sweetalert2";
+import {getRooms} from "../../../services/roomsServices/RoomService";
 
 export default function Request() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     let [url, setUrl] = useState('')
+    let [gender, setGender] = useState('')
     const Toast = Swal.mixin({
         toast: true,
         position: 'top',
@@ -24,7 +24,10 @@ export default function Request() {
         timer: 1500,
         timerProgressBar: true,
     });
-
+    const rooms = useSelector(state => state.rooms.rooms);
+    useEffect(() => {
+        dispatch(getRooms());
+    }, []);
     const showError = (errorMessage) => {
         Toast.fire({
             icon: 'error',
@@ -40,7 +43,7 @@ export default function Request() {
     };
 
     const handleAdd = async (values) => {
-        values = await {...values, img: url}
+        values = await {...values,gender: gender, img: url}
 
         if (values.username === '') {
             showError('Không được để trống mã sinh viên');
@@ -79,7 +82,7 @@ export default function Request() {
                         address: '',
                         clazz: '',
                         phone: '',
-                        gender: '',
+                        gender: gender,
                         img: url
                     }}>
                     <Form className={"mt-3"}>
@@ -116,19 +119,33 @@ export default function Request() {
                                         <Field type="text" name={"phone"} className="form-control" id="inputPhone"/>
                                     </div>
                                     <div className="form-group col-md-4">
-                                        <label htmlFor="inputGender"> Giới tính</label>
-                                        <FormSelect name={"gender"} id="inputGender" className="form-control">
-                                            <option selected>Lựa chọn</option>
-                                            <option>Nam</option>
-                                            <option>Nữ</option>
-                                            <option>Khác...</option>
-                                        </FormSelect>
+                                        <label htmlFor="inputGender" > Giới tính</label>
+                                        <select onChange={(event)=>{
+                                           setGender(event.target.value)
+                                        }} name={"gender"} id="inputGender" className="form-control">
+                                            <option >Lựa chọn</option>
+                                            <option value={"Nam"}>Nam</option>
+                                            <option value={"Nữ"}>Nữ</option>
+                                            <option value="Khác">Khác...</option>
+                                        </select>
                                     </div>
                                     <div className="form-group col-md-2">
                                         <label htmlFor="inputClazz">Lớp?</label>
                                         <Field type="text" name={"clazz"} className="form-control" id="inputClazz"/>
                                     </div>
 
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="inputRoom"> Danh sách các phòng phù hợp</label>
+                                    <select name={"room"} id="inputRoom" className="form-control">
+                                        <option selected>Lựa chọn</option>
+                                        {rooms.map(room=>{
+                                            if(room.type === gender && (room.maxCurrent - room.currentPresent) >0){
+                                                console.log(room)
+                                                return (<option value={room.id}>{room.name}</option>)
+                                            }
+                                        })}
+                                    </select>
                                 </div>
                             </div>
                             <div className="col-3 avatar-edit text-center">
@@ -139,6 +156,7 @@ export default function Request() {
                                     setUrl(onUpload)
                                 }}></FireUpload>
                             </div>
+
 
                         </div>
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Đăng Ký</button>
