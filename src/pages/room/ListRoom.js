@@ -2,7 +2,8 @@ import a from './img.png'
 import './ListRoom.css'
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addRooms} from "../../services/roomsServices/RoomService";
+import {addRooms, getRooms} from "../../services/roomsServices/RoomService";
+import {useEffect} from "react";
 
 export default function ListRoom() {
     let dispatch = useDispatch()
@@ -10,6 +11,14 @@ export default function ListRoom() {
     let rooms = useSelector(state => {
         return state.rooms.rooms
     })
+    useEffect(() => {
+        dispatch(getRooms())
+    }, []);
+
+    let handleCreateBill = (id) => {
+        navigate(`/admin/room/create-bill/${id}`)
+    }
+
     return (
         <>
             <div className={`d-flex align-items-center`}>
@@ -52,11 +61,20 @@ export default function ListRoom() {
                                     <td>{room.price}</td>
                                     <td>{room.type}</td>
                                     <td>
-                                        <Link to={`add/${room.id}`} className="btn btn-outline-success" type="submit">Sửa</Link>
+                                        <Link to={`add/${room.id}`} className="btn btn-outline-success"
+                                              type="submit">Sửa</Link>
                                     </td>
-                                    <td>
-                                        <button className="btn btn-outline-danger" type="submit">Tạo hóa đơn</button>
-                                    </td>
+                                    {
+                                        room.currentPresent != 0 ? <td>
+                                                <button className="btn btn-outline-primary" type="submit" onClick={() => {
+                                                    handleCreateBill(room.id)
+                                                }}>Tạo hóa đơn
+                                                </button>
+
+                                            </td> :
+                                            <td></td>
+                                    }
+
                                 </tr>
                             </>
                         ))
