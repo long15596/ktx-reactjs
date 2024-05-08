@@ -8,7 +8,6 @@ import ListRoom from "./pages/room/ListRoom";
 import ListInvoice from "./pages/invoice/ListInvoice";
 import ListDevice from "./pages/device/ListDevice";
 import AddRoom from "./pages/room/AddRoom";
-import EditRoom from "./pages/room/EditRoom";
 import Room from "./pages/room/Room";
 import Device from "./pages/device/Device";
 import AddDevice from "./pages/device/AddDevice";
@@ -17,6 +16,7 @@ import ClientHome from "./pages/home/client/ClientHome";
 import Profile from "./pages/home/client/Profile";
 import ClientInvoice from "./pages/home/client/ClientInvoice";
 import Request from "./pages/home/client/Request";
+import Rent from "./pages/home/client/Rent";
 
 function App() {
     return (
@@ -35,13 +35,13 @@ function App() {
                             <Route path={`profile`} element={<Profile/>}></Route>
                             <Route path={`invoice`} element={<ClientInvoice/>}></Route>
                             <Route path={`request`} element={<Request/>}></Route>
+                            <Route path={`rent/:id`} element={<Rent/>}></Route>
                         </Route>
                         <Route path={`admin`} element={<Admin/>}>
                             <Route path={``} element={<ListUser/>}/>
                             <Route path={`room`} element={<Room/>}>
                                 <Route path={``} element={<ListRoom/>}/>
-                                <Route path={`add`} element={<AddRoom/>}/>
-                                <Route path={`edit`} element={<EditRoom/>}/>
+                                <Route path={`add/:id`} element={<AddRoom/>}/>
                             </Route>
                             <Route path={`invoice`} element={<ListInvoice/>}/>
                             <Route path={`device`} element={<Device/>}>
@@ -51,7 +51,6 @@ function App() {
                             </Route>
                         </Route>
                     </Routes>
-
                 </div>
             </div>
         </div>);

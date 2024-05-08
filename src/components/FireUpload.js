@@ -25,6 +25,10 @@ export default function FireUpload({onUpload}) {
     }
 
     let handleClick = async () => {
+        if (!file) {
+            alert("Vui lòng chọn một tệp để tải lên.");
+            return;
+        }
         let storageRef = ref(storage, `files/${file.name}`)
         let uploadTask = uploadBytesResumable(storageRef, file)
         await new Promise((resolve, reject) => {
@@ -48,7 +52,7 @@ export default function FireUpload({onUpload}) {
                 <div className="progress">
                     <div className="progress-bar" role="progressbar" style={{width: `${progress}%`}}
                          aria-valuenow={progress}
-                         aria-valuemin="0" aria-valuemax="100">${progress}%
+                         aria-valuemin="0" aria-valuemax="100">{progress}%
                     </div>
                 </div>
                 <div className="input-group mb-3 pt-2">

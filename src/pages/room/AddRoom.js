@@ -3,34 +3,59 @@ import FireUpload from "../../components/FireUpload";
 import {useEffect, useState} from "react";
 import {Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router";
+import {useNavigate, useParams} from "react-router";
+import {editRooms, getRooms} from "../../services/roomsServices/RoomService";
 import {getDevices} from "../../services/devicesService/DiveceService";
+import {addRoomDevice, getRoomDevice} from "../../services/roomDeviceService/roomDeviceService";
 
 export default function AddRoom() {
+    let {id} = useParams()
     let dispatch = useDispatch()
     let navigate = useNavigate()
     let [url, setUrl] = useState('')
+    let [listDevice, setListDevice] = useState([])
+    let room = useSelector(state => {
+        if (id) {
+            return state.rooms.rooms.find(room => room.id == id)
+        } else {
+            return state.rooms.newRoom
+        }
+    })
     let devices = useSelector(state => {
         return state.devices.devices
     })
-    console.log(devices)
+    let roomDevices = useSelector(state => {
+        return state.roomsDevice.roomDevices
+    })
+    console.log(roomDevices)
     useEffect(() => {
+        dispatch(getRooms())
         dispatch(getDevices())
+        dispatch(getRoomDevice({id: !id ? room.id : id}))
     }, [])
     let handleAdd = (values) => {
-
+        values = {...values, img: url}
+        dispatch(editRooms({id: values.id, values}))
+        if (listDevice) {
+            for (const item of listDevice) {
+                let data = {
+                    room: {
+                        id: values.id
+                    },
+                    device: {
+                        id: item
+                    }
+                }
+                dispatch(addRoomDevice({values: data}))
+            }
+        }
+        navigate(`/admin/room`)
     }
     return (
         <>
-            <Formik initialValues={{
-                name: "",
-                maxCurrent: "",
-                description: "",
-                price: "",
-                type: "",
-            }} onSubmit={values => {
+            <Formik initialValues={room} onSubmit={values => {
                 handleAdd(values)
-            }}>
+            }} enableReinitialize={true}>
                 <Form>
                     <h2>Thêm Phòng Mới</h2>
                     <div className="row justify-content-center pt-2">
@@ -71,15 +96,23 @@ export default function AddRoom() {
                                     <div className="form-check">
                                         {
                                             devices ?
-                                            devices.map(device => (
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" value={device.id}
-                                                           id="defaultCheck1"/>
-                                                    <label className="form-check-label" htmlFor="defaultCheck1">
-                                                        {device.name}
-                                                    </label>
-                                                </div>
-                                            ))
+                                                devices.map(device => (
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" type="checkbox"
+                                                               value={device.id}
+                                                               id="defaultCheck1"
+                                                               onChange={(event) => {
+                                                                   event.target.checked ?
+                                                                       setListDevice([...listDevice, device.id])
+                                                                       :
+                                                                       setListDevice(listDevice.filter(id => id != device.id))
+                                                               }}/>
+                                                        <label className="form-check-label"
+                                                               htmlFor={`checkbox-${device.id}`}>
+                                                            {device.name}
+                                                        </label>
+                                                    </div>
+                                                ))
                                                 :
                                                 <>
                                                     <p>Tải Dữ Liệu </p>

@@ -25,7 +25,7 @@ export default function NavBar() {
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: '#e3f2fd'}}>
-                <Link to={``} className="navbar-brand">
+                <Link to={currentUser && currentUser.roles[0].authority === "ROLE_ADMIN" ? "admin" : ''} className="navbar-brand">
                     <img src={logo} width="50" height="50" className="d-inline-block align-top" alt=""/>
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
