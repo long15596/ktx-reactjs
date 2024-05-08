@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import a from "../room/img.png";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {getDevices} from "../../services/DiveceService";
+import {getDevices} from "../../services/devicesService/DiveceService";
 import {useNavigate} from "react-router";
 
 export default function ListDevice(){

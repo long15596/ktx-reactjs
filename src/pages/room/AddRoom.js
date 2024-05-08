@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
-import {getDevices} from "../../services/DiveceService";
+import {getDevices} from "../../services/devicesService/DiveceService";
 
 export default function AddRoom() {
     let dispatch = useDispatch()

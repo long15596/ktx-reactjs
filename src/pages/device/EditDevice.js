@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {editDevice, getDevices} from "../../services/DiveceService";
+import {editDevice, getDevices} from "../../services/devicesService/DiveceService";
 import a from "../room/img.png";
 import FireUpload from "../../components/FireUpload";
 import {Field, Form, Formik} from "formik";

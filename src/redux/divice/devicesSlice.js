@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addDevices, editDevice, getDevices} from "../../services/DiveceService";
+import {addDevices, editDevice, getDevices} from "../../services/devicesService/DiveceService";
 
 const initialState = {
     devices : []
