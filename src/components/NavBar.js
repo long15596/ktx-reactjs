@@ -38,13 +38,16 @@ export default function NavBar() {
                         {currentUser &&
                         currentUser.roles[0].authority === 'ROLE_ADMIN' ? (
                             <>
-                                <li className="nav-item active">
+                                <li className={`nav-item ${location.pathname === '/admin' ? 'active' : ''}`}>
                                     <Link className="nav-link" to={`/admin`}>Sinh Viên<span
                                         className="sr-only">(current)</span></Link>
                                 </li>
-                                <li className="nav-item"><Link className="nav-link" to={`/admin/room`}>Phòng</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to={`/admin/invoice`}>Hóa Đơn</Link></li>
-                                <li className="nav-item"><Link className="nav-link" to={`/admin/device`}>Thiết Bị</Link></li>
+                                <li className={`nav-item ${location.pathname === '/admin/room' ? 'active' : ''}`}>
+                                    <Link className="nav-link" to={`/admin/room`}>Phòng</Link></li>
+                                <li className={`nav-item ${location.pathname === '/admin/invoice' ? 'active' : ''}`}>
+                                    <Link className="nav-link" to={`/admin/invoice`}>Hóa Đơn</Link></li>
+                                <li className={`nav-item ${location.pathname === '/admin/device' ? 'active' : ''}`}>
+                                    <Link className="nav-link" to={`/admin/device`}>Thiết Bị</Link></li>
                             </>
                         ): (
                             <>
