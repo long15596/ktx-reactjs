@@ -8,6 +8,7 @@ export const getRooms = createAsyncThunk(
         return res.data
     }
 )
+
 export const addRooms = createAsyncThunk(
     "rooms/addRooms",
     async ({values}) => {

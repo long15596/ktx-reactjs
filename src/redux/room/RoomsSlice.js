@@ -4,6 +4,7 @@ import {addRooms, editRooms, getRooms} from "../../services/roomsServices/RoomSe
 
 const initialState = {
     rooms: [],
+    room:{},
     newRoom: {}
 }
 const roomsSlice = createSlice({
@@ -21,6 +22,7 @@ const roomsSlice = createSlice({
             let index = state.rooms.findIndex(room => room.id == action.payload.id)
             if (index != -1) state.rooms[index] = action.payload
         })
+
     }
 })
 export default roomsSlice.reducer;
