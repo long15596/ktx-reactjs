@@ -83,7 +83,7 @@ export default function Rent() {
 
                                             </div>
                                                     :
-                                                    <Link className="btn btn-outline-danger w-100" to={"/"}>Không thể
+                                                    <Link className="btn btn-outline-danger w-100 ml-4 mr-4" to={"/"}>Không thể
                                                 thuê phòng dành cho {room.type}</Link>
                                             }
                                             {user.gender === room.type ?
