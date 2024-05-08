@@ -8,7 +8,6 @@ export default function ListRoom() {
     let rooms = useSelector(state => {
         return state.rooms.rooms
     })
-    console.log(rooms)
     return (
         <>
             <div className={`d-flex align-items-center`}>
