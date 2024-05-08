@@ -55,7 +55,7 @@ export default function ListRoom() {
                                         <Link to={`add/${room.id}`} className="btn btn-outline-success" type="submit">Sửa</Link>
                                     </td>
                                     <td>
-                                        <button className="btn btn-outline-danger" type="submit">Xóa</button>
+                                        <button className="btn btn-outline-danger" type="submit">Tạo hóa đơn</button>
                                     </td>
                                 </tr>
                             </>
