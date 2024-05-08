@@ -34,6 +34,13 @@ export const editProfile = createAsyncThunk(
         return res.data
     }
 )
+export const addProfile = createAsyncThunk(
+    "user/addProfile",
+    async ({values})=>{
+        const res = await  customAxios.post(`register`,values)
+        return res.data
+    }
+)
 export const getAllUserByAdmin = createAsyncThunk(
     "user/getAllUserByAdmin",
     async ()=>{

@@ -1,25 +1,34 @@
 import './client.css'
 import {Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {editProfile, getProfile} from "../../../services/usersServices/UserService";
 import {FormSelect} from "react-bootstrap";
-import {useParams} from "react-router";
+import {useNavigate} from "react-router-dom";
+import a from "../../room/img.png";
+import FireUpload from "../../../components/FireUpload";
+
 export default function Profile() {
     const currentUser = useSelector(state => {
         return state.user.currentUser
     })
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    let [url, setUrl] = useState('')
     const user = useSelector(state => {
-        console.log(state.user.profile)
         return state.user.profile
     })
     useEffect(() => {
         dispatch(getProfile(currentUser.id))
+        setUrl(user.img)
     }, []);
-    const handleEdit = async (values)=>{
-      await dispatch(editProfile({id:user.id, values}))
+    const handleEdit = async (values) => {
+        values = await {...values, img: url}
+        await dispatch(editProfile({id: user.id, values}))
+        await navigate("/")
     }
+
+
     return (
         <>
             <div className="container">
@@ -39,15 +48,18 @@ export default function Profile() {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="inputAddress">Địa Chỉ</label>
-                                    <Field type="text" name={"address"} className="form-control" id="inputAddress" placeholder="Hà Nội..."/>
+                                    <Field type="text" name={"address"} className="form-control" id="inputAddress"
+                                           placeholder="Hà Nội..."/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="inputBirthDay">Ngày Sinh</label>
-                                    <Field type="date" name={"dateOfBirth"} className="form-control" id="inputBirthDay"/>
+                                    <Field type="date" name={"dateOfBirth"} className="form-control"
+                                           id="inputBirthDay"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="inputIdentityID">Số CCCD</label>
-                                    <Field type="text" name={"identificationCard"} className="form-control" id="inputIdentityID"
+                                    <Field type="text" name={"identificationCard"} className="form-control"
+                                           id="inputIdentityID"
                                            placeholder="00123456789..."/>
                                 </div>
                                 <div className="form-row">
@@ -71,9 +83,10 @@ export default function Profile() {
                                 </div>
                             </div>
                             <div className="col-3 avatar-edit text-center">
-                                <img src={user.img} className={"avatar img-circle img-thumbnail"} alt="avatar"/>
-                                <h6>Upload a different photo...</h6>
-                                <Field type="text" name={"img"} className="text-center center-block file-upload"/>
+                                <img src={url !== undefined ? url : "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"} className={"avatar img-thumbnail"} alt="avatar"/>
+                                <FireUpload onUpload={(onUpload) => {
+                                    setUrl(onUpload)
+                                }}></FireUpload>
                             </div>
 
                         </div>

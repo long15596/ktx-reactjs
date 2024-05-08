@@ -5,7 +5,8 @@ import {
     logOut,
     login,
     setCheckShow,
-    getAllUserByAdmin
+    getAllUserByAdmin,
+    addProfile
 } from "../../services/usersServices/UserService";
 let localStorageUser = () => {
     if (JSON.parse(localStorage.getItem(`currentUser`))) {
@@ -41,6 +42,9 @@ const userSlice = createSlice({
         })
         builder.addCase(getAllUserByAdmin.fulfilled,(state,action)=>{
             state.user = action.payload
+        })
+        builder.addCase(addProfile.fulfilled, (state,action)=>{
+            state.user.push(action.payload)
         })
     }
 })
