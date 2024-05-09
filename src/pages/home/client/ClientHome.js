@@ -39,7 +39,7 @@ export default function ClientHome() {
                                             <div className="card-body">
                                                 <h5 className="card-title">{room.name}</h5>
                                                 <p className="card-text">Số người: {room.currentPresent}/{room.maxCurrent}</p>
-                                                <p className="card-text">Kiểu: {room.type}</p>
+                                                <p className="card-text">Kiểu phòng: Dành cho {room.type}</p>
                                                 <p className="card-text">Mô tả: {room.description}</p>
                                                 <p className="card-text">Giá: {room.price}</p>
                                                 <div className={'d-flex justify-content-end'}>

@@ -1,9 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addRooms, editRooms, getRooms} from "../../services/roomsServices/RoomService";
+import {addRooms, editRooms, getOneRoom, getRooms} from "../../services/roomsServices/RoomService";
 
 
 const initialState = {
     rooms: [],
+    room:{},
     newRoom: {}
 }
 const roomsSlice = createSlice({
@@ -13,6 +14,9 @@ const roomsSlice = createSlice({
         builder.addCase(getRooms.fulfilled, (state, action) => {
             state.rooms = action.payload
         });
+        builder.addCase(getOneRoom.fulfilled, (state, action)=>{
+            state.room = action.payload
+        })
         builder.addCase(addRooms.fulfilled, (state, action) => {
             state.rooms.push(action.payload)
             state.newRoom = action.payload
@@ -21,6 +25,7 @@ const roomsSlice = createSlice({
             let index = state.rooms.findIndex(room => room.id == action.payload.id)
             if (index != -1) state.rooms[index] = action.payload
         })
+
     }
 })
 export default roomsSlice.reducer;

@@ -8,6 +8,14 @@ export const getRooms = createAsyncThunk(
         return res.data
     }
 )
+export const getOneRoom = createAsyncThunk(
+    "rooms/getOneRoom",
+    async (id) => {
+        const res = await customAxios.get(`rooms/${id}`)
+        console.log(res)
+        return res.data
+    }
+)
 export const addRooms = createAsyncThunk(
     "rooms/addRooms",
     async ({values}) => {
