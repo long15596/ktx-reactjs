@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getInvoice} from "../../services/invoicesService/InvoiceService";
+import {addInvoice, getInvoice} from "../../services/invoicesService/InvoiceService";
 
 
 const initialState = {
@@ -11,6 +11,9 @@ const invoicesSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(getInvoice.fulfilled, (state, action) => {
             state.invoices = action.payload
+        });
+        builder.addCase(addInvoice.fulfilled, (state, action) => {
+            state.invoices.push(action.payload)
         });
     }
 })

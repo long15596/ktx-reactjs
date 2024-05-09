@@ -1,27 +1,60 @@
 import {Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
+import {useEffect} from "react";
+import {getAllUserRooms} from "../../services/userRoomsService/UserRoomService";
+import {addInvoice} from "../../services/invoicesService/InvoiceService";
 
 export default function CreateBillRoom() {
-    let {id} = useParams()
+    let {id} = useParams();
     let dispatch = useDispatch();
-    // let room = useSelector(state => {
-    //     return state.
-    // })
+    let userRooms = useSelector(state => {
+        if (id == undefined) {
+            return [];
+        }
+        return state.userRooms.userRooms.filter((userRoom) => {
+            if (userRoom.room) {
+                return userRoom.room.id == id
+            } else {
+                return false
+            }
+        })
+    })
+    useEffect(() => {
+        dispatch(getAllUserRooms())
+    }, []);
     let handleCreate = (values) => {
-        let totalElectric = values.electricityBill * 1.678;
+        let totalElectric = values.electricityBill * 1678;
         let totalWater = 0;
         if (values.waterBill <= 10) {
-            totalWater = values.waterBill * 5.973;
+            totalWater = values.waterBill * 5973;
         } else if (values.waterBill <= 20) {
-            totalWater = 10 * 5.973 + (values.waterBill - 10) * 7.052;
+            totalWater = 10 * 5973 + (values.waterBill - 10) * 7052;
         } else if (values.waterBill <= 30) {
-            totalWater = 10 * 5.973 + 10 * 7.052 + (values.waterBill - 20) * 8.669;
+            totalWater = 10 * 5973 + 10 * 7052 + (values.waterBill - 20) * 8669;
         } else {
-            totalWater = 10 * 5.973 + 10 * 7.052 + 10 * 8.669 + (values.waterBill - 30) * 15.929;
+            totalWater = 10 * 5973 + 10 * 7052 + 10 * 8669 + (values.waterBill - 30) * 15929;
         }
         let totalService = values.serviceBill;
-        let totalCost = totalElectric + totalWater + totalService
+        if (userRooms.length > 0) {
+            let totalCost = (totalElectric + totalWater + totalService) / userRooms[0].room.currentPresent;
+            let totalAll = totalCost + userRooms[0].room.price;
+            userRooms.map((i) => {
+                dispatch(addInvoice({value:{
+                    room: {
+                        id: i.room.id
+                    },
+                    user: {
+                        id: i.user.id
+                    },
+                    useElectricity: totalElectric,
+                    useWater: totalWater,
+                    servicePrice: totalService,
+                    price: totalAll
+                }
+                }));
+            });
+        }
     };
 
     return (

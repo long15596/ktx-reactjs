@@ -4,6 +4,7 @@ import deviceReducer from "./device/devicesSlice";
 import userReducer from "./user/UserSlice";
 import invoiceReducer from "./invoice/InvoicesSlice";
 import roomDeviceReducer from "./roomDevice/roomDeviceSlice";
+import userRoomReducer from "./userRoom/UserRoomSlice";
 
 export let store = configureStore({
     reducer:{
@@ -11,6 +12,7 @@ export let store = configureStore({
         rooms: roomReducer,
         devices: deviceReducer,
         user:userReducer,
-        roomsDevice: roomDeviceReducer
+        roomsDevice: roomDeviceReducer,
+        userRooms:userRoomReducer
     },
 })
