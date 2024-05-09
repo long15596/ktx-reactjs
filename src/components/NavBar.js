@@ -11,21 +11,19 @@ export default function NavBar() {
     const navigate = useNavigate();
     const checkShow = useSelector(state => state.user.checkShow);
     const currentUser = useSelector(state => state.user.currentUser);
-
     const handleLoginClick = () => {
         dispatch(setCheckShow(true));
     };
-
     const handleLogoutClick = () => {
         localStorage.clear();
         dispatch(logOut());
         navigate('/');
     };
-
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: '#e3f2fd'}}>
-                <Link to={currentUser && currentUser.roles[0].authority === "ROLE_ADMIN" ? "admin" : ''} className="navbar-brand">
+                <Link to={currentUser && currentUser.roles[0].authority === "ROLE_ADMIN" ? "admin" : ''}
+                      className="navbar-brand">
                     <img src={logo} width="50" height="50" className="d-inline-block align-top" alt=""/>
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -49,7 +47,7 @@ export default function NavBar() {
                                 <li className={`nav-item ${location.pathname === '/admin/device' ? 'active' : ''}`}>
                                     <Link className="nav-link" to={`/admin/device`}>Thiết Bị</Link></li>
                             </>
-                        ): (
+                        ) : (
                             <>
                                 <li className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
                                     <Link className="nav-link" to={``}>Trang chủ<span
@@ -65,11 +63,11 @@ export default function NavBar() {
                                             <Link className="nav-link" to={`invoice`}>Hóa Đơn</Link>
                                         </li>
                                     </>
-                                ):(
-                                        <li className={`nav-item ${location.pathname === '/request' ? 'active' : ''}`}>
-                                            <Link className="nav-link" to={`request`}>Yêu cầu thuê phòng</Link>
-                                        </li>
-                                    )}
+                                ) : (
+                                    <li className={`nav-item ${location.pathname === '/request' ? 'active' : ''}`}>
+                                        <Link className="nav-link" to={`request`}>Yêu cầu thuê phòng</Link>
+                                    </li>
+                                )}
                             </>
                         )}
                     </ul>

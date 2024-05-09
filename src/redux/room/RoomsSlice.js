@@ -24,6 +24,7 @@ const roomsSlice = createSlice({
         builder.addCase(editRooms.fulfilled, (state, action) => {
             let index = state.rooms.findIndex(room => room.id == action.payload.id)
             if (index != -1) state.rooms[index] = action.payload
+            state.newRoom = {}
         })
 
     }

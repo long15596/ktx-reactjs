@@ -20,7 +20,6 @@ import Rent from "./pages/home/client/Rent";
 
 function App() {
     return (
-
         <div className="container-fluid">
             <div className="row">
                 <div className="col-12">

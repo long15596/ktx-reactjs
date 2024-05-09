@@ -27,13 +27,16 @@ export default function AddRoom() {
     let roomDevices = useSelector(state => {
         return state.roomsDevice.roomDevices
     })
-    console.log(roomDevices)
     useEffect(() => {
         dispatch(getRooms())
         dispatch(getDevices())
         dispatch(getRoomDevice({id: !id ? room.id : id}))
     }, [])
     let handleAdd = (values) => {
+        if (!values.name || !values.maxCurrent || !values.description || !values.type || !values.price) {
+            alert('Xin hãy điền đầy đủ thông tin')
+            return;
+        }
         values = {...values, img: url}
         dispatch(editRooms({id: values.id, values}))
         if (listDevice) {
@@ -51,6 +54,7 @@ export default function AddRoom() {
         }
         navigate(`/admin/room`)
     }
+    console.log(room)
     return (
         <>
             <Formik initialValues={room} onSubmit={values => {

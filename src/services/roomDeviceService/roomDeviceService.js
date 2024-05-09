@@ -2,7 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import customAxios from "../api";
 export const getRoomDevice = createAsyncThunk(
     "roomDevices/getRoomDevice",
-    async (id) => {
+    async ({id}) => {
         const res = await customAxios.get(`rooms-device?id=${id}`)
         return res.data
     }
