@@ -4,11 +4,14 @@ import {useParams} from "react-router";
 import {useEffect} from "react";
 import {getAllUserRooms} from "../../services/userRoomsService/userRoomService";
 import {addInvoice} from "../../services/invoicesService/InvoiceService";
+import {useNavigate} from "react-router-dom";
 
 export default function CreateBillRoom() {
     let {id} = useParams();
     let dispatch = useDispatch();
+    let navigate = useNavigate();
     let userRooms = useSelector(state => {
+        console.log(state)
         if (id == undefined) {
             return [];
         }
@@ -20,12 +23,10 @@ export default function CreateBillRoom() {
             }
         })
     })
-    console.log(userRooms)
     useEffect(() => {
         dispatch(getAllUserRooms())
     }, []);
     let handleCreate = (values) => {
-        console.log(values)
         let totalElectric = values.electricityBill * 1678;
         let totalWater = 0;
         if (values.waterBill <= 10) {
@@ -38,9 +39,12 @@ export default function CreateBillRoom() {
             totalWater = 10 * 5973 + 10 * 7052 + 10 * 8669 + (values.waterBill - 30) * 15929;
         }
         let totalService = values.serviceBill;
+        console.log(userRooms)
         if (userRooms.length > 0) {
             let totalCost = (totalElectric + totalWater + totalService) / userRooms[0].room.currentPresent;
+            console.log(userRooms[0].room)
             let totalAll = totalCost + userRooms[0].room.price;
+            console.log(totalCost, userRooms[0].room.price )
             userRooms.map((i) => {
                 dispatch(addInvoice({value:{
                     room: {
@@ -54,8 +58,9 @@ export default function CreateBillRoom() {
                     servicePrice: totalService,
                     price: totalAll
                 }
-                }));
+                }))
             });
+            // navigate("/admin/room")
         }
     };
 

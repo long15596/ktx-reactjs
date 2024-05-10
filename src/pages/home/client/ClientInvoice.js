@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {getUserRoomByUserId} from "../../../services/userRoomServices/userRoomService";
-
 export default function ClientInvoice() {
     let {id} = useParams()
     const dispatch = useDispatch();
@@ -135,10 +134,10 @@ export default function ClientInvoice() {
                                         <hr/>
                                         <div className="row">
                                             <div className="col-4">
-                                                <b>Số Người Tối Đa:</b>
+                                                <b>Thời Hạn:</b>
                                             </div>
                                             <div className="col-8">
-                                                <p>{userRoom[0].room.maxCurrent}</p>
+                                                <p>{userRoom[0].startDate} - {userRoom[0].endDate}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -149,7 +148,7 @@ export default function ClientInvoice() {
                 </>
                 :
                 <>
-                    <p>Tải Dữ Liệu </p>
+                    <p>Chưa Thuê Phòng  </p>
                 </>}
 
         </>

@@ -63,7 +63,6 @@ export default function AddRoom() {
                 handleAdd(values)
             }} enableReinitialize={true}>
                 <Form>
-                    <h2>Thêm Phòng Mới</h2>
                     <div className="row justify-content-center pt-2">
                         <div className="col-6">
                             <div className="form-group row">
@@ -147,7 +146,7 @@ export default function AddRoom() {
                             }}></FireUpload>
                             <div className="form-group row pt-2">
                                 <div className="col-sm-10">
-                                    <button type="submit" className="btn btn-primary">Thêm</button>
+                                    <button type="submit" className="btn btn-primary">Xác Nhận</button>
                                 </div>
                             </div>
                         </div>
