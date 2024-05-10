@@ -1,4 +1,4 @@
-import a from './img.png'
+import a from '../../components/Logo Đại Học Giao Thông Vận Tải - UTC.svg'
 import FireUpload from "../../components/FireUpload";
 import {useEffect, useState} from "react";
 import {Field, Form, Formik} from "formik";
@@ -25,10 +25,6 @@ export default function AddRoom() {
     let devices = useSelector(state => {
         return state.devices.devices
     })
-    let roomDevices = useSelector(state => {
-        return state.roomDevices.roomDevices
-    })
-    console.log(roomDevices)
     useEffect(() => {
         dispatch(getRooms())
         dispatch(getDevices())
@@ -37,25 +33,28 @@ export default function AddRoom() {
     let handleAdd = (values) => {
         if (!values.name || !values.maxCurrent || !values.description || !values.type || !values.price) {
             alert('Xin hãy điền đầy đủ thông tin')
-            return;
+            return  ;
         }
-        values = {...values, img: url}
-        dispatch(editRooms({id: values.id, values}))
-        if (listDevice) {
-            for (const item of listDevice) {
-                let data = {
-                    room: {
-                        id: values.id
-                    },
-                    device: {
-                        id: item
+        else {
+            values = {...values, img: url}
+            dispatch(editRooms({id: values.id, values}))
+            if (listDevice) {
+                for (const item of listDevice) {
+                    let data = {
+                        room: {
+                            id: values.id
+                        },
+                        device: {
+                            id: item
+                        }
                     }
+                    dispatch(addRoomDevice({values: data}))
                 }
-                dispatch(addRoomDevice({values: data}))
             }
+            navigate(`/admin/room`)
         }
-        navigate(`/admin/room`)
     }
+
     return (
         <>
             <Formik initialValues={room} onSubmit={values => {
@@ -129,8 +128,8 @@ export default function AddRoom() {
                         </div>
                         <div className="col-6">
                             <div className={`d-flex justify-content-center`}>
-                                <img src={!url ? a : url} alt="room-img"
-                                     style={{objectFit: "cover", aspectRatio: `1`}}/>
+                                <img src={!url ? !room.img ? a : room.img : url} alt="room-img"
+                                     style={{objectFit: "cover", aspectRatio: `1`,width:640,height:640}}/>
                             </div>
                             <FireUpload onUpload={(uploadUrl) => {
                                 console.log(uploadUrl)

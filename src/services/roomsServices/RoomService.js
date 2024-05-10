@@ -33,6 +33,8 @@ export const editRooms = createAsyncThunk(
 export const deleteRoom = createAsyncThunk(
     "rooms/deleteRoom",
     async ({id}) => {
-        await customAxios.delete(`rooms/${id}`)
+        await customAxios.delete(`rooms/${id}`);
+        const res = await customAxios.get(`rooms`)
+        return res.data
     }
 )

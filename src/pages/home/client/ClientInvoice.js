@@ -3,7 +3,7 @@ import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {getUserRoomByUserId} from "../../../services/userRoom/userRoomService";
+import {getUserRoomByUserId} from "../../../services/userRoomsService/UserRoomService";
 
 export default function ClientInvoice() {
     let {id} = useParams()

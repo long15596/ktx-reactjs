@@ -18,7 +18,6 @@ import ClientInvoice from "./pages/home/client/ClientInvoice";
 import Request from "./pages/home/client/Request";
 import Rent from "./pages/home/client/Rent";
 import CreateBillRoom from "./pages/room/CreateBillRoom";
-
 function App() {
     return (
         <div className="container-fluid">

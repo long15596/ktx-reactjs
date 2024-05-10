@@ -1,6 +1,6 @@
 import FireUpload from "../../components/FireUpload";
 import {useState} from "react";
-import a from "../room/img.png";
+import a from '../../components/Logo Đại Học Giao Thông Vận Tải - UTC.svg'
 import {Field, Form, Formik} from "formik";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
@@ -13,7 +13,7 @@ export default function AddDevice() {
     let handleAdd = (values) => {
         values = {...values, img: url}
         dispatch(addDevices({values}))
-        navigate(`/device`)
+        navigate(`/admin/device`)
     }
     return(
         <>
@@ -22,7 +22,7 @@ export default function AddDevice() {
                 <div className="offset-3 col-6">
                     <div className={`d-flex justify-content-center`}>
                         <img src={!url ? a : url} alt="room-img"
-                             style={{objectFit: "cover", aspectRatio: `1`}}/>
+                             style={{objectFit: "cover", aspectRatio: `1`, width:640,height:640}}/>
                     </div>
                     <FireUpload onUpload={(onUpload) => {
                         setUrl(onUpload)

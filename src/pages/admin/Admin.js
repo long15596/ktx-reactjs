@@ -7,6 +7,7 @@ export default function Admin() {
     let location = useLocation()
     let dispatch = useDispatch()
     let newRoom  = useSelector(state => state.rooms.newRoom)
+
     useEffect(() => {
         dispatch(getRooms())
         if (location.pathname !== `/admin/room/add/${newRoom.id}`) {

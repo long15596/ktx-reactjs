@@ -9,7 +9,6 @@ export default function ListUser() {
     const users = useSelector(state => state.user.user);
     const [currentPage, setCurrentPage] = useState(1);
     const [usersPerPage] = useState(6);
-    console.log(users)
     useEffect(() => {
         dispatch(getAllUserByAdmin());
     }, []);

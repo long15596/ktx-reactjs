@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getUserRoomByUserId} from "../../services/userRoom/userRoomService";
+import {getAllUserRooms, getUserRoomByUserId} from "../../services/userRoomsService/UserRoomService";
 
 const initialState = {
     userRooms : []
@@ -9,6 +9,9 @@ const userRoomSlice = createSlice({
     initialState,
     extraReducers: builder => {
         builder.addCase(getUserRoomByUserId.fulfilled, (state, action) => {
+            state.userRooms = action.payload
+        })
+        builder.addCase(getAllUserRooms.fulfilled, (state, action) => {
             state.userRooms = action.payload
         })
     }
