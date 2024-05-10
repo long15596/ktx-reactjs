@@ -67,7 +67,7 @@ export default function ListUser() {
                                 }}>{user.enabled ? "Khóa" : "Mở Khóa"}</button>
                             </td>
                             <td>
-                                <Link to={`user/${user.id}`} className={`btn btn-outline-primary`}>Hoá Đơn</Link>
+                                <Link to={`user/${user.id}`} className={`btn btn-outline-primary`}>Thông Tin</Link>
                             </td>
                         </tr>
                     ))}
