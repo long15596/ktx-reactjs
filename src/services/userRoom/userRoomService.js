@@ -4,7 +4,18 @@ import customAxios from "../api";
 export const getUserRoomByUserId = createAsyncThunk(
     "userRooms/getUserRoomById",
     async ({id}) => {
-        const res = await customAxios.get(`/users-room/user/${id}`)
+        const res = await customAxios.get(`users-room/user/${id}`)
         return res.data
-    }
-)
+    })
+export const getUserRoom = createAsyncThunk(
+    "userRooms/getUserRoom",
+    async () => {
+        const res = await customAxios.get(`users-room`)
+        return res.data
+    })
+export const addUserRoom = createAsyncThunk(
+    "userRooms/addUserRoom",
+    async ({values}) => {
+        const res = await customAxios.post(`users-room`, values)
+        return res.data
+    })
