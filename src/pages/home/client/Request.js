@@ -1,13 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {addProfile} from "../../../services/usersServices/UserService";
 import {Field, Form, Formik} from "formik";
 import FireUpload from "../../../components/FireUpload";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
 import {getOneRoom, getRooms} from "../../../services/roomsServices/RoomService";
-import {addUserRoom} from "../../../services/userRoom/userRoomService";
+import {addUserRoom} from "../../../services/userRoomServices/userRoomService";
 
 const currentDate = new Date();
 

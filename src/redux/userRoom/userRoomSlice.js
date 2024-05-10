@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addUserRoom, getUserRoom, getUserRoomByUserId} from "../../services/userRoom/userRoomService";
+import {addUserRoom, getUserRoom, getUserRoomByUserId} from "../../services/userRoomServices/userRoomService";
 
 const initialState = {
     userRooms : []
