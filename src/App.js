@@ -38,6 +38,7 @@ function App() {
                         </Route>
                         <Route path={`admin`} element={<Admin/>}>
                             <Route path={``} element={<ListUser/>}/>
+                            <Route path={`user/:id`} element={<ClientInvoice/>}/>
                             <Route path={`room`} element={<Room/>}>
                                 <Route path={``} element={<ListRoom/>}/>
                                 <Route path={`add/:id`} element={<AddRoom/>}/>
