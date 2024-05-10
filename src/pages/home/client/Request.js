@@ -1,19 +1,39 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {addProfile} from "../../../services/usersServices/UserService";
 import {Field, Form, Formik} from "formik";
 import FireUpload from "../../../components/FireUpload";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
-import {getRooms} from "../../../services/roomsServices/RoomService";
+import {getOneRoom, getRooms} from "../../../services/roomsServices/RoomService";
+import {addUserRoom} from "../../../services/userRoomServices/userRoomService";
 
+const currentDate = new Date();
+
+function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function nextMonthSameDayFormatted(currentDate) {
+    const nextMonthSameDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
+
+    return formatDate(nextMonthSameDay);
+}
+
+const currentDateFormatted = formatDate(currentDate);
+const nextMonthSameDay = nextMonthSameDayFormatted(currentDate);
 export default function Request() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     let [url, setUrl] = useState('')
     let [gender, setGender] = useState('')
+    let choiceRoom = useSelector(state =>{
+    return state.rooms.room
+    })
     const Toast = Swal.mixin({
         toast: true,
         position: 'top',
@@ -26,6 +46,7 @@ export default function Request() {
         timerProgressBar: true,
     });
     const rooms = useSelector(state => state.rooms.rooms);
+
     useEffect(() => {
         dispatch(getRooms());
     }, []);
@@ -44,7 +65,8 @@ export default function Request() {
     };
 
     const handleAdd = async (values) => {
-        values = await {...values,gender: gender, img: url}
+
+        values = await {...values, gender: gender, img: url}
 
         if (values.username === '') {
             showError('Không được để trống mã sinh viên');
@@ -52,12 +74,14 @@ export default function Request() {
             showError('Không được để trống mật khẩu');
         } else {
 
-            await dispatch(addProfile({values})).then(data=>{
-                if(data.payload=== "Username existed"){
+            await dispatch(addUserRoom({values})).then(data => {
+                console.log(data)
+                if (data.payload === "Username existed") {
                     showError('Tài khoản đã tồn tại');
-                }
-                else {
+                } else {
                     showSuccess('Đăng ký thành công');
+                    const valuesMoi = {user: data.payload, room: choiceRoom, startDate: currentDateFormatted, endDate: nextMonthSameDay}
+                    dispatch(addUserRoom({values :valuesMoi}))
                     setTimeout(async () => {
                         navigate(`/`);
                     }, 1500);
@@ -73,7 +97,6 @@ export default function Request() {
             .matches(/^[0-9]{9}$/, 'Mã sinh viên phải là 9 chữ số')
             .required('Không được để trống mã sinh viên')
     });
-
 
 
     return (
@@ -96,7 +119,7 @@ export default function Request() {
                         gender: gender,
                         img: url
                     }}>
-                    {({ errors, touched }) => ( // Destructure errors and touched from Formik props
+                    {({errors, touched}) => ( // Destructure errors and touched from Formik props
                         <Form className={"mt-3"}>
                             <div className="row">
                                 <div className="col-md-9">
@@ -135,11 +158,11 @@ export default function Request() {
                                             <Field type="text" name={"phone"} className="form-control" id="inputPhone"/>
                                         </div>
                                         <div className="form-group col-md-4">
-                                            <label htmlFor="inputGender" > Giới tính</label>
-                                            <select onChange={(event)=>{
+                                            <label htmlFor="inputGender"> Giới tính</label>
+                                            <select onChange={(event) => {
                                                 setGender(event.target.value)
                                             }} name={"gender"} id="inputGender" className="form-control">
-                                                <option >Lựa chọn</option>
+                                                <option>Lựa chọn</option>
                                                 <option value={"Nam"}>Nam</option>
                                                 <option value={"Nữ"}>Nữ</option>
                                                 <option value="Khác">Khác...</option>
@@ -153,11 +176,13 @@ export default function Request() {
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="inputRoom"> Danh sách các phòng phù hợp</label>
-                                        <select name={"room"} id="inputRoom" className="form-control">
-                                            <option selected>Lựa chọn</option>
-                                            {rooms.map(room=>{
-                                                if(room.type === gender && (room.maxCurrent - room.currentPresent) >0){
-                                                    console.log(room)
+                                        <select name={"room"} id="inputRoom" className="form-control" onChange={(event) => {
+                                           dispatch(getOneRoom(event.target.value))
+                                        }}>
+                                            <option selected>Lựa chọn
+                                            </option>
+                                            {rooms.map(room => {
+                                                if (room.type === gender && (room.maxCurrent - room.currentPresent) > 0) {
                                                     return (<option value={room.id}>{room.name}</option>)
                                                 }
                                             })}

@@ -1,28 +1,102 @@
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {getRoomDevice} from "../../../services/roomDeviceService/roomDeviceService";
 import {getOneRoom} from "../../../services/roomsServices/RoomService";
+import {addUserRoom, getUserRoom} from "../../../services/userRoomServices/userRoomService";
+import Swal from "sweetalert2";
+
+const currentDate = new Date();
+
+function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function nextMonthSameDayFormatted(currentDate) {
+    const nextMonthSameDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
+
+    return formatDate(nextMonthSameDay);
+}
+
+const currentDateFormatted = formatDate(currentDate);
+const nextMonthSameDay = nextMonthSameDayFormatted(currentDate);
 
 export default function Rent() {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+    });
+    const showError = (errorMessage) => {
+        Toast.fire({
+            icon: 'error',
+            title: `<span class="error-message">${errorMessage}</span>`,
+        });
+    };
+
+    const showSuccess = (successMessage) => {
+        Toast.fire({
+            icon: 'success',
+            title: successMessage,
+        });
+    };
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const {id} = useParams();
     const room = useSelector(state => {
-        console.log(state.rooms.room)
         return state.rooms.room
     })
-    const devices = useSelector(state => {
-        console.log(state.roomsDevice.roomDevices)
-        return state.roomsDevice.roomDevices
+
+    const roomDevices = useSelector(state => {
+        console.log(state.roomDevices.roomDevices)
+        return state.roomDevices.roomDevices
     })
+
     const user = useSelector(state => {
+        console.log(state)
         return state.user.profile
+    })
+    const userRoom = useSelector(state => {
+        return state.userRooms.userRooms
     })
     useEffect(() => {
         dispatch(getOneRoom(id))
-        dispatch(getRoomDevice(id))
+        dispatch(getRoomDevice({id}))
+        dispatch(getUserRoom())
     }, []);
+
+    function handleRent() {
+        const values = {user, room, startDate: currentDateFormatted, endDate: nextMonthSameDay}
+                let list = userRoom
+                let roomCheck = {}
+                let check = false
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i].user.id === user.id) {
+                        check = true;
+                        roomCheck = list[i].room
+
+                    }
+                }
+                if (check === true) {
+                    showError(`Bạn đã thuê phòng ${roomCheck.name} rồi. Đợi tháng sau nhé`)
+                } else {
+                    showSuccess("Bạn thuê thành công!")
+                    setTimeout(async () => {
+                        dispatch(addUserRoom({values}))
+                        navigate(`/`);
+                    }, 1500)
+                }
+    }
 
     return (
         <>
@@ -64,8 +138,8 @@ export default function Rent() {
                                         <h5>Mô tả</h5>
                                         <span>{room.description}</span>
                                         <br/>
-                                        <span>Thiết bị: {devices.map(device => {
-                                            return (device.device.name? device.device.name + ", ": "Không có thiết bị")
+                                        <span>Thiết bị: {roomDevices.map(roomDevices => {
+                                            return (roomDevices.device.name ? roomDevices.device.name + ", " : "Không có thiết bị")
                                         })}</span>
                                         <hr className="m-0 pt-2 mt-2"/>
                                     </div>
@@ -77,19 +151,23 @@ export default function Rent() {
                                     <div className="col-lg-12 mt-3">
                                         <div className="row">
                                             {user.gender === room.type ?
-                                            <div className="col-lg-6 pb-2">
-                                                <Link className="btn btn-outline-danger w-100" to={"/"}>Không
-                                                    thuê</Link>
+                                                <div className="col-lg-6 pb-2">
+                                                    <Link className="btn btn-outline-danger w-100" to={"/"}>Không
+                                                        thuê</Link>
 
-                                            </div>
-                                                    :
-                                                    <Link className="btn btn-outline-danger w-100 ml-4 mr-4" to={"/"}>Không thể
-                                                thuê phòng dành cho {room.type}</Link>
+                                                </div>
+                                                :
+                                                <Link className="btn btn-outline-danger w-100 ml-4 mr-4" to={"/"}>Không
+                                                    thể
+                                                    thuê phòng dành cho {room.type}</Link>
                                             }
                                             {user.gender === room.type ?
-                                            <div className="col-lg-6">
-                                                 <Link to={""} className="btn btn-outline-success w-100">Thuê</Link>
-                                            </div>
+                                                <div className="col-lg-6">
+                                                    <button className="btn btn-outline-success w-100"
+                                                            onClick={handleRent}
+                                                    >Thuê
+                                                    </button>
+                                                </div>
                                                 : ""}
                                         </div>
                                     </div>
