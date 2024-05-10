@@ -6,6 +6,7 @@ import {getRoomDevice} from "../../../services/roomDeviceService/roomDeviceServi
 import {getOneRoom} from "../../../services/roomsServices/RoomService";
 import {addUserRoom, getUserRoom} from "../../../services/userRoomServices/userRoomService";
 import Swal from "sweetalert2";
+import {getProfile} from "../../../services/usersServices/UserService";
 
 const currentDate = new Date();
 
@@ -61,7 +62,9 @@ export default function Rent() {
         console.log(state.roomDevices.roomDevices)
         return state.roomDevices.roomDevices
     })
-
+    const currentUser = useSelector(state => {
+        return state.user.currentUser
+    })
     const user = useSelector(state => {
         console.log(state)
         return state.user.profile
@@ -70,6 +73,7 @@ export default function Rent() {
         return state.userRooms.userRooms
     })
     useEffect(() => {
+        dispatch(getProfile(currentUser.id))
         dispatch(getOneRoom(id))
         dispatch(getRoomDevice({id}))
         dispatch(getUserRoom())
