@@ -17,6 +17,7 @@ import Profile from "./pages/home/client/Profile";
 import ClientInvoice from "./pages/home/client/ClientInvoice";
 import Request from "./pages/home/client/Request";
 import Rent from "./pages/home/client/Rent";
+import CreateBillRoom from "./pages/room/CreateBillRoom";
 
 function App() {
     return (
@@ -41,6 +42,7 @@ function App() {
                             <Route path={`room`} element={<Room/>}>
                                 <Route path={``} element={<ListRoom/>}/>
                                 <Route path={`add/:id`} element={<AddRoom/>}/>
+                                <Route path={`create-bill/:id`} element={<CreateBillRoom/>}/>
                             </Route>
                             <Route path={`invoice`} element={<ListInvoice/>}/>
                             <Route path={`device`} element={<Device/>}>
