@@ -20,10 +20,12 @@ export default function CreateBillRoom() {
             }
         })
     })
+    console.log(userRooms)
     useEffect(() => {
         dispatch(getAllUserRooms())
     }, []);
     let handleCreate = (values) => {
+        console.log(values)
         let totalElectric = values.electricityBill * 1678;
         let totalWater = 0;
         if (values.waterBill <= 10) {
@@ -61,8 +63,8 @@ export default function CreateBillRoom() {
         <>
             <div className="container mt-5">
                 <h2>Nhập tiền điện và tiền nước</h2>
-                <Formik onSubmit={(values) => {
-                    handleCreate(values)
+                <Formik onSubmit={(value) => {
+                    handleCreate(value)
                 }}
                         initialValues={{
                             electricityBill: "",

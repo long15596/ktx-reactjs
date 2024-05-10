@@ -12,7 +12,6 @@ export const addInvoice = createAsyncThunk(
     "invoice/addInvoice",
     async ({value}) => {
         const res = await customAxios.post(`/invoices`,value)
-        console.log(value)
-        return res.data
+       return res.data
     }
 )
