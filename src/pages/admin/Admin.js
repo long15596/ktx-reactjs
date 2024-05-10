@@ -15,7 +15,6 @@ export default function Admin() {
             }
         }
     }, [location.pathname])
-    console.log(newRoom)
     return(
         <>
             <div className="row pt-4">

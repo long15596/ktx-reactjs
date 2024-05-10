@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {changeEnabled, getAllUserByAdmin} from "../../services/usersServices/UserService";
 import './listUser.css';
+import {Link} from "react-router-dom";
 
 export default function ListUser() {
     const dispatch = useDispatch();
@@ -44,6 +45,7 @@ export default function ListUser() {
                         <th scope="col">Căn Cước Công Dân</th>
                         <th scope="col">Trạng Thái</th>
                         <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,6 +65,9 @@ export default function ListUser() {
                                         type="submit" onClick={() => {
                                     handleChangeEnabled(user.id)
                                 }}>{user.enabled ? "Khóa" : "Mở Khóa"}</button>
+                            </td>
+                            <td>
+                                <Link to={`user/${user.id}`} className={`btn btn-outline-primary`}>Hoá Đơn</Link>
                             </td>
                         </tr>
                     ))}

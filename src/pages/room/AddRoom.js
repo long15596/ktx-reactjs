@@ -14,6 +14,7 @@ export default function AddRoom() {
     let navigate = useNavigate()
     let [url, setUrl] = useState('')
     let [listDevice, setListDevice] = useState([])
+    let [showDevice, setShowDevice] = useState(false)
     let room = useSelector(state => {
         if (id) {
             return state.rooms.rooms.find(room => room.id == id)
@@ -25,8 +26,9 @@ export default function AddRoom() {
         return state.devices.devices
     })
     let roomDevices = useSelector(state => {
-        return state.roomsDevice.roomDevices
+        return state.roomDevices.roomDevices
     })
+    console.log(roomDevices)
     useEffect(() => {
         dispatch(getRooms())
         dispatch(getDevices())
@@ -54,7 +56,6 @@ export default function AddRoom() {
         }
         navigate(`/admin/room`)
     }
-    console.log(room)
     return (
         <>
             <Formik initialValues={room} onSubmit={values => {
