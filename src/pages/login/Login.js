@@ -18,7 +18,8 @@ export default function Login() {
                     showSuccess('Đăng nhập thành công');
                     setTimeout(() => {
                         dispatch(setCheckShow(false))
-                        navigate(`/`);
+                        // navigate(`/`);
+                        window.location.reload();
                     }, 1500);
                 } else if (userRoles.includes("ROLE_ADMIN")) {
                     showSuccess('Đăng nhập thành công');
