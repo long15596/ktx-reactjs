@@ -1,4 +1,4 @@
-import a from './img.png'
+import logo from '../../components/Logo Đại Học Giao Thông Vận Tải - UTC.svg'
 import './ListRoom.css'
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -56,7 +56,7 @@ export default function ListRoom() {
                         currentRooms.map((room, index) => (
                             <tr key={index}>
                                 <th scope="row">{indexOfFirstRoom + index + 1}</th>
-                                <td><img src={room.img ? room.img : a} id={`img-table`} alt={`img-room`}/></td>
+                                <td><img src={room.img ? room.img : logo} id={`img-table`} alt={`img-room`}/></td>
                                 <td>{room.name}</td>
                                 <td>{room.maxCurrent}</td>
                                 <td>{room.currentPresent}</td>

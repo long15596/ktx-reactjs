@@ -14,7 +14,9 @@ export default function AddRoom() {
     let navigate = useNavigate()
     let [url, setUrl] = useState('')
     let [listDevice, setListDevice] = useState([])
-    let [showDevice, setShowDevice] = useState(false)
+    let [roomType, setRoomType] = useState('Nam')
+    console.log(roomType)
+    console.log(url)
     let room = useSelector(state => {
         if (id) {
             return state.rooms.rooms.find(room => room.id == id)
@@ -31,12 +33,12 @@ export default function AddRoom() {
         dispatch(getRoomDevice({id: !id ? room.id : id}))
     }, [])
     let handleAdd = (values) => {
-        if (!values.name || !values.maxCurrent || !values.description || !values.type || !values.price) {
+        if (!values.name || !values.maxCurrent || !values.description || !values.price) {
             alert('Xin hãy điền đầy đủ thông tin')
             return  ;
         }
         else {
-            values = {...values, img: url}
+            values = {...values, img: url, type: roomType}
             dispatch(editRooms({id: values.id, values}))
             if (listDevice) {
                 for (const item of listDevice) {
@@ -85,7 +87,12 @@ export default function AddRoom() {
                             <div className="form-group row">
                                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Loại Phòng</label>
                                 <div className="col-sm-10">
-                                    <Field type="text" className="form-control" name={`type`}/>
+                                    <select className="custom-select" id="inputGroupSelect01" onChange={(event) => {
+                                        setRoomType(event.target.value)
+                                    }}>
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                    </select>
                                 </div>
                             </div>
                             <div className="form-group row">
@@ -128,8 +135,11 @@ export default function AddRoom() {
                         </div>
                         <div className="col-6">
                             <div className={`d-flex justify-content-center`}>
-                                <img src={!url ? !room.img ? a : room.img : url} alt="room-img"
-                                     style={{objectFit: "cover", aspectRatio: `1`,width:640,height:640}}/>
+                                {
+                                    room &&
+                                    <img src={!url ? !room.img ? a : room.img : url} alt="room-img"
+                                         style={{objectFit: "cover", aspectRatio: `1`,width:640,height:640}}/>
+                                }
                             </div>
                             <FireUpload onUpload={(uploadUrl) => {
                                 console.log(uploadUrl)
