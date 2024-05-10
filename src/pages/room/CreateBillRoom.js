@@ -2,7 +2,7 @@ import {Field, Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
 import {useEffect} from "react";
-import {getAllUserRooms} from "../../services/userRoomsService/UserRoomService";
+import {getAllUserRooms} from "../../services/userRoomsService/userRoomService";
 import {addInvoice} from "../../services/invoicesService/InvoiceService";
 
 export default function CreateBillRoom() {
