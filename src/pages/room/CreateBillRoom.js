@@ -6,6 +6,20 @@ import {getAllUserRooms} from "../../services/userRoomsService/userRoomService";
 import {addInvoice} from "../../services/invoicesService/InvoiceService";
 import {useNavigate} from "react-router-dom";
 
+const currentDate = new Date();
+
+function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function nextMonthSameDayFormatted(currentDate) {
+    const nextMonthSameDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 10);
+    return formatDate(nextMonthSameDay);
+}
+
 export default function CreateBillRoom() {
     let {id} = useParams();
     let dispatch = useDispatch();
@@ -23,6 +37,8 @@ export default function CreateBillRoom() {
             }
         })
     })
+    const currentDateFormatted = formatDate(currentDate);
+    const nextMonthSameDay = nextMonthSameDayFormatted(currentDate);
     useEffect(() => {
         dispatch(getAllUserRooms())
     }, []);
@@ -44,20 +60,23 @@ export default function CreateBillRoom() {
             let totalCost = (totalElectric + totalWater + totalService) / userRooms[0].room.currentPresent;
             console.log(userRooms[0].room)
             let totalAll = totalCost + userRooms[0].room.price;
-            console.log(totalCost, userRooms[0].room.price )
+            console.log(totalCost, userRooms[0].room.price)
             userRooms.map((i) => {
-                dispatch(addInvoice({value:{
-                    room: {
-                        id: i.room.id
-                    },
-                    user: {
-                        id: i.user.id
-                    },
-                    useElectricity: totalElectric,
-                    useWater: totalWater,
-                    servicePrice: totalService,
-                    price: totalAll
-                }
+                dispatch(addInvoice({
+                    value: {
+                        room: {
+                            id: i.room.id
+                        },
+                        user: {
+                            id: i.user.id
+                        },
+                        useElectricity: totalElectric,
+                        useWater: totalWater,
+                        servicePrice: totalService,
+                        price: totalAll,
+                        startDate: currentDateFormatted,
+                        endDate: nextMonthSameDay
+                    }
                 }))
             });
             // navigate("/admin/room")

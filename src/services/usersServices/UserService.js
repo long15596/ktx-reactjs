@@ -37,6 +37,7 @@ export const editProfile = createAsyncThunk(
 export const addProfile = createAsyncThunk(
     "user/addProfile",
     async ({values})=>{
+        console.log(values)
         const res = await  customAxios.post(`register`,values)
         return res.data
     }

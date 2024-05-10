@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import * as Yup from "yup";
 import {getOneRoom, getRooms} from "../../../services/roomsServices/RoomService";
 import {addUserRoom} from "../../../services/userRoomServices/userRoomService";
+import {addProfile} from "../../../services/usersServices/UserService";
 
 const currentDate = new Date();
 
@@ -31,8 +32,8 @@ export default function Request() {
     const navigate = useNavigate();
     let [url, setUrl] = useState('')
     let [gender, setGender] = useState('')
-    let choiceRoom = useSelector(state =>{
-    return state.rooms.room
+    let choiceRoom = useSelector(state => {
+        return state.rooms.room
     })
     const Toast = Swal.mixin({
         toast: true,
@@ -67,26 +68,35 @@ export default function Request() {
     const handleAdd = async (values) => {
 
         values = await {...values, gender: gender, img: url}
-
         if (values.username === '') {
             showError('Không được để trống mã sinh viên');
         } else if (values.password === '') {
             showError('Không được để trống mật khẩu');
         } else {
-
-            await dispatch(addUserRoom({values})).then(data => {
-                console.log(data)
-                if (data.payload === "Username existed") {
-                    showError('Tài khoản đã tồn tại');
-                } else {
-                    showSuccess('Đăng ký thành công');
-                    const valuesMoi = {user: data.payload, room: choiceRoom, startDate: currentDateFormatted, endDate: nextMonthSameDay}
-                    dispatch(addUserRoom({values :valuesMoi}))
-                    setTimeout(async () => {
-                        navigate(`/`);
-                    }, 1500);
-                }
+            dispatch(addProfile({values})).then((data) => {
+                // dispatch(addUserRoom({values})).then(data => {
+                    console.log(data)
+                    if (data.payload === "Username existed") {
+                        showError('Tài khoản đã tồn tại');
+                    } else {
+                        showSuccess('Đăng ký thành công');
+                        const valuesMoi = {
+                            user: {
+                                id: data.payload.id
+                            },
+                            room: choiceRoom,
+                            startDate: currentDateFormatted,
+                            endDate: nextMonthSameDay
+                        }
+                        console.log(valuesMoi)
+                        dispatch(addUserRoom({values: valuesMoi}))
+                        setTimeout(async () => {
+                            navigate(`/`);
+                        }, 1500);
+                    }
+                // })
             })
+
 
         }
     }
@@ -165,7 +175,6 @@ export default function Request() {
                                                 <option>Lựa chọn</option>
                                                 <option value={"Nam"}>Nam</option>
                                                 <option value={"Nữ"}>Nữ</option>
-                                                <option value="Khác">Khác...</option>
                                             </select>
                                         </div>
                                         <div className="form-group col-md-2">
@@ -176,9 +185,10 @@ export default function Request() {
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="inputRoom"> Danh sách các phòng phù hợp</label>
-                                        <select name={"room"} id="inputRoom" className="form-control" onChange={(event) => {
-                                           dispatch(getOneRoom(event.target.value))
-                                        }}>
+                                        <select name={"room"} id="inputRoom" className="form-control"
+                                                onChange={(event) => {
+                                                    dispatch(getOneRoom(event.target.value))
+                                                }}>
                                             <option selected>Lựa chọn
                                             </option>
                                             {rooms.map(room => {

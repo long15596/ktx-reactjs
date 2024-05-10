@@ -1,10 +1,25 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getInvoice } from "../../services/invoicesService/InvoiceService";
+import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {getInvoice} from "../../services/invoicesService/InvoiceService";
 
 export default function ListInvoice() {
     const dispatch = useDispatch();
-    const invoices = useSelector(state => state.invoices.invoices);
+    const invoices = useSelector(state => {
+        let currentDate = new Date();
+        let list = state.invoices.invoices;
+        let newList = []
+        list.forEach(invoice => {
+            let endDateParts = invoice.endDate.split('/');
+            let endDate = new Date(endDateParts[2], endDateParts[1] - 1, endDateParts[0]);
+            if (endDate < currentDate) {
+                newList.push({...invoice, isOverdue: true})
+            } else {
+                newList.push({...invoice, isOverdue: false})
+            }
+        });
+        console.log(newList)
+        return newList
+    });
 
     useEffect(() => {
         dispatch(getInvoice());
@@ -22,8 +37,10 @@ export default function ListInvoice() {
                         <th scope="col">Mã Phòng</th>
                         <th scope="col">Tiền Điện</th>
                         <th scope="col">Tiền Nước</th>
-                        <th scope="col">Tiền Phòng</th>
                         <th scope="col">Dịch Vụ</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Ngày tạo</th>
+                        <th scope="col">Hạn nộp</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -35,10 +52,14 @@ export default function ListInvoice() {
                             <td>{invoice.room.name}</td>
                             <td>{invoice.useElectricity}</td>
                             <td>{invoice.useWater}</td>
-                            <td>{invoice.price}</td>
                             <td>{invoice.servicePrice}</td>
+                            <td>{invoice.price}</td>
+                            <td>{invoice.startDate}</td>
+                            <td>{invoice.endDate}</td>
                             <td>
-                                {/*<button className="btn btn-outline-danger" type="submit">Xóa</button>*/}
+                                {invoice.isOverdue &&
+                                    <>Quá hạn</>
+                                }
                             </td>
                         </tr>
                     ))}
