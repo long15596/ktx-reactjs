@@ -8,10 +8,11 @@ import {useEffect, useState} from "react";
 export default function ListRoom() {
     let dispatch = useDispatch()
     let navigate = useNavigate()
-    let rooms = useSelector(state => state.rooms.rooms)
+    let rooms = useSelector(state => {
+        return  state.rooms.rooms
+    })
     const [currentPage, setCurrentPage] = useState(1);
     const [roomsPerPage] = useState(6);
-    console.log(rooms)
     useEffect(() => {
         dispatch(getRooms())
     }, []);

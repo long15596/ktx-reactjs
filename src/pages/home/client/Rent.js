@@ -57,7 +57,6 @@ export default function Rent() {
         return state.user.currentUser
     })
     const user = useSelector(state => {
-        console.log(state)
         return state.user.profile
     })
     const userRoom = useSelector(state => {
@@ -75,9 +74,8 @@ export default function Rent() {
         let list = userRoom
         let roomCheck = {}
         let check = false
-        console.log(user)
         console.log(list)
-        if (user && list[0].user) {
+        if (user && list.length > 0 && list[0].user) {
             for (let i = 0; i < list.length; i++) {
                 if (list[i].user.id === user.id) {
                     check = true;
@@ -92,6 +90,7 @@ export default function Rent() {
             setTimeout(async () => {
                 dispatch(addUserRoom({values}))
                 navigate(`/`);
+                window.location.reload()
             }, 1500)
         }
     }

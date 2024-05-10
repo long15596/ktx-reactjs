@@ -9,8 +9,11 @@ import {login} from "../../../services/usersServices/UserService";
 export default function ClientHome() {
     const dispatch = useDispatch();
     const [visibleRooms, setVisibleRooms] = useState(6);
-    const rooms = useSelector(state => state.rooms.rooms);
+    const rooms = useSelector(state => {
+        return  state.rooms.rooms.filter((room)=> room.maxCurrent > room.currentPresent)
+    });
     const currentUser = localStorage.getItem("currentUser")
+    console.log(rooms)
     useEffect(() => {
         dispatch(getRooms());
     }, []);

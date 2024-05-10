@@ -5,21 +5,21 @@ import React, {useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {getUserRoomByUserId} from "../../../services/userRoomServices/userRoomService";
 export default function ClientInvoice() {
-    let {id} = useParams()
+    let currentUser = useSelector(state => state.user.currentUser)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     let userRoom = useSelector(state => state.userRooms.userRooms)
     useEffect(() => {
-        dispatch(getUserRoomByUserId({id}))
+        dispatch(getUserRoomByUserId({id: currentUser.id}))
     }, [])
     console.log(userRoom)
     return (
         <>
-            {userRoom.length ?
+            {userRoom.length && userRoom[0].user ?
                 <>
                     <div className="container">
                         <div className="row d-flex">
-                            <h1>Thông Tin Sinh Viên</h1>
+                            <h1>Hợp Đồng</h1>
                         </div>
                         <div className={`row pt-4`}>
                             <div className="col-6">
