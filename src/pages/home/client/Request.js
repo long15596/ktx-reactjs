@@ -19,9 +19,13 @@ function formatDate(date) {
 }
 
 function nextMonthSameDayFormatted(currentDate) {
-    const nextMonthSameDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
-
-    return formatDate(nextMonthSameDay);
+    let endDate
+    if (currentDate.getMonth() >= 8) {
+        endDate = new Date(currentDate.getFullYear() + 1, 1, 0)
+    } else {
+        endDate = new Date(currentDate.getFullYear(), 7, 31)
+    }
+    return formatDate(endDate);
 }
 
 const currentDateFormatted = formatDate(currentDate);
@@ -79,6 +83,7 @@ export default function Request() {
         }
         else {
             dispatch(addProfile({values})).then((data) => {
+                console.log(data.payload)
                     if (data.payload === "Username existed") {
                         showError('Tài khoản đã tồn tại');
                     } else {
