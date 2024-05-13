@@ -18,6 +18,7 @@ import ClientInvoice from "./pages/home/client/ClientInvoice";
 import Request from "./pages/home/client/Request";
 import Rent from "./pages/home/client/Rent";
 import CreateBillRoom from "./pages/room/CreateBillRoom";
+import Footer from "./components/Footer";
 function App() {
     return (
         <div className="container-fluid">
@@ -52,6 +53,11 @@ function App() {
                             </Route>
                         </Route>
                     </Routes>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-12">
+                    <Footer/>
                 </div>
             </div>
         </div>);
