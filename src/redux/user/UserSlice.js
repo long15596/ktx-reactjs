@@ -6,7 +6,7 @@ import {
     login,
     setCheckShow,
     getAllUserByAdmin,
-    addProfile
+    addProfile, setCheckShowRoom
 } from "../../services/usersServices/UserService";
 let localStorageUser = () => {
     if (JSON.parse(localStorage.getItem(`currentUser`))) {
@@ -18,7 +18,8 @@ const initialState = {
     currentUser: localStorageUser(),
     user : [],
     checkShow: false,
-    profile:{}
+    profile:{},
+    checkShowRoom : false,
 }
 const userSlice = createSlice({
     name : 'user',
@@ -30,6 +31,9 @@ const userSlice = createSlice({
         });
         builder.addCase(setCheckShow.fulfilled, (state, action)=>{
             state.checkShow = action.payload
+        });
+        builder.addCase(setCheckShowRoom.fulfilled, (state, action)=>{
+            state.checkShowRoom = action.payload
         });
         builder.addCase(logOut.fulfilled, (state, action) => {
             state.currentUser = null

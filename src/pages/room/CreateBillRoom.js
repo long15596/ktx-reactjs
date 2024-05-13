@@ -55,12 +55,9 @@ export default function CreateBillRoom() {
             totalWater = 10 * 5973 + 10 * 7052 + 10 * 8669 + (values.waterBill - 30) * 15929;
         }
         let totalService = values.serviceBill;
-        console.log(userRooms)
         if (userRooms.length > 0) {
             let totalCost = (totalElectric + totalWater + totalService) / userRooms[0].room.currentPresent;
-            console.log(userRooms[0].room)
             let totalAll = totalCost + userRooms[0].room.price;
-            console.log(totalCost, userRooms[0].room.price)
             userRooms.map((i) => {
                 dispatch(addInvoice({
                     value: {

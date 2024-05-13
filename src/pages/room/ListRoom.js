@@ -4,12 +4,16 @@ import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {addRooms, getRooms} from "../../services/roomsServices/RoomService";
 import {useEffect, useState} from "react";
+import PersonInRoom from "./PersonInRoom";
+import {setCheckShow, setCheckShowRoom} from "../../services/usersServices/UserService";
+import {getUserRoomByRoomId} from "../../services/userRoomServices/userRoomService";
 
 export default function ListRoom() {
     let dispatch = useDispatch()
     let navigate = useNavigate()
+    const checkShowRoom = useSelector(state => state.user.checkShowRoom);
     let rooms = useSelector(state => {
-        return  state.rooms.rooms
+        return state.rooms.rooms
     })
     const [currentPage, setCurrentPage] = useState(1);
     const [roomsPerPage] = useState(6);
@@ -55,7 +59,10 @@ export default function ListRoom() {
                     <tbody>
                     {
                         currentRooms.map((room, index) => (
-                            <tr key={index}>
+                            <tr key={index} onClick={() => {
+                                dispatch(setCheckShowRoom(true))
+                                dispatch(getUserRoomByRoomId({id: room.id}))
+                            }}>
                                 <th scope="row">{indexOfFirstRoom + index + 1}</th>
                                 <td><img src={room.img ? room.img : logo} id={`img-table`} alt={`img-room`}/></td>
                                 <td>{room.name}</td>
@@ -92,6 +99,9 @@ export default function ListRoom() {
                     )}
                 </div>
             </div>
+            {
+                checkShowRoom && <PersonInRoom></PersonInRoom>
+            }
         </>
     )
 }

@@ -14,6 +14,12 @@ export const setCheckShow = createAsyncThunk(
         return values
     }
 )
+export const setCheckShowRoom = createAsyncThunk(
+    "checkShowRoom/check",
+    async (values)=>{
+        return values
+    }
+)
 export const logOut = createAsyncThunk(
     "user/logout",
     async ()=>{

@@ -5,7 +5,6 @@ export const getAllUserRooms = createAsyncThunk(
     "rooms/getRooms",
     async () => {
         const res = await customAxios.get(`users-room`)
-        console.log(res.data)
         return res.data
     }
 )
