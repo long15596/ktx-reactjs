@@ -21,21 +21,6 @@ export default function ListInvoice() {
         console.log(newList)
         return newList
     });
-    // let invoices = useSelector(state => {
-    //     let currentDate = dayjs()
-    //     let list = state.invoices.invoices
-    //     let newList = []
-    //     list.forEach(invoice => {
-    //         let endDate = dayjs(invoice.endDate, 'DD/MM/YYYY')
-    //         if (endDate.isBefore(currentDate, 'day')) {
-    //             newList.push({...invoice, isOverdue: true})
-    //         } else {
-    //             newList.push({...invoice, isOverdue: false})
-    //         }
-    //     })
-    //     console.log(newList)
-    //     return newList
-    // })
     useEffect(() => {
         dispatch(getInvoice());
     }, []);
