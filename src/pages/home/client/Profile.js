@@ -65,6 +65,10 @@ export default function Profile() {
                                         <label htmlFor="inputPhone">Số điện thoại</label>
                                         <Field type="text" name={"phone"} className="form-control" id="inputPhone"/>
                                     </div>
+                                    <div className="form-group col-md-4">
+                                        <label htmlFor="inputGender"> Giới tính</label>
+                                        <Field type="text" name="gender" id="inputGender" className="form-control" readOnly />
+                                    </div>
                                     <div className="form-group col-md-2">
                                         <label htmlFor="inputClazz">Lớp?</label>
                                         <Field type="text" name={"clazz"} className="form-control" id="inputClazz"/>

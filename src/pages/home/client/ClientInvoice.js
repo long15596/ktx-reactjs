@@ -2,25 +2,28 @@ import logo from "../../../components/Logo Đại Học Giao Thông Vận Tải 
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import {getUserRoomByUserId} from "../../../services/userRoomServices/userRoomService";
-import dayjs from "dayjs";
 export default function ClientInvoice() {
     let currentUser = useSelector(state => state.user.currentUser)
+    let {id} = useParams()
     const dispatch = useDispatch();
     const navigate = useNavigate();
     let userRoom = useSelector(state => state.userRooms.userRooms)
     useEffect(() => {
-        dispatch(getUserRoomByUserId({id: currentUser.id}))
+        if (currentUser.id == 5) {
+            dispatch(getUserRoomByUserId({id}))
+        }  else  {
+            dispatch(getUserRoomByUserId({id: currentUser.id}))
+        }
     }, [])
-
     return (
         <>
             {userRoom.length && userRoom[0].user ?
                 <>
                     <div className="container">
                         <div className="row d-flex">
-                            <h1>Hợp Đồng Tháng {dayjs(userRoom[0].startDate).month() + 1}</h1>
+                            <h1>Hợp Đồng</h1>
                         </div>
                         <div className={`row pt-4`}>
                             <div className="col-6">
