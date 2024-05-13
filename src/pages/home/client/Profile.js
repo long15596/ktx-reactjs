@@ -18,7 +18,6 @@ export default function Profile() {
     })
     let [url, setUrl] = useState(user.img)
     useEffect( () => {
-
         dispatch(getProfile(currentUser.id))
     }, []);
     const handleEdit = async (values) => {
@@ -65,16 +64,6 @@ export default function Profile() {
                                     <div className="form-group col-md-6">
                                         <label htmlFor="inputPhone">Số điện thoại</label>
                                         <Field type="text" name={"phone"} className="form-control" id="inputPhone"/>
-                                    </div>
-                                    <div className="form-group col-md-4">
-                                        <label htmlFor="inputGender"> Giới tính</label>
-                                        <Field as="select" name="gender" id="inputGender" className="form-control">
-                                            <option selected>Lựa chọn</option>
-                                            <option value="Nam">Nam</option>
-                                            <option value="Nữ">Nữ</option>
-                                            <option value="Khác">Khác...</option>
-                                        </Field>
-
                                     </div>
                                     <div className="form-group col-md-2">
                                         <label htmlFor="inputClazz">Lớp?</label>

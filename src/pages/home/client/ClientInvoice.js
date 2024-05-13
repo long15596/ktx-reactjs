@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {getUserRoomByUserId} from "../../../services/userRoomServices/userRoomService";
+import dayjs from "dayjs";
 export default function ClientInvoice() {
     let currentUser = useSelector(state => state.user.currentUser)
     const dispatch = useDispatch();
@@ -12,14 +13,14 @@ export default function ClientInvoice() {
     useEffect(() => {
         dispatch(getUserRoomByUserId({id: currentUser.id}))
     }, [])
-    console.log(userRoom)
+
     return (
         <>
             {userRoom.length && userRoom[0].user ?
                 <>
                     <div className="container">
                         <div className="row d-flex">
-                            <h1>Hợp Đồng</h1>
+                            <h1>Hợp Đồng Tháng {dayjs(userRoom[0].startDate).month() + 1}</h1>
                         </div>
                         <div className={`row pt-4`}>
                             <div className="col-6">
@@ -28,7 +29,7 @@ export default function ClientInvoice() {
                                         <img src={!userRoom[0].user.img ? logo : userRoom[0].user.img} id={`img-table`}
                                              alt={`img-room`} style={{width: '168', height: '168'}}/>
                                     </div>
-                                    <div className="col-9">``
+                                    <div className="col-9">
                                         <div className="row">
                                             <div className="col-4">
                                                 <b>Mã Sinh Viên: </b>
