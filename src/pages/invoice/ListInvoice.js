@@ -63,7 +63,7 @@ export default function ListInvoice() {
                     {invoices.map((invoice, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td></td>
+                            <td>{invoice.startDate.split('/')[1]}</td>
                             <td>{invoice.user.username}</td>
                             <td>{invoice.room.name}</td>
                             <td>{invoice.useElectricity}</td>

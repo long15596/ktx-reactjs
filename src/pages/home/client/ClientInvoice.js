@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import { useNavigate} from "react-router-dom";
 import {getUserRoomByUserId} from "../../../services/userRoomServices/userRoomService";
+import dayjs from "dayjs";
 export default function ClientInvoice() {
     let currentUser = useSelector(state => state.user.currentUser)
     let {id} = useParams()
@@ -11,7 +12,7 @@ export default function ClientInvoice() {
     const navigate = useNavigate();
     let userRoom = useSelector(state => state.userRooms.userRooms)
     useEffect(() => {
-        if (currentUser.id == 5) {
+        if (currentUser && currentUser.roles[0].authority === "ROLE_ADMIN") {
             dispatch(getUserRoomByUserId({id}))
         }  else  {
             dispatch(getUserRoomByUserId({id: currentUser.id}))
@@ -23,7 +24,7 @@ export default function ClientInvoice() {
                 <>
                     <div className="container">
                         <div className="row d-flex">
-                            <h1>Hợp Đồng</h1>
+                            <h1>Hợp Đồng Tháng {userRoom[0].startDate.split('/')[1]}</h1>
                         </div>
                         <div className={`row pt-4`}>
                             <div className="col-6">
