@@ -2,17 +2,21 @@ import logo from "../../../components/Logo Đại Học Giao Thông Vận Tải 
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import {getUserRoomByUserId} from "../../../services/userRoomServices/userRoomService";
 export default function ClientInvoice() {
     let currentUser = useSelector(state => state.user.currentUser)
+    let {id} = useParams()
     const dispatch = useDispatch();
     const navigate = useNavigate();
     let userRoom = useSelector(state => state.userRooms.userRooms)
     useEffect(() => {
-        dispatch(getUserRoomByUserId({id: currentUser.id}))
+        if (currentUser.id == 5) {
+            dispatch(getUserRoomByUserId({id}))
+        }  else  {
+            dispatch(getUserRoomByUserId({id: currentUser.id}))
+        }
     }, [])
-    console.log(userRoom)
     return (
         <>
             {userRoom.length && userRoom[0].user ?
@@ -28,7 +32,7 @@ export default function ClientInvoice() {
                                         <img src={!userRoom[0].user.img ? logo : userRoom[0].user.img} id={`img-table`}
                                              alt={`img-room`} style={{width: '168', height: '168'}}/>
                                     </div>
-                                    <div className="col-9">``
+                                    <div className="col-9">
                                         <div className="row">
                                             <div className="col-4">
                                                 <b>Mã Sinh Viên: </b>

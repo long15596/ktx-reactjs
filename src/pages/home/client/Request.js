@@ -66,16 +66,19 @@ export default function Request() {
     };
 
     const handleAdd = async (values) => {
-
+        console.log(values)
         values = await {...values, gender: gender, img: url}
         if (values.username === '') {
             showError('Không được để trống mã sinh viên');
         } else if (values.password === '') {
+            console.log(values.gender)
             showError('Không được để trống mật khẩu');
-        } else {
+        }
+        else if (values.gender === '' || values.gender == "Lựa chọn") {
+            showError('Không được để trống giới tính');
+        }
+        else {
             dispatch(addProfile({values})).then((data) => {
-                // dispatch(addUserRoom({values})).then(data => {
-                    console.log(data)
                     if (data.payload === "Username existed") {
                         showError('Tài khoản đã tồn tại');
                     } else {
@@ -88,13 +91,11 @@ export default function Request() {
                             startDate: currentDateFormatted,
                             endDate: nextMonthSameDay
                         }
-                        console.log(valuesMoi)
                         dispatch(addUserRoom({values: valuesMoi}))
                         setTimeout(async () => {
                             navigate(`/`);
                         }, 1500);
                     }
-                // })
             })
 
 
@@ -105,16 +106,21 @@ export default function Request() {
     const validationSchema = Yup.object().shape({
         username: Yup.string()
             .matches(/^[0-9]{9}$/, 'Mã sinh viên phải là 9 chữ số')
-            .required('Không được để trống mã sinh viên')
+            .required('Không được để trống mã sinh viên'),
+        identificationCard : Yup.string()
+            .matches(/^[0-9]{12}$/, 'CCCD phải là 12 số')
+            .required('Không được để trống số CCCD'),
+        phone: Yup.string()
+            .matches(/^[0-9]+$/, 'Số điện thoại phải là số')
+            .notOneOf([Yup.ref('identificationCard')], 'Số điện thoại không được trùng với CCCD')
+            .required('Không được để trống số điện thoại'),
     });
 
 
     return (
         <>
             <div className="container">
-                <Formik
-
-                    onSubmit={(values) => {
+                <Formik onSubmit={(values) => {
                         handleAdd(values)
                     }}
                     validationSchema={validationSchema}
@@ -129,7 +135,7 @@ export default function Request() {
                         gender: gender,
                         img: url
                     }}>
-                    {({errors, touched}) => ( // Destructure errors and touched from Formik props
+                    {({errors, touched}) => (
                         <Form className={"mt-3"}>
                             <div className="row">
                                 <div className="col-md-9">
@@ -161,11 +167,22 @@ export default function Request() {
                                         <Field type="text" name={"identificationCard"} className="form-control"
                                                id="inputIdentityID"
                                                placeholder="00123456789..."/>
+                                        {touched.identificationCard && errors.identificationCard && (
+                                            <div><p className={'text-danger'}>{errors.identificationCard}</p></div>
+                                        )}
+
+                                    </div>  <div className="form-group">
+                                        <label htmlFor="inputName">Tên Sinh Viên</label>
+                                        <Field type="text" name={"name"} className="form-control"
+                                               id="name"/>
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <label htmlFor="inputPhone">Số điện thoại</label>
                                             <Field type="text" name={"phone"} className="form-control" id="inputPhone"/>
+                                            {touched.phone && errors.phone && (
+                                                <div><p className={'text-danger'}>{errors.phone}</p></div>
+                                            )}
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="inputGender"> Giới tính</label>

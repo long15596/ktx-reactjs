@@ -17,7 +17,8 @@ export default function NavBar() {
     const handleLogoutClick = () => {
         localStorage.clear();
         dispatch(logOut());
-        navigate('/');
+        navigate('/')
+        window.location.reload();
     };
     return (
         <>

@@ -68,12 +68,8 @@ export default function Profile() {
                                     </div>
                                     <div className="form-group col-md-4">
                                         <label htmlFor="inputGender"> Giới tính</label>
-                                        <Field as="select" name="gender" id="inputGender" className="form-control">
-                                            <option selected>Lựa chọn</option>
-                                            <option value="Nam">Nam</option>
-                                            <option value="Nữ">Nữ</option>
-                                            <option value="Khác">Khác...</option>
-                                        </Field>
+                                        <Field type="text" name="gender" id="inputGender" className="form-control" readOnly />
+
 
                                     </div>
                                     <div className="form-group col-md-2">
