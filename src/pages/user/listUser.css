@@ -1,14 +1,9 @@
-.pagination {
-    position: fixed;
-    bottom: 20px; /* Điều chỉnh khoảng cách từ nút phân trang đến bottom */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
-    z-index: 999; /* Đảm bảo nút phân trang hiển thị trên các phần tử khác */
-}
-/*.inline-current-page{*/
-/*    margin-top: 6px;*/
-/*    margin-left: 10px;*/
+/*.pagination {*/
+/*    position: fixed;*/
+/*    bottom: 30%;*/
+/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+/*    z-index: 999;*/
 /*}*/
-
 .current-page {
     display: inline-block;
     padding: 5px 10px;

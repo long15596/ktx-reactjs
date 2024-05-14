@@ -40,7 +40,6 @@ body {
 }
 
 .main-section {
-    position: absolute;
     left: 50%;
     right: 50%;
     transform: translate(-50%, 5%);
