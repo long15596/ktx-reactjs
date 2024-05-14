@@ -76,7 +76,7 @@ export default function CreateBillRoom() {
                     }
                 }))
             });
-            // navigate("/admin/room")
+            navigate("/admin/room")
         }
     };
 
