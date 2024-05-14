@@ -59,15 +59,15 @@ export default function ListRoom() {
                     <tbody>
                     {
                         currentRooms.map((room, index) => (
-                            <tr key={index} onClick={() => {
-                                dispatch(setCheckShowRoom(true))
-                                dispatch(getUserRoomByRoomId({id: room.id}))
-                            }}>
+                            <tr key={index} >
                                 <th scope="row">{indexOfFirstRoom + index + 1}</th>
                                 <td><img src={room.img ? room.img : logo} id={`img-table`} alt={`img-room`}/></td>
                                 <td>{room.name}</td>
                                 <td>{room.maxCurrent}</td>
-                                <td>{room.currentPresent}</td>
+                                <td onClick={() => {
+                                    dispatch(setCheckShowRoom(true))
+                                    dispatch(getUserRoomByRoomId({id: room.id}))
+                                }}>{room.currentPresent}</td>
                                 <td>{room.description}</td>
                                 <td>{room.price}</td>
                                 <td>{room.type}</td>

@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getInvoice} from "../../services/invoicesService/InvoiceService";
-import dayjs from "dayjs";
+import * as XLSX from 'xlsx';
 
 export default function ListInvoice() {
     const dispatch = useDispatch();
@@ -21,12 +21,36 @@ export default function ListInvoice() {
         console.log(newList)
         return newList
     });
+
+
     useEffect(() => {
         dispatch(getInvoice());
     }, []);
+    const exportToExcel = () => {
+        const data = invoices.map((invoice, index) => ({
+            STT: index + 1,
+            "Hợp Đồng Tháng": invoice.startDate.split('/')[1],
+            "Mã Sinh Viên": invoice.user.username,
+            "Mã Phòng": invoice.room.name,
+            "Tiền Điện": invoice.useElectricity,
+            "Tiền Nước": invoice.useWater,
+            "Dịch Vụ": invoice.servicePrice,
+            "Tổng tiền": invoice.price,
+            "Ngày tạo": invoice.startDate,
+            "Hạn nộp": invoice.endDate,
+            "Cảnh báo": invoice.isOverdue ? "Quá hạn" : "Chưa đến hạn"
+        }));
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Invoices");
+        XLSX.writeFile(wb, "Danh_Sach_Hoa_Don.xlsx");
+    };
     return (
         <>
             <h2>Danh Sách Hóa Đơn</h2>
+            {invoices && <div className="row d-flex justify-content-end">
+                <button className={"btn btn-outline-primary"} onClick={exportToExcel}>Xuất file Excel</button>
+            </div>}
             <div className={`justify-content-center align-items-center pt-2`}>
                 <table className="table">
                     <thead>
