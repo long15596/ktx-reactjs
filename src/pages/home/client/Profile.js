@@ -42,7 +42,7 @@ export default function Profile() {
                             <div className="col-md-9">
                                 <div className="form-group">
                                     <label htmlFor="inputMSV">Mã Sinh Viên</label>
-                                    <Field type="text" name={"username"} className="form-control" id="inputMSV"/>
+                                    <Field type="text" name={"username"} className="form-control" id="inputMSV" readOnly/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="inputAddress">Địa Chỉ</label>

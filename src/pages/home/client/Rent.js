@@ -23,7 +23,7 @@ function nextMonthSameDayFormatted(currentDate) {
     if (currentDate.getMonth() >= 8) {
         endDate = new Date(currentDate.getFullYear() + 1, 1, 0)
     } else {
-        endDate = new Date(currentDate.getFullYear(), 7, 31)
+        endDate = new Date(currentDate.getFullYear(), 6, 31)
     }
     return formatDate(endDate);
 }
