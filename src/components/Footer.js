@@ -1,6 +1,7 @@
-import './Footer.css'
+import './Footer.css';
+
 export default function Footer() {
-    return(
+    return (
         <>
             <footer className="mainfooter" role="contentinfo">
                 <div className="footer-middle">
@@ -8,61 +9,57 @@ export default function Footer() {
                         <div className="row">
                             <div className="col-md-3 col-sm-6">
                                 <div className="footer-pad">
-                                    <h4> Footer Heading 1</h4>
+                                    <h4>Liên hệ</h4>
                                     <ul className="list-unstyled">
-                                        <li><a href="#"> </a></li>
-                                        <li><a href="#">Payment Center</a></li>
-                                        <li><a href="#"> Contact Directory </a></li>
-                                        <li><a href="#">Forms</a></li>
-                                        <li><a href="#">News and Updates</a></li>
-                                        <li><a href="#">FAQs</a></li>
+                                        <li><a href="https://www.utc.edu.vn/phong-quan-ly-ky-tuc-xa">Phòng Quản lý Ký túc xá</a></li>
+                                        <li><a href="https://www.utc.edu.vn/phong-bao-ve">Phòng Bảo vệ</a></li>
+                                        <li><a href="https://www.utc.edu.vn/phong-y-te">Phòng Y tế</a></li>
+                                        <li><a href="https://www.utc.edu.vn/phong-hanh-chinh">Phòng Hành Chính</a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div className="col-md-3 col-sm-6">
                                 <div className="footer-pad">
-                                    <h4> Footer Heading 2</h4>
+                                    <h4>Thông tin</h4>
                                     <ul className="list-unstyled">
-                                        <li><a href="#"> Blog </a></li>
-                                        <li><a href="#">Accessibility</a></li>
-                                        <li><a href="#">Disclaimer</a></li>
-                                        <li><a href="#">Privacy Policy</a></li>
-                                        <li><a href="#">FAQs</a></li>
-                                        <li><a href="#">Webmaster</a></li>
+                                        <li><a href="https://www.utc.edu.vn/gioi-thieu-ky-tuc-xa">Giới thiệu Ký túc xá</a></li>
+                                        <li><a href="https://www.utc.edu.vn/quy-dinh-va-noi-quy">Quy định và Nội quy</a></li>
+                                        <li><a href="https://www.utc.edu.vn/tien-ich">Tiện ích</a></li>
+                                        <li><a href="https://www.utc.edu.vn/lien-he">Liên hệ</a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div className="col-md-3 col-sm-6">
                                 <div className="footer-pad">
-                                    <h4> Footer Heading 3 </h4>
+                                    <h4>Sinh viên</h4>
                                     <ul className="list-unstyled">
-                                        <li><a href="#"> Parks and Recreation </a></li>
-                                        <li><a href="#"> Public Works </a></li>
-                                        <li><a href="#">Police Department</a></li>
-                                        <li><a href="#"> Fire </a></li>
-                                        <li><a href="#"> Mayor and City Council </a></li>
+                                        <li><a href="https://www.utc.edu.vn/thong-bao">Thông báo</a></li>
+                                        <li><a href="https://www.utc.edu.vn/huong-dan-dang-ky">Hướng dẫn đăng ký</a></li>
+                                        <li><a href="https://www.utc.edu.vn/hoat-dong-sinh-vien">Hoạt động sinh viên</a></li>
+                                        <li><a href="https://www.utc.edu.vn/su-kien">Sự kiện</a></li>
                                     </ul>
                                 </div>
                             </div>
-                            <div className="col-md-3">
-                                <h4> Follow Us </h4>
-                                <ul className="social-network social-circle">
-                                    <li><a href="#" className="icoFacebook" title="Facebook"> <i
-                                        className="fa fa-facebook"> </i> </a></li>
-                                    <li><a href="#" className="icoLinkedin" title="Linkedin"> <i
-                                        className="fa fa-linkedin"> </i> </a></li>
-                                    <li><a href="#"> <i className="fa fa-youtube" aria-hidden="true"> </i> </a></li>
-                                </ul>
+                            <div className="col-md-3 col-sm-6">
+                                <div className="footer-pad">
+                                    <h4>Kết nối</h4>
+                                    <ul className="list-unstyled">
+                                        <li><a href="https://www.facebook.com/TruongDaiHocGiaoThongVanTai">Facebook</a></li>
+                                        <li><a href="https://www.youtube.com/user/UTCChannel">YouTube</a></li>
+                                        <li><a href="https://www.linkedin.com/school/university-of-transport-and-communications">LinkedIn</a></li>
+                                        <li><a href="https://www.instagram.com/utc.edu.vn">Instagram</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-12 copy">
-                                <p className="text-center"> © Copyright 2024 - Bùi Ngọc Đạt. All rights reserved. </p>
+                                <p className="text-center">© 2024 Ký túc xá Trường Đại học Giao thông Vận tải. Bản quyền thuộc về Thương.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </footer>
         </>
-    )
+    );
 }

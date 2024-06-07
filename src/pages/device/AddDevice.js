@@ -22,7 +22,7 @@ export default function AddDevice() {
                 <div className="offset-3 col-6">
                     <div className={`d-flex justify-content-center`}>
                         <img src={!url ? a : url} alt="room-img"
-                             style={{objectFit: "cover", aspectRatio: `1`, width: 640, height: 640}}/>
+                             style={{objectFit: "cover", aspectRatio: `1`, width: 180, height: 180}}/>
                     </div>
                     <FireUpload onUpload={(onUpload) => {
                         setUrl(onUpload)

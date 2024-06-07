@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 
 export default function ListUser() {
     let dispatch = useDispatch();
-    let [value, setValue] = useState('')
     let listUsersSearch = useSelector(state => state.user.listUserSearch);
     let users = useSelector(state => {
             if (listUsersSearch && listUsersSearch.length > 0) {
@@ -15,8 +14,7 @@ export default function ListUser() {
             return state.user.user
         }
     );
-
-    console.log(value)
+    console.log(listUsersSearch)
     let [currentPage, setCurrentPage] = useState(1);
     let [usersPerPage] = useState(6);
     useEffect(() => {
@@ -46,7 +44,6 @@ export default function ListUser() {
                         placeholder="tìm kiếm sinh viên"
                         aria-label="Search"
                         onChange={(e) => {
-                            setValue(e.target.value)
                             dispatch(searchUser(e.target.value))
                         }}
                     />
@@ -95,7 +92,6 @@ export default function ListUser() {
                                 </td>
                             </tr>
                         ))
-
                     }
                     </tbody>
                 </table>

@@ -73,21 +73,38 @@ export default function NavBar() {
                             </>
                         )}
                     </ul>
-                    <ul className="navbar-nav" style={{marginRight:"10px"}}>
-                        <li className="nav-item mx-auto">
-                            <input
-                                className="form-control"
-                                type="search"
-                                placeholder="tìm kiếm phòng"
-                                aria-label="Search"
-                                onChange={(e)=>{
-                                    dispatch(searchRoom(e.target.value))
-                                }}
-                            />
-                        </li>
-                    </ul>
-
-
+                    {
+                        currentUser ?
+                            currentUser.roles[0].authority == "ROLE_USER" ?
+                                <ul className="navbar-nav" style={{marginRight: "10px"}}>
+                                    <li className="nav-item mx-auto">
+                                        <input
+                                            className="form-control"
+                                            type="search"
+                                            placeholder="tìm kiếm phòng"
+                                            aria-label="Search"
+                                            onChange={(e) => {
+                                                dispatch(searchRoom(e.target.value))
+                                            }}
+                                        />
+                                    </li>
+                                </ul>
+                                : <ul>
+                                </ul>
+                            : <ul className="navbar-nav" style={{marginRight: "10px"}}>
+                                <li className="nav-item mx-auto">
+                                    <input
+                                        className="form-control"
+                                        type="search"
+                                        placeholder="tìm kiếm phòng"
+                                        aria-label="Search"
+                                        onChange={(e) => {
+                                            dispatch(searchRoom(e.target.value))
+                                        }}
+                                    />
+                                </li>
+                            </ul>
+                    }
                     {currentUser ? (
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit"
                                 onClick={handleLogoutClick}>Đăng Xuất</button>

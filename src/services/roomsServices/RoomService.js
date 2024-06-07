@@ -27,6 +27,7 @@ export const editRooms = createAsyncThunk(
     "rooms/editRooms",
     async ({id, values}) => {
         const res = await customAxios.put(`rooms/${id}`, values)
+        console.log(res)
         return res.data
     }
 )

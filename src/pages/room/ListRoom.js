@@ -2,23 +2,28 @@ import logo from '../../components/Logo Đại Học Giao Thông Vận Tải - U
 import './ListRoom.css'
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addRooms, getRooms} from "../../services/roomsServices/RoomService";
-import {useEffect, useState} from "react";
+import {addRooms, getRooms, searchRoom} from "../../services/roomsServices/RoomService";
+import React, {useEffect, useState} from "react";
 import PersonInRoom from "./PersonInRoom";
-import {setCheckShow, setCheckShowRoom} from "../../services/usersServices/UserService";
+import {searchUser, setCheckShow, setCheckShowRoom} from "../../services/usersServices/UserService";
 import {getUserRoomByRoomId} from "../../services/userRoomServices/userRoomService";
 
 export default function ListRoom() {
     let dispatch = useDispatch()
     let navigate = useNavigate()
     const checkShowRoom = useSelector(state => state.user.checkShowRoom);
+    const listSearchRooms = useSelector(state => state.rooms.listRoomsSearch);
     let rooms = useSelector(state => {
+        if (listSearchRooms && listSearchRooms.length > 0 ){
+            return listSearchRooms
+        }
         return state.rooms.rooms
     })
     const [currentPage, setCurrentPage] = useState(1);
     const [roomsPerPage] = useState(6);
     useEffect(() => {
         dispatch(getRooms())
+        dispatch(searchRoom());
     }, []);
     let handleCreateBill = (id) => {
         navigate(`/admin/room/create-bill/${id}`)
@@ -31,13 +36,27 @@ export default function ListRoom() {
     return (
         <>
             <div className={`d-flex align-items-center`}>
+                <div className="container-fluid d-flex">
                 <h2>Danh Sách Phòng</h2>
-                <button className="btn btn-outline-primary m-2" onClick={() => {
+                    <ul>
+                        <input
+                            className="form-control"
+                            type="search"
+                            placeholder="tìm kiếm phòng"
+                            aria-label="Search"
+                            onChange={(e) => {
+                                dispatch(searchRoom(e.target.value))
+                            }}
+                        />
+                    </ul>
+                </div>
+                <button className="btn btn-outline-primary " onClick={() => {
                     let values = {}
                     dispatch(addRooms({values})).then(data => {
+                        console.log(data.payload)
                         navigate(`/admin/room/add/${data.payload.id}`)
                     })
-                }}>Thêm Mới
+                }}>Thêm Phòng Mới
                 </button>
             </div>
             <div className={`justify-content-center align-items-center pt-2`}>

@@ -128,6 +128,7 @@ export default function Rent() {
                                     </div>
                                     <div className="col-lg-12 pt-2">
                                         <span>Số Người đang ở hiện tại: {room.currentPresent}</span>
+                                        <br/>
                                         {
                                             userInRoom.length > 0 &&
                                             <>

@@ -15,8 +15,6 @@ export default function AddRoom() {
     let [url, setUrl] = useState('')
     let [listDevice, setListDevice] = useState([])
     let [roomType, setRoomType] = useState('Nam')
-    console.log(roomType)
-    console.log(url)
     let room = useSelector(state => {
         if (id) {
             return state.rooms.rooms.find(room => room.id == id)
@@ -34,36 +32,35 @@ export default function AddRoom() {
     }, [])
     let handleAdd = (values) => {
         if (!values.name || !values.maxCurrent || !values.description || !values.price) {
-            alert('Xin hãy điền đầy đủ thông tin')
-            return  ;
-        }
-        else {
-            values = {...values, img: url, type: roomType}
+            return alert('Xin hãy điền đầy đủ thông tin');
+        } else {
+            values = {...values, img: !url ? values.img : url, type: roomType}
             dispatch(editRooms({id: values.id, values}))
             if (listDevice) {
-                for (const item of listDevice) {
+                for (let i = 0; i < listDevice.length; i++) {
+                    const item = listDevice[i];
                     let data = {
                         room: {
                             id: values.id
                         },
                         device: {
                             id: item
-                        }
+                        },
+                        quantity: document.getElementById('d' + item).value
                     }
-                    dispatch(addRoomDevice({values: data}))
+                    dispatch(addRoomDevice({ values: data }));
                 }
             }
-            navigate(`/admin/room`)
+            // navigate(`/admin/room`)
         }
     }
-
     return (
         <>
             <Formik initialValues={room} onSubmit={values => {
                 handleAdd(values)
             }} enableReinitialize={true}>
                 <Form>
-                    <div className="row justify-content-center pt-2">
+                    <div className="row justify-content-center pt-2" style={{marginTop: 100}}>
                         <div className="col-6">
                             <div className="form-group row">
                                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Tên Phòng</label>
@@ -107,21 +104,28 @@ export default function AddRoom() {
                                         {
                                             devices ?
                                                 devices.map(device => (
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox"
-                                                               value={device.id}
-                                                               id="defaultCheck1"
-                                                               onChange={(event) => {
-                                                                   event.target.checked ?
-                                                                       setListDevice([...listDevice, device.id])
-                                                                       :
-                                                                       setListDevice(listDevice.filter(id => id != device.id))
-                                                               }}/>
-                                                        <label className="form-check-label"
-                                                               htmlFor={`checkbox-${device.id}`}>
-                                                            {device.name}
-                                                        </label>
-                                                    </div>
+                                                    <>
+                                                        <div className="col-6">
+                                                            <div className="form-check">
+                                                                <input className="form-check-input" type="checkbox"
+                                                                       value={device.id}
+                                                                       id="defaultCheck1"
+                                                                       onChange={(event) => {
+                                                                           event.target.checked ?
+                                                                               setListDevice([...listDevice, device.id])
+                                                                               :
+                                                                               setListDevice(listDevice.filter(id => id != device.id))
+                                                                       }}/>
+                                                                <label className="form-check-label"
+                                                                       htmlFor={`checkbox-${device.id}`}>
+                                                                    {device.name}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <input type="number" id={'d' + device.id}/>
+                                                        </div>
+                                                    </>
                                                 ))
                                                 :
                                                 <>
@@ -137,7 +141,7 @@ export default function AddRoom() {
                                 {
                                     room &&
                                     <img src={!url ? !room.img ? a : room.img : url} alt="room-img"
-                                         style={{objectFit: "cover", aspectRatio: `1`,width:640,height:640}}/>
+                                         style={{objectFit: "cover", aspectRatio: `1`, width: 200, height: 200}}/>
                                 }
                             </div>
                             <FireUpload onUpload={(uploadUrl) => {

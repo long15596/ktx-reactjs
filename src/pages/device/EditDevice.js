@@ -32,12 +32,12 @@ export default function EditDevice() {
                     </>
                     :
                     <>
-                        <div className="row">
+                        <div className="row" style={{paddingTop:'78px', paddingBottom: '78px'}}>
                             <div className="d-flex justify-content-center"></div>
                             <div className="offset-3 col-6">
                                 <div className={`d-flex justify-content-center`}>
                                     <img src={!url ? device.img : url} alt="room-img"
-                                         style={{objectFit: "cover", aspectRatio: `1`}}/>
+                                         style={{objectFit: "cover", aspectRatio: `1` , height:180, width:180}}/>
                                 </div>
                                 <FireUpload onUpload={(onUpload) => {
                                     setUrl(onUpload)
