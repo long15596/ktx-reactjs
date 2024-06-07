@@ -77,30 +77,33 @@ export default function Request() {
         } else if (values.password === '') {
             console.log(values.gender)
             showError('Không được để trống mật khẩu');
-        }
-        else if (values.gender === '' || values.gender == "Lựa chọn") {
+        } else if (values.gender === '' || values.gender == "Lựa chọn") {
             showError('Không được để trống giới tính');
-        }
-        else {
+        } else {
             dispatch(addProfile({values})).then((data) => {
-                console.log(data.payload)
-                    if (data.payload === "Username existed") {
-                        showError('Tài khoản đã tồn tại');
-                    } else {
-                        showSuccess('Đăng ký thành công');
-                        const valuesMoi = {
-                            user: {
-                                id: data.payload.id
-                            },
-                            room: choiceRoom,
-                            startDate: currentDateFormatted,
-                            endDate: nextMonthSameDay
-                        }
-                        dispatch(addUserRoom({values: valuesMoi}))
-                        setTimeout(async () => {
-                            navigate(`/`);
-                        }, 1500);
+                console.log(data.payload === 'Phone existed')
+                console.log(data.payload === 'IdentificationCard existed')
+                if (data.payload === 'Phone existed') {
+                    showError('SDT đã tồn tại');
+                } else if (data.payload === 'IdentificationCard existed') {
+                    showError('CCCD đã tồn tại');
+                } else if (data.payload === "Username existed") {
+                    showError('Tài khoản đã tồn tại');
+                } else {
+                    showSuccess('Đăng ký thành công');
+                    const valuesMoi = {
+                        user: {
+                            id: data.payload.id
+                        },
+                        room: choiceRoom,
+                        startDate: currentDateFormatted,
+                        endDate: nextMonthSameDay
                     }
+                    dispatch(addUserRoom({values: valuesMoi}))
+                    setTimeout(async () => {
+                        navigate(`/`);
+                    }, 1500);
+                }
             })
 
 
@@ -112,7 +115,7 @@ export default function Request() {
         username: Yup.string()
             .matches(/^[0-9]{9}$/, 'Mã sinh viên phải là 9 chữ số')
             .required('Không được để trống mã sinh viên'),
-        identificationCard : Yup.string()
+        identificationCard: Yup.string()
             .matches(/^[0-9]{12}$/, 'CCCD phải là 12 số')
             .required('Không được để trống số CCCD'),
         phone: Yup.string()
@@ -126,20 +129,20 @@ export default function Request() {
         <>
             <div className="container">
                 <Formik onSubmit={(values) => {
-                        handleAdd(values)
-                    }}
-                    validationSchema={validationSchema}
-                    initialValues={{
-                        username: "",
-                        password: "",
-                        dateOfBirth: '',
-                        identificationCard: '',
-                        address: '',
-                        clazz: '',
-                        phone: '',
-                        gender: gender,
-                        img: url
-                    }}>
+                    handleAdd(values)
+                }}
+                        validationSchema={validationSchema}
+                        initialValues={{
+                            username: "",
+                            password: "",
+                            dateOfBirth: '',
+                            identificationCard: '',
+                            address: '',
+                            clazz: '',
+                            phone: '',
+                            gender: gender,
+                            img: url
+                        }}>
                     {({errors, touched}) => (
                         <Form className={"mt-3"}>
                             <div className="row">
@@ -176,7 +179,8 @@ export default function Request() {
                                             <div><p className={'text-danger'}>{errors.identificationCard}</p></div>
                                         )}
 
-                                    </div>  <div className="form-group">
+                                    </div>
+                                    <div className="form-group">
                                         <label htmlFor="inputName">Tên Sinh Viên</label>
                                         <Field type="text" name={"name"} className="form-control"
                                                id="name"/>
