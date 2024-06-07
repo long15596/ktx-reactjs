@@ -52,11 +52,6 @@ export default function Footer() {
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-md-12 copy">
-                                <p className="text-center">© 2024 Ký túc xá Trường Đại học Giao thông Vận tải. Bản quyền thuộc về Thương.</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </footer>

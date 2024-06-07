@@ -14,3 +14,10 @@ export const addRoomDevice = createAsyncThunk(
         return res.data
     }
 )
+export const deleteRoomDevice = createAsyncThunk(
+    "roomDevices/deleteRoomDevice",
+    async ({id}) => {
+        const res = await customAxios.delete(`rooms-device/${id}`)
+        return res.data
+    }
+)

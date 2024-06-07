@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
 import {editRooms, getRooms} from "../../services/roomsServices/RoomService";
 import {getDevices} from "../../services/devicesService/DiveceService";
-import {addRoomDevice, getRoomDevice} from "../../services/roomDeviceService/roomDeviceService";
+import {addRoomDevice, deleteRoomDevice, getRoomDevice} from "../../services/roomDeviceService/roomDeviceService";
 
 export default function AddRoom() {
     let {id} = useParams()
@@ -30,12 +30,13 @@ export default function AddRoom() {
         dispatch(getDevices())
         dispatch(getRoomDevice({id: !id ? room.id : id}))
     }, [])
-    let handleAdd = (values) => {
+    let handleAdd = async (values) => {
         if (!values.name || !values.maxCurrent || !values.description || !values.price) {
             return alert('Xin hãy điền đầy đủ thông tin');
         } else {
             values = {...values, img: !url ? values.img : url, type: roomType}
-            dispatch(editRooms({id: values.id, values}))
+            await dispatch(editRooms({id: values.id, values}))
+            await dispatch(deleteRoomDevice({id: values.id}))
             if (listDevice) {
                 for (let i = 0; i < listDevice.length; i++) {
                     const item = listDevice[i];
@@ -46,9 +47,8 @@ export default function AddRoom() {
                         device: {
                             id: item
                         },
-                        quantity: document.getElementById('d' + item).value
                     }
-                    dispatch(addRoomDevice({ values: data }));
+                    await dispatch(addRoomDevice({values: data}));
                 }
             }
             // navigate(`/admin/room`)
@@ -121,9 +121,6 @@ export default function AddRoom() {
                                                                     {device.name}
                                                                 </label>
                                                             </div>
-                                                        </div>
-                                                        <div className="col-6">
-                                                            <input type="number" id={'d' + device.id}/>
                                                         </div>
                                                     </>
                                                 ))

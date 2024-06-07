@@ -54,7 +54,13 @@ export default function Rent() {
         return state.rooms.room
     })
     const roomDevices = useSelector(state => {
-        return state.roomDevices.roomDevices
+        let list = state.roomDevices.roomDevices;
+        const uniqueList = list.filter((item, index, self) =>
+                index === self.findIndex((t) => (
+                    t.id === item.id
+                ))
+        );
+        return uniqueList;
     })
     const currentUser = useSelector(state => {
         return state.user.currentUser
@@ -102,6 +108,11 @@ export default function Rent() {
 
     return (
         <>
+            {
+
+
+                console.log(userInRoom)
+            }
             <div className="container">
                 <div className="col-lg-10 border p-3 main-section bg-white">
                     <div className="row hedding m-0 pl-3 pt-0 pb-3">
@@ -133,9 +144,9 @@ export default function Rent() {
                                             userInRoom.length > 0 &&
                                             <>
                                             {
-                                                userInRoom.map(item => (
+                                                userInRoom.map((item,index) => (
                                                     <>
-                                                        <span>{item.user.name}</span>
+                                                        <span>{index+1}. {item.user.name}</span>
                                                         <br/>
                                                     </>
                                                 ))
@@ -160,7 +171,7 @@ export default function Rent() {
                                                         {
                                                             roomDevices.map((device, index) => (
                                                                 <>
-                                                                    <span>{device.device.name}: {device.device.quantity}</span>
+                                                                    <span>{index+1}.{device.device.name}</span>
                                                                     <br/>
                                                                 </>
                                                             ))
