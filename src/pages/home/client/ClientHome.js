@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {getRooms} from "../../../services/roomsServices/RoomService";
+import {getRooms, searchRoom} from "../../../services/roomsServices/RoomService";
 import './client.css'
 import {Link} from "react-router-dom";
 import {login} from "../../../services/usersServices/UserService";
 
 
 export default function ClientHome() {
-    const dispatch = useDispatch();
-    const [visibleRooms, setVisibleRooms] = useState(6);
-    const rooms = useSelector(state => {
+    let dispatch = useDispatch();
+    let [visibleRooms, setVisibleRooms] = useState(6);
+    let searchRooms = useSelector(state => {
+        return state.rooms.listRoomsSearch
+    })
+    let rooms = useSelector(state => {
+        if (searchRooms && searchRooms.length > 0 ) {
+            return searchRooms
+        }
         return  state.rooms.rooms.filter((room)=> room.maxCurrent > room.currentPresent)
     });
-    const currentUser = localStorage.getItem("currentUser")
-    console.log(rooms)
+    let currentUser = localStorage.getItem("currentUser")
+
     useEffect(() => {
         dispatch(getRooms());
+        dispatch(searchRoom())
     }, []);
-    const handleShowMore = () => {
+    let handleShowMore = () => {
         setVisibleRooms(prev => prev + 6);
     };
 

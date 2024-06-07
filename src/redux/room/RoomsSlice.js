@@ -1,11 +1,19 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addRooms, deleteRoom, editRooms, getOneRoom, getRooms} from "../../services/roomsServices/RoomService";
+import {
+    addRooms,
+    deleteRoom,
+    editRooms,
+    getOneRoom,
+    getRooms,
+    searchRoom
+} from "../../services/roomsServices/RoomService";
 
 
 const initialState = {
     rooms: [],
     room:{},
-    newRoom: {}
+    newRoom: {},
+    listRoomsSearch:[]
 }
 const roomsSlice = createSlice({
     name: 'rooms',
@@ -28,6 +36,9 @@ const roomsSlice = createSlice({
         })
         builder.addCase(deleteRoom.fulfilled, (state, action) => {
             state.rooms = action.payload
+        });
+        builder.addCase(searchRoom.fulfilled, (state, action) => {
+            state.listRoomsSearch = action.payload
         });
 
     }

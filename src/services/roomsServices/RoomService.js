@@ -38,3 +38,10 @@ export const deleteRoom = createAsyncThunk(
         return res.data
     }
 )
+export const searchRoom = createAsyncThunk(
+    "rooms/searchRoom",
+    async (value) => {
+        const res = await customAxios.get(`rooms?name=${value}`)
+        return res.data
+    }
+)
