@@ -1,9 +1,7 @@
 import {Link} from "react-router-dom";
-import a from "../room/img.png";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {getDevices} from "../../services/devicesService/DiveceService";
-import {useNavigate} from "react-router";
 
 export default function ListDevice(){
     let dispatch = useDispatch()
@@ -26,6 +24,7 @@ export default function ListDevice(){
                         <th scope="col">#</th>
                         <th scope="col">Ảnh</th>
                         <th scope="col">Tên Thiết Bị</th>
+                        <th scope="col">Số Lượng</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -37,6 +36,7 @@ export default function ListDevice(){
                                     <th scope="row">{index + 1}</th>
                                     <td><img src={device.img} id={`img-table`} alt={`img-devices`}/></td>
                                     <td>{device.name}</td>
+                                    <td>{device.quantity}</td>
                                     <td>
                                         <Link to={`edit/${device.id}`} className="btn btn-outline-success">Sửa</Link>
                                     </td>
