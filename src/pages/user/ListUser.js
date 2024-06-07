@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {changeEnabled, getAllUserByAdmin} from "../../services/usersServices/UserService";
 import './listUser.css';
 import {Link} from "react-router-dom";
+import {searchRoom} from "../../services/roomsServices/RoomService";
 
 export default function ListUser() {
     const dispatch = useDispatch();
@@ -29,7 +30,22 @@ export default function ListUser() {
 
     return (
         <>
-            <h2>Danh Sách Sinh Viên</h2>
+            <div className="container-fluid ">
+                <h2>Danh Sách Sinh Viên</h2>
+                <ul>
+                    <li>
+                        <input
+                            className="form-control"
+                            type="search"
+                            placeholder="tìm kiếm sinh viên"
+                            aria-label="Search"
+                            onChange={(e)=>{
+                                // dispatch(searchRoom(e.target.value))
+                            }}
+                        />
+                    </li>
+                </ul>
+            </div>
             {/*<div className="container">*/}
             {/*    <div className="row">*/}
             {/*        <div className="col-12">*/}

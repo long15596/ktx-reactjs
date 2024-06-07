@@ -4,6 +4,7 @@ import logo from './Logo Đại Học Giao Thông Vận Tải - UTC.svg';
 import Login from '../pages/login/Login';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut, setCheckShow} from '../services/usersServices/UserService';
+import {searchRoom} from "../services/roomsServices/RoomService";
 
 export default function NavBar() {
     const location = useLocation();
@@ -72,6 +73,20 @@ export default function NavBar() {
                             </>
                         )}
                     </ul>
+                    <ul className="navbar-nav" style={{marginRight:"10px"}}>
+                        <li className="nav-item mx-auto">
+                            <input
+                                className="form-control"
+                                type="search"
+                                placeholder="tìm kiếm phòng"
+                                aria-label="Search"
+                                onChange={(e)=>{
+                                    dispatch(searchRoom(e.target.value))
+                                }}
+                            />
+                        </li>
+                    </ul>
+
 
                     {currentUser ? (
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit"
