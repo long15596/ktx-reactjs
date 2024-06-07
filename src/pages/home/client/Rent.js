@@ -4,10 +4,10 @@ import {useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {getRoomDevice} from "../../../services/roomDeviceService/roomDeviceService";
 import {getOneRoom} from "../../../services/roomsServices/RoomService";
-import {addUserRoom, getUserRoom} from "../../../services/userRoomServices/userRoomService";
+import {addUserRoom, getUserRoom, getUserRoomByRoomId} from "../../../services/userRoomServices/userRoomService";
 import Swal from "sweetalert2";
-import {getProfile} from "../../../services/usersServices/UserService";
-import Footer from "../../../components/Footer";
+import {getProfile, setCheckShowRoom} from "../../../services/usersServices/UserService";
+import PersonInRoom from "../../room/PersonInRoom";
 
 const currentDate = new Date();
 
@@ -42,7 +42,6 @@ export default function Rent() {
             icon: 'error', title: `<span class="error-message">${errorMessage}</span>`,
         });
     };
-
     const showSuccess = (successMessage) => {
         Toast.fire({
             icon: 'success', title: successMessage,
@@ -54,7 +53,6 @@ export default function Rent() {
     const room = useSelector(state => {
         return state.rooms.room
     })
-
     const roomDevices = useSelector(state => {
         return state.roomDevices.roomDevices
     })
@@ -67,13 +65,15 @@ export default function Rent() {
     const userRoom = useSelector(state => {
         return state.userRooms.userRoomsAll
     })
+    let userInRoom = useSelector(state => state.userRooms.userRoomsByRoom)
     useEffect(() => {
         dispatch(getProfile(currentUser.id))
         dispatch(getOneRoom(id))
         dispatch(getRoomDevice({id}))
         dispatch(getUserRoom())
+        dispatch(getUserRoomByRoomId({id: room.id}))
     }, []);
-
+    console.log("1",userInRoom)
     function handleRent() {
         const values = {user, room, startDate: currentDateFormatted, endDate: nextMonthSameDay}
         let list = userRoom
@@ -127,14 +127,23 @@ export default function Rent() {
                                         <hr className="p-0 m-0"/>
                                     </div>
                                     <div className="col-lg-12 pt-2">
-                                        <span
-                                            className="m-0 p-0 text-sm">Số Người đang ở hiện tại: {room.currentPresent}</span>
+                                        <span>Số Người đang ở hiện tại: {room.currentPresent}</span>
+                                        {
+                                            userInRoom.length > 0 &&
+                                            <>
+                                            {
+                                                userInRoom.map(item => (
+                                                    <>
+                                                        <span>{item.user.name}</span>
+                                                        <br/>
+                                                    </>
+                                                ))
+                                            }
+                                            </>
+                                        }
                                     </div>
-                                    <div className="col-lg-12">
+                                    <div className="col-lg-12 pt-1">
                                         <span className="m-0 p-0 text-sm">Số Người tối đa: {room.maxCurrent}</span>
-                                    </div>
-                                    <div className="col-lg-12">
-                                        <span className="m-0 p-0 text-sm">Kiểu phòng: Dành cho {room.type}</span>
                                     </div>
                                     <div className="col-lg-12 pt-2">
                                         <div>
