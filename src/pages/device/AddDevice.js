@@ -29,7 +29,7 @@ export default function AddDevice() {
                     }}></FireUpload>
                     <Formik initialValues={{
                         name: "",
-                        quantity: 0,
+                        quantity: "",
                         img: url
                     }} onSubmit={values => {
                         handleAdd(values)

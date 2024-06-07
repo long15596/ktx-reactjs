@@ -51,7 +51,7 @@ export default function AddRoom() {
                     await dispatch(addRoomDevice({values: data}));
                 }
             }
-            // navigate(`/admin/room`)
+            navigate(`/admin/room`)
         }
     }
     return (
