@@ -15,31 +15,37 @@ export default function AddDevice() {
         dispatch(addDevices({values}))
         navigate(`/admin/device`)
     }
-    return(
+    return (
         <>
             <div className="row">
                 <div className="d-flex justify-content-center"></div>
                 <div className="offset-3 col-6">
                     <div className={`d-flex justify-content-center`}>
                         <img src={!url ? a : url} alt="room-img"
-                             style={{objectFit: "cover", aspectRatio: `1`, width:640,height:640}}/>
+                             style={{objectFit: "cover", aspectRatio: `1`, width: 640, height: 640}}/>
                     </div>
                     <FireUpload onUpload={(onUpload) => {
                         setUrl(onUpload)
                     }}></FireUpload>
                     <Formik initialValues={{
                         name: "",
+                        quantity: 0,
                         img: url
                     }} onSubmit={values => {
                         handleAdd(values)
                     }}>
                         <Form>
-                            <div className="input-group mb-3">
-                                <Field type="text" className="form-control" placeholder="Tên Thiết Bị" aria-label="Recipient's username" aria-describedby="button-addon2" name={`name`}/>
-                                <div className="input-group-append">
-                                    <button className="btn btn-outline-success" id="button-addon2">Thêm</button>
-                                </div>
+                            <div className="form-group">
+                                <label htmlFor="exampleInputEmail1">Tên Thiết Bị</label>
+                                <Field type="text" className="form-control" id="exampleInputEmail1"
+                                       aria-describedby="emailHelp" name={`name`}/>
                             </div>
+                            <div className="form-group">
+                                <label htmlFor="exampleInputPassword1">Số Lượng</label>
+                                <Field type="number" className="form-control" id="exampleInputPassword1"
+                                       name={`quantity`}/>
+                            </div>
+                            <button type="submit" className="btn btn-outline-success">Thêm</button>
                         </Form>
                     </Formik>
                 </div>
