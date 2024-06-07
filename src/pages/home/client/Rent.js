@@ -137,17 +137,36 @@ export default function Rent() {
                                         <span className="m-0 p-0 text-sm">Kiểu phòng: Dành cho {room.type}</span>
                                     </div>
                                     <div className="col-lg-12 pt-2">
-                                        <h5>Mô tả</h5>
-                                        <span>{room.description}</span>
-                                        <br/>
-                                        <span>Thiết bị: {roomDevices.map(roomDevices => {
-                                            return (roomDevices.device.name ? roomDevices.device.name + ", " : "Không có thiết bị")
-                                        })}</span>
-                                        <hr className="m-0 pt-2 mt-2"/>
+                                        <div>
+                                            <h5>Mô tả</h5>
+                                            <span>{room.description}</span>
+                                            <br/>
+                                        </div>
+                                        <div className={`pt-2`}>
+                                            <h5>Thiết bị</h5>
+                                            {
+                                                roomDevices ?
+                                                    <>
+                                                        {
+                                                            roomDevices.map((device, index) => (
+                                                                <>
+                                                                    <span>{device.device.name}: {device.device.quantity}</span>
+                                                                    <br/>
+                                                                </>
+                                                            ))
+                                                        }
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <span>Không có thiết bị</span>
+                                                    </>
+                                            }
+                                            <hr className="m-0 pt-2 mt-2"/>
+                                        </div>
                                     </div>
                                     <div className="col-lg-12">
-                                        <p className="tag-section"><strong>Tag : </strong><Link to={"#"}
-                                                                                                href="">{room.type}</Link>
+                                        <p className="tag-section"><strong>Loại Phòng : </strong><Link to={"#"}
+                                                                                                       href="">{room.type}</Link>
                                         </p>
                                     </div>
                                     <div className="col-lg-12 mt-3">
