@@ -27,7 +27,7 @@ function App() {
                     <NavBar></NavBar>
                 </div>
             </div>
-            <div className="row">
+            <div className="row pt-3">
                 <div className="col-12">
                     <Routes>
                         <Route path={``} element={<Home/>}>

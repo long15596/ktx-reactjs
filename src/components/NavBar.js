@@ -61,7 +61,7 @@ export default function NavBar() {
                                             <Link className="nav-link" to={`profile`}>Thông tin cá nhân</Link>
                                         </li>
                                         <li className={`nav-item ${location.pathname === '/invoice' ? 'active' : ''}`}>
-                                            <Link className="nav-link" to={`invoice`}>Hóa Đơn</Link>
+                                            <Link className="nav-link" to={`invoice`}>Hợp Đồng</Link>
                                         </li>
                                     </>
                                 ) : (
