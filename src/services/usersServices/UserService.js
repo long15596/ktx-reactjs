@@ -61,3 +61,11 @@ export const changeEnabled = createAsyncThunk(
          await customAxios.put(`admin/${id}`)
     }
 )
+export const searchUser = createAsyncThunk(
+    "user/searchUser",
+    async (value)=>{
+       const res = await customAxios.get(`/admin/users?username=${value}`)
+        console.log(res.data)
+        return res.data
+    }
+)
