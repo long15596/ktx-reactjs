@@ -11,6 +11,7 @@ export const getUserRoomByRoomId = createAsyncThunk(
     "userRooms/getUserRoomByRoomId",
     async ({id}) => {
         const res = await customAxios.get(`users-room/${id}`)
+        console.log(res.data)
         return res.data
     })
 export const getUserRoom = createAsyncThunk(

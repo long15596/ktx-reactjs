@@ -77,15 +77,14 @@ export default function Rent() {
         dispatch(getOneRoom(id))
         dispatch(getRoomDevice({id}))
         dispatch(getUserRoom())
-        dispatch(getUserRoomByRoomId({id: room.id}))
+        dispatch(getUserRoomByRoomId({id: id}))
     }, []);
-    console.log("1",userInRoom)
+
     function handleRent() {
         const values = {user, room, startDate: currentDateFormatted, endDate: nextMonthSameDay}
         let list = userRoom
         let roomCheck = {}
         let check = false
-        console.log(list)
         if (user && list.length > 0 && list[0].user) {
             for (let i = 0; i < list.length; i++) {
                 if (list[i].user.id === user.id) {
@@ -99,20 +98,15 @@ export default function Rent() {
         } else {
             showSuccess("Bạn thuê thành công!")
             setTimeout(async () => {
-                dispatch(addUserRoom({values}))
-                navigate(`/`);
-                window.location.reload()
+                await dispatch(addUserRoom({values}))
+                await navigate(`/`);
+                await window.location.reload()
             }, 1500)
         }
     }
 
     return (
         <>
-            {
-
-
-                console.log(userInRoom)
-            }
             <div className="container">
                 <div className="col-lg-10 border p-3 main-section bg-white">
                     <div className="row hedding m-0 pl-3 pt-0 pb-3">
@@ -143,14 +137,14 @@ export default function Rent() {
                                         {
                                             userInRoom.length > 0 &&
                                             <>
-                                            {
-                                                userInRoom.map((item,index) => (
-                                                    <>
-                                                        <span>{index+1}. {item.user.name}</span>
-                                                        <br/>
-                                                    </>
-                                                ))
-                                            }
+                                                {
+                                                    userInRoom.map((item, index) => (
+                                                        <>
+                                                            <span>{index + 1}. {item.user.name}</span>
+                                                            <br/>
+                                                        </>
+                                                    ))
+                                                }
                                             </>
                                         }
                                     </div>
@@ -171,7 +165,7 @@ export default function Rent() {
                                                         {
                                                             roomDevices.map((device, index) => (
                                                                 <>
-                                                                    <span>{index+1}.{device.device.name}</span>
+                                                                    <span>{index + 1}.{device.device.name}</span>
                                                                     <br/>
                                                                 </>
                                                             ))
