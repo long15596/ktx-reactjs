@@ -7,6 +7,8 @@ import {useNavigate, useParams} from "react-router";
 import {editRooms, getRooms} from "../../services/roomsServices/RoomService";
 import {getDevices} from "../../services/devicesService/DiveceService";
 import {addRoomDevice, deleteRoomDevice, getRoomDevice} from "../../services/roomDeviceService/roomDeviceService";
+import Swal from "sweetalert2";
+import {addUserRoom} from "../../services/userRoomServices/userRoomService";
 
 export default function AddRoom() {
     let {id} = useParams()
@@ -30,12 +32,36 @@ export default function AddRoom() {
         dispatch(getDevices())
         dispatch(getRoomDevice({id: !id ? room.id : id}))
     }, [])
+    const Toast = Swal.mixin({
+        toast: true, position: 'top', iconColor: 'white', customClass: {
+            popup: 'colored-toast',
+        }, showConfirmButton: false, timer: 1500, timerProgressBar: true,
+    });
+    const showError = (errorMessage) => {
+        Toast.fire({
+            icon: 'error', title: `<span class="error-message">${errorMessage}</span>`,
+        });
+    };
+    const showSuccess = (successMessage) => {
+        Toast.fire({
+            icon: 'success', title: successMessage,
+        });
+    };
     let handleAdd = async (values) => {
         if (!values.name || !values.maxCurrent || !values.description || !values.price) {
-            return alert('Xin hãy điền đầy đủ thông tin');
+            showError("Xin hãy điền đầy đủ thông tin")
         } else {
             values = {...values, img: !url ? values.img : url, type: roomType}
-            await dispatch(editRooms({id: values.id, values}))
+            await dispatch(editRooms({id: values.id, values})).then((i)=>{
+                if (i.payload === "Room name existed"){
+                    showError("Tên phòng đã tồn tại")
+                }else {
+                    showSuccess("Thành công")
+                    setTimeout(async () => {
+                        await navigate(`/admin/room`)
+                    }, 1500)
+                }
+            })
             await dispatch(deleteRoomDevice({id: values.id}))
             if (listDevice) {
                 for (let i = 0; i < listDevice.length; i++) {
@@ -51,7 +77,7 @@ export default function AddRoom() {
                     await dispatch(addRoomDevice({values: data}));
                 }
             }
-            navigate(`/admin/room`)
+
         }
     }
     return (

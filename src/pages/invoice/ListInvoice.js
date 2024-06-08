@@ -18,7 +18,6 @@ export default function ListInvoice() {
                 newList.push({...invoice, isOverdue: false})
             }
         });
-        console.log(newList)
         return newList
     });
 

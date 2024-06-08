@@ -6,8 +6,7 @@ import {getRoomDevice} from "../../../services/roomDeviceService/roomDeviceServi
 import {getOneRoom} from "../../../services/roomsServices/RoomService";
 import {addUserRoom, getUserRoom, getUserRoomByRoomId} from "../../../services/userRoomServices/userRoomService";
 import Swal from "sweetalert2";
-import {getProfile, setCheckShowRoom} from "../../../services/usersServices/UserService";
-import PersonInRoom from "../../room/PersonInRoom";
+import {getProfile } from "../../../services/usersServices/UserService";
 
 const currentDate = new Date();
 
