@@ -24,7 +24,6 @@ export default function ListDevice(){
                         <th scope="col">#</th>
                         <th scope="col">Ảnh</th>
                         <th scope="col">Tên Thiết Bị</th>
-                        <th scope="col">Số Lượng</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -36,7 +35,6 @@ export default function ListDevice(){
                                     <th scope="row">{index + 1}</th>
                                     <td><img src={device.img} id={`img-table`} alt={`img-devices`}/></td>
                                     <td>{device.name}</td>
-                                    <td>{device.quantity}</td>
                                     <td>
                                         <Link to={`edit/${device.id}`} className="btn btn-outline-success">Sửa</Link>
                                     </td>

@@ -40,11 +40,6 @@ export default function AddDevice() {
                                 <Field type="text" className="form-control" id="exampleInputEmail1"
                                        aria-describedby="emailHelp" name={`name`}/>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="exampleInputPassword1">Số Lượng</label>
-                                <Field type="number" className="form-control" id="exampleInputPassword1"
-                                       name={`quantity`}/>
-                            </div>
                             <button type="submit" className="btn btn-outline-success">Thêm</button>
                         </Form>
                     </Formik>

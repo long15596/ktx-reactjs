@@ -4,10 +4,12 @@ import {getRooms, searchRoom} from "../../../services/roomsServices/RoomService"
 import './client.css'
 import {Link} from "react-router-dom";
 import {login} from "../../../services/usersServices/UserService";
+import {useNavigate} from "react-router";
 
 
 export default function ClientHome() {
     let dispatch = useDispatch();
+    let navigate = useNavigate();
     let [visibleRooms, setVisibleRooms] = useState(6);
     let searchRooms = useSelector(state => {
         return state.rooms.listRoomsSearch
@@ -18,7 +20,6 @@ export default function ClientHome() {
         }
         return  state.rooms.rooms.filter((room)=> room.maxCurrent > room.currentPresent)
     });
-    let currentUser = localStorage.getItem("currentUser")
 
     useEffect(() => {
         dispatch(getRooms());
@@ -27,6 +28,11 @@ export default function ClientHome() {
     let handleShowMore = () => {
         setVisibleRooms(prev => prev + 6);
     };
+    let handleNavigate = (id)=>{
+            navigate(`rent/${id}`)
+            // <Link to={currentUser !== null ? `rent/${room.id}`: "request"} className="btn btn-outline-primary">Thông tin!!!</Link>
+    }
+
 
     return (
         <>
@@ -47,15 +53,14 @@ export default function ClientHome() {
                                                 className="card-img-top" alt="..."
                                             />
                                             <div className="card-body">
-                                                <h5 className="card-title">{room.name}</h5>
+                                                <h5 className="card-title" onClick={()=>{
+                                                    handleNavigate(room.id)
+                                                }}>{room.name}</h5>
                                                 <p className="card-text">Số người: {room.currentPresent}/{room.maxCurrent}</p>
                                                 <p className="card-text">Kiểu phòng: Dành cho {room.type}</p>
                                                 <p className="card-text">Mô tả: {room.description}</p>
                                                 <p className="card-text">Giá: {room.price}</p>
-                                                <div className={'d-flex justify-content-end'}>
 
-                                                    <Link to={currentUser !== null ? `rent/${room.id}`: "request"} className="btn btn-outline-primary">Thuê ngay!!!</Link>
-                                                </div>
 
                                             </div>
                                         </div>
