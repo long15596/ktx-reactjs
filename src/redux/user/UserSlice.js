@@ -22,14 +22,19 @@ const initialState = {
     profile: {},
     listUserSearch: [],
     checkShowRoom: false,
+    err:""
 }
 const userSlice = createSlice({
     name: 'user',
     initialState,
     extraReducers: builder => {
         builder.addCase(login.fulfilled, (state, action) => {
-            state.currentUser = action.payload
-            localStorage.setItem('currentUser', JSON.stringify(action.payload))
+            if (action.payload === "Tài Khoản Bị Khóa"){
+                state.err = action.payload
+            } else {
+                state.currentUser = action.payload
+                localStorage.setItem('currentUser', JSON.stringify(action.payload))
+            }
         });
         builder.addCase(setCheckShow.fulfilled, (state, action) => {
             state.checkShow = action.payload

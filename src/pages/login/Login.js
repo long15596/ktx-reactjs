@@ -1,7 +1,7 @@
 import {Field, Form, Formik} from "formik";
-import { useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import './login.css'
-import {useDispatch} from "react-redux";
+import {useDispatch, } from "react-redux";
 import {login, setCheckShow} from "../../services/usersServices/UserService";
 import Swal from "sweetalert2";
 
@@ -10,7 +10,9 @@ export default function Login() {
     const navigate = useNavigate();
     const handleLogin = async (values) => {
         await dispatch(login(values)).then(user => {
-            if (user.payload === undefined) {
+            if (user.payload === "Tài Khoản Bị Khóa") {
+                showError("Tài Khoản Bị Khóa")
+            } else if (user.payload === undefined) {
                 showError('Sai tên người dùng hoặc mật khẩu, vui lòng kiểm tra lại!');
             } else {
                 const userRoles = user.payload.roles.map(role => role.authority);
