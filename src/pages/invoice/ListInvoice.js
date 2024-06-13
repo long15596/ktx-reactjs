@@ -1,7 +1,10 @@
-import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {getInvoice} from "../../services/invoicesService/InvoiceService";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getInvoice } from '../../services/invoicesService/InvoiceService';
 import * as XLSX from 'xlsx';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import { setMonth, setYear, getYear, getMonth } from 'date-fns';
 
 export default function ListInvoice() {
     const dispatch = useDispatch();
@@ -21,12 +24,29 @@ export default function ListInvoice() {
         return newList
     });
 
+    const [showMonthSelector, setShowMonthSelector] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
         dispatch(getInvoice());
-    }, []);
+    }, [dispatch]);
+
     const exportToExcel = () => {
-        const data = invoices.map((invoice, index) => ({
+        if (!selectedDate) {
+            alert("Vui lòng chọn tháng và năm");
+            return;
+        }
+
+        const selectedMonth = getMonth(selectedDate) + 1;
+        const selectedYear = getYear(selectedDate);
+
+        const filteredInvoices = invoices.filter(invoice => {
+            const invoiceMonth = parseInt(invoice.startDate.split('/')[1]);
+            const invoiceYear = parseInt(invoice.startDate.split('/')[2]);
+            return invoiceMonth === selectedMonth && invoiceYear === selectedYear;
+        });
+
+        const data = filteredInvoices.map((invoice, index) => ({
             STT: index + 1,
             "Hợp Đồng Tháng": invoice.startDate.split('/')[1],
             "Mã Sinh Viên": invoice.user.username,
@@ -39,17 +59,45 @@ export default function ListInvoice() {
             "Hạn nộp": invoice.endDate,
             "Cảnh báo": invoice.isOverdue ? "Quá hạn" : "Chưa đến hạn"
         }));
+
         const ws = XLSX.utils.json_to_sheet(data);
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Invoices");
-        XLSX.writeFile(wb, "Danh_Sach_Hoa_Don.xlsx");
+        XLSX.utils.book_append_sheet(wb, ws, `Invoices_${selectedMonth}_${selectedYear}`);
+        XLSX.writeFile(wb, `Danh_Sach_Hoa_Don_${selectedMonth}_${selectedYear}.xlsx`);
     };
+
+    const handleMonthChange = (date) => {
+        const newDate = setYear(setMonth(new Date(), getMonth(date)), getYear(date));
+        setSelectedDate(newDate);
+    };
+
     return (
         <>
             <h2>Danh Sách Hóa Đơn</h2>
             {invoices && <div className="row d-flex justify-content-end">
+                {showMonthSelector && (
+                    <>
+                            <DatePicker
+                                selected={selectedDate}
+                                onChange={handleMonthChange}
+                                dateFormat="MM/yyyy"
+                                showMonthYearPicker
+                                showFullMonthYearPicker
+                                className="form-control"
+                                placeholderText="Chọn tháng và năm"
+                            />
+                            <button className={"btn btn-outline-primary"} onClick={exportToExcel}>
+                                Xuất file Excel
+                            </button>
+                    </>
+                )}
+                <button className={"btn btn-outline-primary"} onClick={() => setShowMonthSelector(true)}>
+                    Xuất file Excel Theo Tháng
+                </button>
                 <button className={"btn btn-outline-primary"} onClick={exportToExcel}>Xuất file Excel</button>
+
             </div>}
+
             <div className={`justify-content-center align-items-center pt-2`}>
                 <table className="table">
                     <thead>
