@@ -50,7 +50,7 @@ export default function ListUser() {
                 </ul>
             </div>
             <div className={`justify-content-center align-items-center pt-2`}>
-                <table className="table">
+                <table className="table ">
                     <thead>
                     <tr>
                         <th scope="col">#</th>

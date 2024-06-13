@@ -66,6 +66,9 @@ export default function NavBar() {
                                         <li className={`nav-item ${location.pathname === '/invoice' ? 'active' : ''}`}>
                                             <Link className="nav-link" to={`invoice`}>Hợp Đồng</Link>
                                         </li>
+                                        <li className={`nav-item ${location.pathname === '/historyInvoice' ? 'active' : ''}`}>
+                                            <Link className="nav-link" to={`historyInvoice`}>Hóa Đơn</Link>
+                                        </li>
                                     </>
                                 ) : (
                                     <li className={`nav-item ${location.pathname === '/request' ? 'active' : ''}`}>

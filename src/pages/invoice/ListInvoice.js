@@ -131,7 +131,7 @@ export default function ListInvoice() {
                 </div>
             </div>
             <div className={`justify-content-center align-items-center pt-2`}>
-                <table className="table">
+                <table className="table table-bordered">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -144,7 +144,7 @@ export default function ListInvoice() {
                         <th scope="col">Tổng tiền</th>
                         <th scope="col">Ngày tạo</th>
                         <th scope="col">Hạn nộp</th>
-                        <th></th>
+                        <th scope="col">Trạng Thái</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -161,9 +161,8 @@ export default function ListInvoice() {
                             <td>{invoice.startDate}</td>
                             <td>{invoice.endDate}</td>
                             <td>
-                                {invoice.isOverdue &&
-                                    <>Quá hạn</>
-                                }
+                                {invoice.isOverdue ? <span className="badge badge-danger">Quá hạn</span> : <span className="badge badge-success">Chưa đến hạn</span>}
+
                             </td>
                         </tr>
                     ))}

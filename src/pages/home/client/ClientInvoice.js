@@ -2,9 +2,10 @@ import logo from "../../../components/Logo Đại Học Giao Thông Vận Tải 
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
-import { useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {getUserRoomByUserId} from "../../../services/userRoomServices/userRoomService";
 import dayjs from "dayjs";
+
 export default function ClientInvoice() {
     let currentUser = useSelector(state => state.user.currentUser)
     let {id} = useParams()
@@ -14,7 +15,7 @@ export default function ClientInvoice() {
     useEffect(() => {
         if (currentUser && currentUser.roles[0].authority === "ROLE_ADMIN") {
             dispatch(getUserRoomByUserId({id}))
-        }  else  {
+        } else {
             dispatch(getUserRoomByUserId({id: currentUser.id}))
         }
     }, [])
@@ -104,9 +105,14 @@ export default function ClientInvoice() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-6">
+                            <div className="col-6 ">
                                 <div className="row d-flex justify-content-center align-items-center">
-                                    <img src={userRoom[0].room.img} alt="room-img" style={{objectFit: "cover", aspectRatio: `1`, height: `300px`, width: `300px`}}/>
+                                    <img src={userRoom[0].room.img} alt="room-img" style={{
+                                        objectFit: "cover",
+                                        aspectRatio: `1`,
+                                        height: `300px`,
+                                        width: `300px`
+                                    }}/>
                                 </div>
                                 <div className="row pt-4">
                                     <div className="col-12">
@@ -153,7 +159,7 @@ export default function ClientInvoice() {
                 </>
                 :
                 <>
-                    <p>Chưa Thuê Phòng  </p>
+                    <p>Chưa Thuê Phòng </p>
                 </>}
 
         </>
