@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getInvoice } from '../../services/invoicesService/InvoiceService';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getInvoice} from '../../services/invoicesService/InvoiceService';
 import * as XLSX from 'xlsx';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { setMonth, setYear, getYear, getMonth } from 'date-fns';
+import {setMonth, setYear, getYear, getMonth} from 'date-fns';
+import Swal from "sweetalert2";
 
 export default function ListInvoice() {
     const dispatch = useDispatch();
@@ -24,6 +25,30 @@ export default function ListInvoice() {
         return newList
     });
     const [selectedDate, setSelectedDate] = useState(null);
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+    });
+
+    const showError = (errorMessage) => {
+        Toast.fire({
+            icon: 'error',
+            title: `<span class="error-message">${errorMessage}</span>`,
+        });
+    };
+    const showSuccess = (successMessage) => {
+        Toast.fire({
+            icon: 'success',
+            title: successMessage,
+        });
+    };
 
     useEffect(() => {
         dispatch(getInvoice());
@@ -31,7 +56,6 @@ export default function ListInvoice() {
 
     const exportToExcel = () => {
         let filteredInvoices = invoices;
-
         if (selectedDate) {
             const selectedMonth = getMonth(selectedDate) + 1;
             const selectedYear = getYear(selectedDate);
@@ -44,10 +68,12 @@ export default function ListInvoice() {
         }
 
         if (filteredInvoices.length === 0) {
-            alert("Không có hóa đơn nào phù hợp để xuất file Excel");
+            showError("Không có hóa đơn nào phù hợp để xuất");
             return;
         }
-
+        else {
+            showSuccess("Xuất thành công vui lòng kiểm tra");
+        }
         const data = filteredInvoices.map((invoice, index) => ({
             STT: index + 1,
             "Hợp Đồng Tháng": invoice.startDate.split('/')[1],
@@ -71,7 +97,7 @@ export default function ListInvoice() {
     };
 
     const handleMonthChange = (date) => {
-        if (date){
+        if (date) {
             const newDate = setYear(setMonth(new Date(), getMonth(date)), getYear(date));
             setSelectedDate(newDate);
         } else {
