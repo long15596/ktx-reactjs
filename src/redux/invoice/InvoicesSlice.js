@@ -1,9 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {addInvoice, getInvoice} from "../../services/invoicesService/InvoiceService";
+import {addInvoice, getInvoice, getTotalByMonth} from "../../services/invoicesService/InvoiceService";
 
 
 const initialState = {
-  invoices : []
+    invoices: [],
+    totalByMonth: []
 }
 const invoicesSlice = createSlice({
     name: 'rooms',
@@ -14,6 +15,9 @@ const invoicesSlice = createSlice({
         });
         builder.addCase(addInvoice.fulfilled, (state, action) => {
             state.invoices.push(action.payload)
+        });
+        builder.addCase(getTotalByMonth.fulfilled, (state, action) => {
+            state.totalByMonth = action.payload
         });
     }
 })

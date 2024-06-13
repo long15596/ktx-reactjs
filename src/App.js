@@ -19,6 +19,7 @@ import Request from "./pages/home/client/Request";
 import Rent from "./pages/home/client/Rent";
 import CreateBillRoom from "./pages/room/CreateBillRoom";
 import Footer from "./components/Footer";
+import Statistical from "./pages/admin/Statistical";
 function App() {
     return (
         <div className="container-fluid">
@@ -40,6 +41,7 @@ function App() {
                         <Route path={`admin`} element={<Admin/>}>
                             <Route path={``} element={<ListUser/>}/>
                             <Route path={`user/:id`} element={<ClientInvoice/>}/>
+                            <Route path={`statistical`} element={<Statistical/>}/>
                             <Route path={`room`} element={<Room/>}>
                                 <Route path={``} element={<ListRoom/>}/>
                                 <Route path={`add/:id`} element={<AddRoom/>}/>

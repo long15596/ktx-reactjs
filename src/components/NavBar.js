@@ -48,6 +48,8 @@ export default function NavBar() {
                                     <Link className="nav-link" to={`/admin/invoice`}>Hóa Đơn</Link></li>
                                 <li className={`nav-item ${location.pathname === '/admin/device' ? 'active' : ''}`}>
                                     <Link className="nav-link" to={`/admin/device`}>Thiết Bị</Link></li>
+                                <li className={`nav-item ${location.pathname === '/admin/statistical' ? 'active' : ''}`}>
+                                    <Link className="nav-link" to={`/admin/statistical`}>Thống kê</Link></li>
                             </>
                         ) : (
                             <>

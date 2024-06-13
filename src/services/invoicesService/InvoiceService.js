@@ -11,8 +11,14 @@ export const getInvoice = createAsyncThunk(
 export const addInvoice = createAsyncThunk(
     "invoice/addInvoice",
     async ({value}) => {
-        console.log(value)
-        const res = await customAxios.post(`/invoices`,value)
-       return res.data
+        const res = await customAxios.post(`/invoices`, value)
+        return res.data
+    }
+)
+export const getTotalByMonth = createAsyncThunk(
+    "invoice/totalByMonth",
+    async () => {
+        const res = await customAxios.get(`/invoices/total-month`,)
+        return res.data
     }
 )
